@@ -4,7 +4,7 @@ author: "Richard White"
 date: "2020-02-17"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{org}
+  %\VignetteIndexEntry{Introduction to org}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

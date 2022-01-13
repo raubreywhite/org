@@ -1,0 +1,3 @@
+template:
+  includes:
+    before_title: <img src="https://docs.sykdomspulsen.no/org/reference/figures/logo.png" width="25">
