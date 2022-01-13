@@ -1,3 +1,11 @@
+url: https://docs.sykdomspulsen.no/org
+
 template:
+  template:
+    bootstrap: 5
+    bslib:
+      bg: "#202123"
+      fg: "#B8BCC2"
+      primary: "#306cc9"
   includes:
     before_title: <img src="https://docs.sykdomspulsen.no/org/reference/figures/logo.png" width="25">
