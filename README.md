@@ -6,7 +6,7 @@ Read the introduction vignette [here](http://docs.sykdomspulsen.no/org/articles/
 
 ## splverse
 
-<a href="https://docs.sykdomspulsen.no/packages"><img src="https://docs.sykdomspulsen.no/packages/splverse.png" style="width:200px;"></a>
+<a href="https://docs.sykdomspulsen.no/packages"><img src="https://docs.sykdomspulsen.no/packages/splverse.png" width="120" /></a>
 
 The [splverse](https://docs.sykdomspulsen.no/packages) is a set of R packages developed to help solve problems that frequently occur when performing infectious disease surveillance.
 
@@ -21,4 +21,4 @@ options(
 )
 ```
 
-Save the file and restart R. This will allow you to install splverse packages from the FHI registry.
+Save the file and restart R. This will allow you to install [splverse](https://docs.sykdomspulsen.no/packages) packages from the FHI registry.
