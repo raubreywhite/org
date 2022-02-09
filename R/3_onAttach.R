@@ -1,7 +1,14 @@
 .onAttach <- function(libname, pkgname) {
+  version <- tryCatch(
+    utils::packageDescription("org", fields = "Version"),
+    warning = function(w){
+      1
+    }
+  )
+
   packageStartupMessage(paste0(
     "org ",
-    utils::packageDescription("org")$Version,
+    version,
     "\n",
     "https://docs.sykdomspulsen.no/org"
   ))
