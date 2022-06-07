@@ -5,7 +5,7 @@
 
 [org](https://docs.sykdomspulsen.no/org/) is a system to help you organize projects. Most analyses have three (or more) main sections: code, results, and data, each with different requirements (version control/sharing/encryption). You provide folder locations and 'org' helps you take care of the details.
 
-Read the introduction vignette [here](http://docs.sykdomspulsen.no/org/articles/org.html) or run `help(package="org")`.
+Read the introduction vignette [here](https://docs.sykdomspulsen.no/org/articles/org.html) or run `help(package="org")`.
 
 ## splverse
 
