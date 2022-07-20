@@ -10,6 +10,6 @@
     "org ",
     version,
     "\n",
-    "https://docs.sykdomspulsen.no/org"
+    "https://docs.sykdomspulsen.no/org/"
   ))
 }

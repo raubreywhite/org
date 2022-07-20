@@ -1,3 +1,10 @@
+# Resubmission
+
+Included \\value to:
+* set_results.Rd
+
+Changed \\dontrun{} to \\donttest{}
+
 ## Test environments
 
 * local Ubuntu 20.04 install, R 4.1.3

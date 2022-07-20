@@ -10,6 +10,7 @@ convert_newline_linux_to_windows <- function(txt) {
 #' @param txt Text to be written
 #' @param file File, passed through to `base::cat`
 #' @param header Optional header that is inserted at the top of the text file
+#' @return No return value.
 #' @export
 write_text <- function(txt, file = "", header = "**THIS FILE IS CONSTANTLY OVERWRITTEN -- DO NOT MANUALLY EDIT**\r\n\r\n") {
   header <- convert_newline_linux_to_windows(header)

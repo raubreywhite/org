@@ -1,3 +1,8 @@
+# org 2022.7.21
+
+- Reduction of exports to: initialize_project, set_results, write_text
+- initialize_project now takes in `env` as an argument (the environment into which the functions will be sourced)
+
 # org 2020.2.17
 
 Introduction of:

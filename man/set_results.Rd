@@ -4,10 +4,15 @@
 \alias{set_results}
 \title{Set results folder after initialization}
 \usage{
-set_results(results)
+set_results(results, proj = org::project)
 }
 \arguments{
-\item{results}{A folder inside `results` with today's date will be created and it will be accessible via `org::project$results_today` (this is where you will store all of your results)}
+\item{results}{A folder inside \code{results} with today's date will be created and it will be accessible via \code{org::project$results_today} (this is where you will store all of your results)}
+
+\item{proj}{The project environment (default is \code{org::project})}
+}
+\value{
+Nothing. There is a side effect where the environments \code{proj} and \code{org::project} have the values $results and $results_today altered.
 }
 \description{
 Set results folder after initialization

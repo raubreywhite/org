@@ -5,29 +5,26 @@
 \title{Initializes project}
 \usage{
 initialize_project(
+  env = new.env(),
   home = NULL,
   results = NULL,
   folders_to_be_sourced = "R",
   source_folders_absolute = FALSE,
-  create_folders = FALSE,
-  silent = FALSE,
   encode_from = "UTF-8",
   encode_to = "latin1",
   ...
 )
 }
 \arguments{
+\item{env}{The environment that the code will be sourced into (use \code{.GlobalEnv} to source code into the global environment)}
+
 \item{home}{The folder containing 'Run.R' and 'R/'}
 
-\item{results}{A folder inside `results` with today's date will be created and it will be accessible via `org::project$results_today` (this is where you will store all of your results)}
+\item{results}{A folder inside \code{results} with today's date will be created and it will be accessible via \code{org::project$results_today} (this is where you will store all of your results)}
 
-\item{folders_to_be_sourced}{The names of folders that live inside `home` and all .r and .R files inside it will be sourced into the global environment.}
+\item{folders_to_be_sourced}{The names of folders that live inside \code{home} and all .r and .R files inside it will be sourced into the global environment.}
 
-\item{source_folders_absolute}{If `TRUE` then `folders_to_be_sourced` is an absolute folder reference. If `FALSE` then `folders_to_be_sourced` is relative and inside `home`.}
-
-\item{create_folders}{Recommended that this is set to `TRUE`. It allows `org` to create any folders that are missing.}
-
-\item{silent}{Silence all feedback}
+\item{source_folders_absolute}{If \code{TRUE} then \code{folders_to_be_sourced} is an absolute folder reference. If \code{FALSE} then \code{folders_to_be_sourced} is relative and inside \code{home}.}
 
 \item{encode_from}{Folders current encoding (only used on Windows)}
 
@@ -35,24 +32,31 @@ initialize_project(
 
 \item{...}{Other folders that you would like to reference}
 }
+\value{
+Returns an environment that contains:
+\itemize{
+\item Folder locations
+\item An environment called \code{env} into which the code has been sourced into.
+There is also a side effect where \code{org::project} mirrors these values.
+}
+}
 \description{
-`org::initialize_project` takes in 2+ arguments.
-It then saves its results (i.e. folder locations) in `org::project`,
-which you will use in all of your subsequent code.
+\code{org::initialize_project} takes in 2+ arguments.
+It then saves folder locations in the return value (a new environment) and
+in \code{org::project}, which you will use in all of your subsequent code. An additional
+folder will be created on the user's file system (org::project$results_today) which
+corresponds to \code{results/YYYY-MM-DD}. The sourced folders are saved into org::project$env.
 }
 \details{
-You need to set `create_folders=TRUE`
-for this function to create today's folder (org::project$results_today).
-
 For more details see the help vignette:
 \code{vignette("intro", package = "org")}
 }
 \examples{
-\dontrun{
-org::initialize(
-  home = "/git/analyses/2019/analysis3/",
-  results = "/dropbox/analyses_results/2019/analysis3/",
-  raw = "/data/analyses/2019/analysis3/"
+\donttest{
+org::initialize_project(
+  home = paste0(tempdir(), "/git/analyses/2019/analysis3/"),
+  results = paste0(tempdir(), "/dropbox/analyses_results/2019/analysis3/"),
+  raw = paste0(tempdir(), "/data/analyses/2019/analysis3/")
 )
 org::project$results_today
 org::project$raw

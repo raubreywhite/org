@@ -3,7 +3,7 @@
 \docType{data}
 \name{project}
 \alias{project}
-\title{Folders to be used/referenced}
+\title{Folders to be used/referenced (environment)}
 \format{
 An object of class \code{environment} of length 0.
 }
@@ -11,6 +11,6 @@ An object of class \code{environment} of length 0.
 project
 }
 \description{
-Folders to be used/referenced
+Folders to be used/referenced (environment)
 }
 \keyword{datasets}

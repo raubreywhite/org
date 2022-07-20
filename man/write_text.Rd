@@ -14,9 +14,12 @@ write_text(
 \arguments{
 \item{txt}{Text to be written}
 
-\item{file}{File, passed through to `base::cat`}
+\item{file}{File, passed through to \code{base::cat}}
 
 \item{header}{Optional header that is inserted at the top of the text file}
+}
+\value{
+No return value.
 }
 \description{
 Write text to a file

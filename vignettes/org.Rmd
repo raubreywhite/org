@@ -76,12 +76,11 @@ An example `Run.R` might look like this:
 # Define any other locations you want:
 # 'raw' (i.e. raw data)
 
-# remember to set `create_folders` = TRUE
 org::initialize_project(
+  env = .GlobalEnv,
   home = "/git/analyses/2019/analysis3/",
   results = "/dropbox/analyses_results/2019/analysis3/"
-  raw = "/data/analyses/2019/analysis3/",
-  create_folders = TRUE
+  raw = "/data/analyses/2019/analysis3/"
 )
 
 # It is a good practice to describe how the archived
@@ -219,10 +218,10 @@ Suggested code for `Run.R`:
 
 ```
 org::initialize_project(
+  env = .GlobalEnv,
   home = "/git/analyses/2019/analysis3/",
   results = "/dropbox/analyses_results/2019/analysis3/",
-  raw = "/data/analyses/2019/analysis3/",
-  create_folders = TRUE
+  raw = "/data/analyses/2019/analysis3/"
 )
 ```
 
@@ -254,10 +253,10 @@ Suggested code for `Run.R`:
 
 ```
 org::initialize_project(
+  env = .GlobalEnv,
   home = "/network/project_name/",
   results = "/network/project_name/results/",
-  raw = "/network/project_name/data_raw/",
-  create_folders = TRUE
+  raw = "/network/project_name/data_raw/"
 )
 ```
 
@@ -293,11 +292,11 @@ Suggested code for `Run.R`:
 # Initialize the project
 
 org::initialize_project(
+  env = .GlobalEnv,
   home = "/network/project_name/",
   results = "/network/project_name/results/",
   paper = "/network/paper/",
-  raw = "/network/project_name/data_raw/",
-  create_folders = TRUE
+  raw = "/network/project_name/data_raw/"
 )
 
 # do some analyses here
