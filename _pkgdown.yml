@@ -18,5 +18,5 @@ authors:
     text: "Crafted by"
   sidebar:
     roles: [cre, aut, ctb]
-    before: "This package is proudly brought to you by:"
-    after: "See the [changelog](news/index.html) for other contributors. :pray:"
+  before: "This package is proudly brought to you by:"
+  after: "See the [changelog](news/index.html) for other contributors. :pray:"
