@@ -17,31 +17,30 @@ fix_description_version:
 	sed -i "s/^Version: .*/Version: $(DATE)/" DESCRIPTION
 	sed -i '/Date\/Publication:/d' DESCRIPTION # delete if exists
 	echo "Date/Publication: $(DATETIMEUTC) UTC" >> DESCRIPTION #append to bottom
-	sudo chmod -R 777 ..
+	chmod -R 777 ..
 
 .ONESHELL:
 build_data:
-	sudo podman run --rm --privileged \
+	docker run --rm --privileged \
 		-v $(shell pwd):/rpkg \
 		docker.io/fhix/rfhiverse:latest /bin/bash -c \
 		'Rscript -e "devtools::load_all(\"/rpkg/\"); gen_data_all(\"/rpkg/data\")"'
-	sudo chmod -R 777 ..
+	chmod -R 777 ..
 
 .ONESHELL:
 build_package:
-	sudo rm -rf ../built
+	rm -rf ../built
 	mkdir ../built
-	sudo podman run --rm --privileged \
+	docker run --rm --privileged \
 		-v $(shell pwd):/rpkg \
 		-v $(shell pwd)/../built:/built \
-		docker.io/fhix/rfhiverse:latest /bin/bash -c \
+		localhost/sc8-splverse:latest /bin/bash -c \
 		' \
 		cd /; \
 		R CMD build /rpkg; \
 		cp *.tar.gz /built/; \
 		'
-	sudo chown -R go ../built
-	sudo chmod -R 777 ..
+	chmod -R 777 ..
 
 .ONESHELL:
 check_package:
