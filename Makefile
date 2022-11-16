@@ -108,6 +108,9 @@ pkgdown:
 		git subtree split --prefix docs -b gh-pages
 		git push --set-upstream-to -f origin gh-pages:gh-pages
 		git branch -D gh-pages
+		git reset --soft HEAD^
+		git restore --staged .
+		rm -rf docs
 	else
 		# code if not found
 		echo "NO DOCS FOUND"
