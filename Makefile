@@ -80,7 +80,7 @@ drat:
 		-v /Volumes/homes/raw996/dev/containers/csids-hub/agent-pipelines/$(PKGNAME)/rpkg:/rpkg \
 		-v /Volumes/homes/raw996/dev/containers/csids-hub/agent-pipelines/$(PKGNAME)/built:/built \
 		-v /Volumes/homes/raw996/dev/git/drat:/drat \
-		localhost/sc8-splverse:latest /bin/bash -c 'Rscript -e "drat::insertPackage(fs::dir_ls(\"/built/\", regexp=\".tar.gz\$\"), repodir = \"/drat\")"'
+		localhost/sc8-splverse:latest /bin/bash -c 'Rscript -e "drat::insertPackage(fs::dir_ls(\"/built/\", regexp=\".tar.gz\$\"), repodir = \"/drat\", action=\"prune\")"'
 
 	# sed -i "/## News/a - **$(PKGNAME) $(PKGVERS)** (linux) inserted at $(DATETIME)" ../drat/README.md
 	# sed -i '1001,\\\$ d' ../drat_sp/README.md # only keep first 1000 lines of readme
@@ -116,19 +116,3 @@ pkgdown:
 		echo "NO DOCS FOUND"
 	fi
 
-.ONESHELL:
-drat_prune_history:
-	cd /tmp
-	git clone "git@github.com:folkehelseinstituttet/drat.git"
-	cd drat
-	git config user.name "Sykdomspulsen"
-	git config user.email "sykdomspulsen@fhi.no"
-	git config push.default simple
-	git checkout gh-pages
-
-	git checkout --orphan latest_branch
-	git add -A
-	git commit -am "Cleaning history" #Committing the changes
-	git branch -D gh-pages #Deleting master branch
-	git branch -m gh-pages #renaming branch as master
-	git -C /tmp/drat push -f origin gh-pages #pushes to master branch
