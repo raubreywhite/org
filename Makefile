@@ -32,8 +32,8 @@ build_package:
 	rm -rf ../built
 	mkdir ../built
 	docker run --rm --privileged \
-		-v /Volumes/homes/raw996/dev/containers/csids-hub/agent-pipelines/$PKGNAME/rpkg:/rpkg \
-		-v /Volumes/homes/raw996/dev/containers/csids-hub/agent-pipelines/$PKGNAME/built:/built \
+		-v /Volumes/homes/raw996/dev/containers/csids-hub/agent-pipelines/\$PKGNAME/rpkg:/rpkg \
+		-v /Volumes/homes/raw996/dev/containers/csids-hub/agent-pipelines/\$PKGNAME/built:/built \
 		localhost/sc8-splverse:latest /bin/bash -c \
 		' \
 		cd /; \
@@ -45,8 +45,8 @@ build_package:
 .ONESHELL:
 check_package:
 	docker run --rm --privileged \
-		-v /Volumes/homes/raw996/dev/containers/csids-hub/agent-pipelines/$PKGNAME/rpkg:/rpkg \
-		-v /Volumes/homes/raw996/dev/containers/csids-hub/agent-pipelines/$PKGNAME/built:/built \
+		-v /Volumes/homes/raw996/dev/containers/csids-hub/agent-pipelines/\$PKGNAME/rpkg:/rpkg \
+		-v /Volumes/homes/raw996/dev/containers/csids-hub/agent-pipelines/\$PKGNAME/built:/built \
 		localhost/sc8-splverse:latest /bin/bash -c \
 		' \
 		R CMD check --no-manual /built/*.tar.gz; \
@@ -77,8 +77,8 @@ check_package:
 drat:
 	# spuls
 	docker run --rm --privileged \
-		-v /Volumes/homes/raw996/dev/containers/csids-hub/agent-pipelines/$PKGNAME/rpkg:/rpkg \
-		-v /Volumes/homes/raw996/dev/containers/csids-hub/agent-pipelines/$PKGNAME/built:/built \
+		-v /Volumes/homes/raw996/dev/containers/csids-hub/agent-pipelines/\$PKGNAME/rpkg:/rpkg \
+		-v /Volumes/homes/raw996/dev/containers/csids-hub/agent-pipelines/\$PKGNAME/built:/built \
 		-v /Volumes/homes/raw996/dev/git/drat:/drat \
 		localhost/sc8-splverse:latest /bin/bash -c 'Rscript -e "drat::insertPackage(fs::dir_ls(\"/built/\", regexp=\".tar.gz\$\"), repodir = \"/drat\")"'
 
@@ -96,8 +96,8 @@ drat:
 .ONESHELL:
 pkgdown:
 	docker run --rm --privileged \
-		-v /Volumes/homes/raw996/dev/containers/csids-hub/agent-pipelines/$PKGNAME/rpkg:/rpkg \
-		-v /Volumes/homes/raw996/dev/containers/csids-hub/agent-pipelines/$PKGNAME/built:/built \
+		-v /Volumes/homes/raw996/dev/containers/csids-hub/agent-pipelines/\$PKGNAME/rpkg:/rpkg \
+		-v /Volumes/homes/raw996/dev/containers/csids-hub/agent-pipelines/\$PKGNAME/built:/built \
 		-v /Volumes/homes/raw996/dev/git/drat:/drat \
 		localhost/sc8-splverse:latest /bin/bash -c 'Rscript -e "devtools::install(\"/rpkg\", dependencies = TRUE, upgrade = FALSE); pkgdown::build_site(\"/rpkg\")"'
 
