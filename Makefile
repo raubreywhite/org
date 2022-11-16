@@ -101,9 +101,17 @@ pkgdown:
 		-v /Volumes/homes/raw996/dev/git/drat:/drat \
 		localhost/sc8-splverse:latest /bin/bash -c 'Rscript -e "devtools::install(\"/rpkg\", dependencies = TRUE, upgrade = FALSE); pkgdown::build_site(\"/rpkg\")"'
 
-	git add docs
-	git commit -am "Pkgdown built"
-	git push origin main # force the push of the gh-pages branch to the remote gh-pages branch at origin
+	if [ -d "docs" ]
+	then
+		git add docs
+		git commit -am "Pkgdown built"
+		git subtree split --prefix docs -b gh-pages
+		git push --set-upstream-to -f origin gh-pages:gh-pages
+		git branch -D gh-pages
+	else
+		# code if not found
+		echo "NO DOCS FOUND"
+	fi
 
 .ONESHELL:
 drat_prune_history:
