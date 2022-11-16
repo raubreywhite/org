@@ -20,7 +20,7 @@ Then write in:
 ```
 options(
   repos = structure(c(
-    csverse = "https://www.csids.no/drat/",
+    CSVERSE = "https://www.csids.no/drat/",
     CRAN    = "https://cran.rstudio.com"
   ))
 )
