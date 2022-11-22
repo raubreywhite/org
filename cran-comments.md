@@ -1,9 +1,4 @@
-# Resubmission
-
-Included \\value to:
-* set_results.Rd
-
-Changed \\dontrun{} to \\donttest{}
+# Submission
 
 ## Test environments
 
@@ -13,15 +8,7 @@ Changed \\dontrun{} to \\donttest{}
 
 ## R CMD check results
 
-0 errors | 0 warnings
-
-* checking CRAN incoming feasibility ... NOTE
-
-Maintainer: 'Richard Aubrey White <hello@rwhite.no>'
-  
-New submission
-
-Package was archived on CRAN
+0 errors | 0 warnings | 0 notes
 
 ## Downstream dependencies
 
