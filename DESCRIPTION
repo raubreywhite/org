@@ -10,6 +10,7 @@ License: MIT + file LICENSE
 URL: https://www.csids.no/org/, https://github.com/csids/org
 BugReports: https://github.com/csids/org/issues
 Encoding: UTF-8
+Imports: utils
 Suggests: testthat,
     knitr,
     rmarkdown,

@@ -1,6 +1,6 @@
 ---
 title: "Introduction to org"
-author: "Richard White"
+author: "Richard Aubrey White"
 date: "2020-02-17"
 output: rmarkdown::html_vignette
 vignette: >

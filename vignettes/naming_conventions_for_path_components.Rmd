@@ -1,0 +1,36 @@
+---
+title: "Naming Conventions for Path Components"
+author: "Richard Aubrey White"
+date: "2022-12-28"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Naming Conventions for Path Components}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Let us consider the file `/home/richard/test.src`
+
+| Component              | Name                      |
+|------------------------|---------------------------|
+| /home/richard/test.src | Absolute (file)path       |
+| richard/test.src       | Relative (file)path       |
+| /home/richard/         | Absolute (directory) path |
+| ./richard/             | Relative (directory) path |
+| richard                | Directory                 |
+| test.src               | Filename                  |
+
+A path is a location in a directory structure. Filenames only include
+information about the name of the file. Directories only include
+information about the name of the directory. Filepaths are paths that
+specify the location of a file.
