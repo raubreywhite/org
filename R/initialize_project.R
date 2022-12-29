@@ -1,19 +1,4 @@
-strip_trailing_forwardslash <- function(x, encode_from, encode_to) {
-  if (is.null(x)) {
-    return(NULL)
-  }
-  retval <- sub("/$", "", x)
-
-  if (requireNamespace("glue", quietly = TRUE)) {
-    for (i in seq_along(retval)) retval[i] <- glue::glue(retval[i], .envir = parent.frame(n = 1))
-  }
-  if (.Platform$OS.type == "windows") {
-    retval <- iconv(retval, from = encode_from, to = encode_to)
-  }
-  return(retval)
-}
-
-SelectFolderThatExists <- function(folders, name) {
+select_folder_that_exists <- function(folders, name) {
   retval <- NA
   id <- NA
   for (i in seq_along(folders)) {
@@ -40,7 +25,9 @@ SelectFolderThatExists <- function(folders, name) {
 
 set_results_internal <- function(results, proj){
   if(is.null(results)) return()
-  proj$results <- SelectFolderThatExists(results, "results")[["folder"]]
+  proj$results <- strip_and_then_add_trailing_forwardslash(
+    select_folder_that_exists(results, "results")[["folder"]]
+  )
 
   today <- format.Date(Sys.time(), "%Y-%m-%d")
 
@@ -48,7 +35,7 @@ set_results_internal <- function(results, proj){
   if (is.null(proj$results)) {
     proj$results_today <- NULL
   } else {
-    proj$results_today <- file.path(proj$results, today)
+    proj$results_today <- path(proj$results, today, "/")
   }
 
   for (i in names(proj)) {
@@ -98,14 +85,14 @@ initialize_project_folders <- function(
 ){
   temp_env <- new.env()
 
-  temp_env$home <- strip_trailing_forwardslash(home, encode_from = encode_from, encode_to = encode_to)
-  if(!is.null(results)) temp_env$results <- strip_trailing_forwardslash(results, encode_from = encode_from, encode_to = encode_to)
+  temp_env$home <- strip_and_then_add_trailing_forwardslash(home, encode_from = encode_from, encode_to = encode_to)
+  if(!is.null(results)) temp_env$results <- strip_and_then_add_trailing_forwardslash(results, encode_from = encode_from, encode_to = encode_to)
 
   today <- format.Date(Sys.time(), "%Y-%m-%d")
 
   arguments <- list(...)
   for (i in seq_along(arguments)) {
-    temp_env[[names(arguments)[i]]] <- strip_trailing_forwardslash(arguments[[i]], encode_from = encode_from, encode_to = encode_to)
+    temp_env[[names(arguments)[i]]] <- strip_and_then_add_trailing_forwardslash(arguments[[i]], encode_from = encode_from, encode_to = encode_to)
   }
 
   # If multiple files were provided, then select the folder that exists
@@ -113,9 +100,9 @@ initialize_project_folders <- function(
     if (i == "computer_id") next
     if (!is.null(temp_env[[i]])) {
       if (i == "home") {
-        temp_env[["computer_id"]] <- SelectFolderThatExists(temp_env[[i]], i)[["id"]]
+        temp_env[["computer_id"]] <- select_folder_that_exists(temp_env[[i]], i)[["id"]]
       }
-      temp_env[[i]] <- SelectFolderThatExists(temp_env[[i]], i)[["folder"]]
+      temp_env[[i]] <- select_folder_that_exists(temp_env[[i]], i)[["folder"]]
     }
   }
 
@@ -138,18 +125,19 @@ source_to_environment <- function(
     if (source_folders_absolute) {
       folder <- i
     } else {
-      folder <- file.path(proj$home, i)
+      folder <- path(proj$home, i)
     }
 
     if (!dir.exists(folder)) {
       warning(paste0("Folder ", folder, " does not exist. Creating it now."))
-      dir.create(folder, showWarnings = FALSE, recursive = TRUE)
+      create_dir(folder)
     }
 
     message(paste0("Sourcing all code inside ", folder, " into ", environmentName(env)))
-    fileSources <- file.path(folder, list.files(folder, pattern = "*.[rR]$"))
+    # fileSources <- file.path(folder, list.files(folder, pattern = "*.[rR]$"))
+    file_sources <- ls_files(folder, regexp = "*.[rR]$")
 
-    sapply(fileSources, source, env)
+    sapply(file_sources, source, env)
   }
 }
 

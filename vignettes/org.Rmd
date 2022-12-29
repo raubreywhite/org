@@ -48,15 +48,15 @@ Data should:
 
 `org::initialize_project` takes in 2+ arguments. It then saves its results (i.e. folder locations) in `org::project`, which you will use in all of your subsequent code.
 
-`home` is the location of `Run.R` and the `R/` folder. It will be accessible via `org::project$home` (but you will rarely need this).
+`home` is the location of `run.R` and the `R/` folder. It will be accessible via `org::project$home` (but you will rarely need this).
 
 `results` is your results folder. It will create a folder inside `results` with today's date and it will be accessible via `org::project$results_today` (this is where you will store all of your results). Because the folder's name is today's date, this means that it automatically archives one copy of results per day. This allows you and your collaborators to easily check and see how the results have changed over time.
 
 `...` you can specify other folders if you want, and they will also be accessible via `org::project`. Some suggested ones are `raw` (raw data) and `clean` (clean data).
 
-### Run.R 
+### run.R 
 
-`Run.R` will be your masterfile. It will sequentially run through every part of your analysis:
+`run.R` will be your masterfile. It will sequentially run through every part of your analysis:
 
 - data cleaning
 - analysis
@@ -66,11 +66,11 @@ You will not have any other masterfiles, as this creates confusion when you need
 
 All sections of code (e.g. data cleaning, analyses for table 1, analyses for table 2, result generation for table 1, sensitivity analysis 1, etc) will be encapsulated in functions that live in the `R` folder.
 
-An example `Run.R` might look like this:
+An example `run.R` might look like this:
 
 ```
 # Define the following 'special' locations:
-# 'home' (i.e. Run.R and R/ folder)
+# 'home' (i.e. run.R and R/ folder)
 # 'results' (i.e. A folder with today's date will be created here)
 
 # Define any other locations you want:
@@ -120,154 +120,129 @@ figure_2(d)
 
 All of your functions should be defined in `org::project$home/R`. The function `org::initialize_project` automatically sources all of the R scripts in `org::project$home/R`, making them available for use.
 
+## Research Article Versioning (Submission/Resubmission)
+
+When writing a research article, multiple versions are often required (initial submission, followed by multiple resubmission variants based on the recommendations of peer reviewers).
+
+To account for this, on the initial submission of the article it is recommended to rename `run.R` and `R/` to `run_YYYY_MM_DD_submission_1.R` and `R_YYYY_MM_DD_submission_1/` (YYYY_MM_DD should be replaced with year, month, and date).
+
+When making adjustments for the resubmission, the relevant files/folders should be called `run_YYYY_MM_DD_submission_2.R` and `R_YYYY_MM_DD_submission_2/` (YYYY_MM_DD should be replaced with year, month, and date).
+
+In doing so, you successfully preserve all of your code that produced the results for every submission, allowing you to easily ensure that all changes are deliberate and intentional.
+
 ## Solutions
 
 ### Best Practice
 
-Our (very opinionated) solution is as follows:
+Our very opinionated solution is as follows:
 
-Code should be stored in Github. Data should be stored locally in an encrypted volume. Results should be stored on Dropbox, with the results for each day stored in a different folder.
+Code should be stored in GitHub. Data should be stored locally in an encrypted volume. Results should be stored on Dropbox, with the results for each day stored in a different folder.
 
 ```
 # code goes here:
 git
   +-- analyses
              +-- 2018
-             |      +-- analysis1 <- org::project$home
-             |      |           +-- Run.R
+             |      +-- analysis_1 <- org::project$home
+             |      |           +-- run.R
              |      |           +-- R
-             |      |                  +-- CleanData.R
-             |      |                  +-- Descriptives.R
-             |      |                  +-- Analysis1.R
-             |      |                  +-- Graphs1.R
-             |      +-- analysis2 <- org::project$home
-             |                  +-- Run.R
+             |      |                  +-- clean_data.R
+             |      |                  +-- descriptives.R
+             |      |                  +-- analysis.R
+             |      |                  +-- figure_1.R
+             |      +-- analysis_2 <- org::project$home
+             |                  +-- run.R
              |                  +-- R
-             |                         +-- CleanData.R
-             |                         +-- Descriptives.R
-             |                         +-- Analysis1.R
-             |                         +-- Graphs1.R
+             |                         +-- clean_data.R
+             |                         +-- descriptives.R
+             |                         +-- analysis.R
+             |                         +-- figure_1.R
              +-- 2019
-                    +-- analysis3 <- org::project$home
-                                +-- Run.R
+                    +-- analysis_3 <- org::project$home
+                                +-- run.R
                                 +-- R
-                                       +-- CleanData.R
-                                       +-- Descriptives.R
-                                       +-- Analysis1.R
-                                       +-- Graphs1.R
+                                       +-- clean_data.R
+                                       +-- descriptives.R
+                                       +-- analysis.R
+                                       +-- figure_1.R
                                        
 # results goes here:
 dropbox
   +-- analyses_results
              +-- 2018
-             |      +-- analysis1 <- org::project$results
+             |      +-- analysis_1 <- org::project$results
              |      |           +-- 2018-03-12 <- org::project$results_today
-             |      |           |            +-- table1.xlsx
-             |      |           |            +-- figure1.png
+             |      |           |            +-- table_1.xlsx
+             |      |           |            +-- figure_1.png
              |      |           +-- 2018-03-15 <- org::project$results_today
-             |      |           |            +-- table1.xlsx
-             |      |           |            +-- figure1.png
+             |      |           |            +-- table_1.xlsx
+             |      |           |            +-- figure_1.png
              |      |           +-- 2018-03-18 <- org::project$results_today
-             |      |           |            +-- table1.xlsx
-             |      |           |            +-- figure1.png
-             |      |           |            +-- figure2.png
+             |      |           |            +-- table_1.xlsx
+             |      |           |            +-- figure_1.png
+             |      |           |            +-- figure_2.png
              |      |           +-- 2018-06-18 <- org::project$results_today
-             |      |           |            +-- table1.xlsx
-             |      |           |            +-- table2.xlsx
-             |      |           |            +-- figure1.png
-             |      |           |            +-- figure2.png
-             |      +-- analysis2 <- org::project$results
+             |      |           |            +-- table_1.xlsx
+             |      |           |            +-- table_2.xlsx
+             |      |           |            +-- figure_1.png
+             |      |           |            +-- figure_2.png
+             |      +-- analysis_2 <- org::project$results
              |      |           +-- 2018-06-09 <- org::project$results_today
-             |      |           |            +-- table1.xlsx
-             |      |           |            +-- figure1.png
+             |      |           |            +-- table_1.xlsx
+             |      |           |            +-- figure_1.png
              |      |           +-- 2018-12-15 <- org::project$results_today
-             |      |           |            +-- table1.xlsx
-             |      |           |            +-- figure1.png
+             |      |           |            +-- table_1.xlsx
+             |      |           |            +-- figure_1.png
              |      |           +-- 2019-01-18 <- org::project$results_today
-             |      |           |            +-- table1.xlsx
-             |      |           |            +-- figure1.png
-             |      |           |            +-- figure2.png
+             |      |           |            +-- table_1.xlsx
+             |      |           |            +-- figure_1.png
+             |      |           |            +-- figure_2.png
              +-- 2019
-                    +-- analysis3 <- org::project$results
+                    +-- analysis_3 <- org::project$results
                     |           +-- 2019-06-09 <- org::project$results_today
-                    |           |            +-- table1.xlsx
-                    |           |            +-- figure1.png
+                    |           |            +-- table_1.xlsx
+                    |           |            +-- figure_1.png
                     |           +-- 2019-12-15 <- org::project$results_today
-                    |           |            +-- table1.xlsx
-                    |           |            +-- figure1.png
+                    |           |            +-- table_1.xlsx
+                    |           |            +-- figure_1.png
                     |           +-- 2020-01-18 <- org::project$results_today
-                    |           |            +-- table1.xlsx
-                    |           |            +-- figure1.png
-                    |           |            +-- figure2.png
+                    |           |            +-- table_1.xlsx
+                    |           |            +-- figure_1.png
+                    |           |            +-- figure_2.png
 
 # data goes here:
 data
   +-- analyses
              +-- 2018
-             |      +-- analysis1 <- org::project$raw
+             |      +-- analysis_1 <- org::project$raw
              |      |           +-- data.xlsx
-             |      +-- analysis2 <- org::project$raw
+             |      +-- analysis_2 <- org::project$raw
              |      |           +-- data.xlsx
              +-- 2019
-                    +-- analysis3 <- org::project$raw
+                    +-- analysis_3 <- org::project$raw
                                 +-- data.xlsx
 
 ```
 
-Suggested code for `Run.R`:
+Suggested code for `run.R`:
 
 ```
 org::initialize_project(
   env = .GlobalEnv,
-  home = "/git/analyses/2019/analysis3/",
-  results = "/dropbox/analyses_results/2019/analysis3/",
-  raw = "/data/analyses/2019/analysis3/"
+  home = "/git/analyses/2019/analysis_3/",
+  results = "/dropbox/analyses_results/2019/analysis_3/",
+  raw = "/data/analyses/2019/analysis_3/"
 )
 ```
 
-### One Folder on a Shared Network Drive
+### Quarto
 
-If you only have one folder on a shared network drive, without access to github or dropbox, then we propose the following solution:
+If you only have one folder on a shared network drive, without access to GitHub or Dropbox, and you would like to create an RMarkdown document, then we propose the following solution:
 
 ```
 # code goes here:
 project_name <- org::project$home
-  +-- Run.R
-  +-- R
-  |      +-- CleanData.R
-  |      +-- Descriptives.R
-  |      +-- Analysis1.R
-  |      +-- Graphs1.R
-  +-- results <- org::project$results
-  |         +-- 2018-03-12 <- org::project$results_today
-  |         |            +-- table1.xlsx
-  |         |            +-- figure1.png
-  |         +-- 2018-03-12 <- org::project$results_today
-  |         |            +-- table1.xlsx
-  |         |            +-- figure1.png
-  +-- data_raw <- org::project$raw
-  |          +-- data.xlsx
-```
-
-Suggested code for `Run.R`:
-
-```
-org::initialize_project(
-  env = .GlobalEnv,
-  home = "/network/project_name/",
-  results = "/network/project_name/results/",
-  raw = "/network/project_name/data_raw/"
-)
-```
-
-### RMarkdown
-
-If you only have one folder on a shared network drive, without access to github or dropbox, and you would like to create an RMarkdown document, then we propose the following solution:
-
-```
-# code goes here:
-project_name <- org::project$home
-  +-- Run.R
+  +-- run.R
   +-- R
   |      +-- CleanData.R
   |      +-- Descriptives.R
@@ -286,7 +261,7 @@ project_name <- org::project$home
   |          +-- data.xlsx
 ```
 
-Suggested code for `Run.R`:
+Suggested code for `run.R`:
 
 ```
 # Initialize the project
@@ -310,3 +285,38 @@ rmarkdown::render(
 )
 ```
 
+
+### One Folder on a Shared Network Drive Without GitHub Access
+
+If you only have one folder on a shared network drive, without access to GitHub or Dropbox, then we propose the following solution:
+
+```
+# code goes here:
+project_name <- org::project$home
+  +-- run.R
+  +-- R
+  |      +-- clean_data.R
+  |      +-- descriptives.R
+  |      +-- analysis.R
+  |      +-- figure_1.R
+  +-- results <- org::project$results
+  |         +-- 2018-03-12 <- org::project$results_today
+  |         |            +-- table_1.xlsx
+  |         |            +-- figure_1.png
+  |         +-- 2018-03-12 <- org::project$results_today
+  |         |            +-- table_1.xlsx
+  |         |            +-- figure_1.png
+  +-- data_raw <- org::project$raw
+  |          +-- data.xlsx
+```
+
+Suggested code for `run.R`:
+
+```
+org::initialize_project(
+  env = .GlobalEnv,
+  home = "/network/project_name/",
+  results = "/network/project_name/results/",
+  raw = "/network/project_name/data_raw/"
+)
+```
