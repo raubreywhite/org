@@ -52,7 +52,7 @@ create_project_quarto_internal_results <- function(
   cat_to_run_r("org::move_directory(", "\n")
   cat_to_run_r("  from = org::path(org::project$quarto, \"rendered_quarto\"),", "\n")
   cat_to_run_r("  to = org::path(org::project$results_today, \"rendered_quarto\"),", "\n")
-  cat_to_run_r("  overwite_to = TRUE", "\n")
+  cat_to_run_r("  overwrite_to = TRUE", "\n")
   cat_to_run_r(")", "\n")
 
   ############
@@ -213,7 +213,7 @@ create_project_quarto_external_results <- function(
   cat_to_run_r("org::move_directory(", "\n")
   cat_to_run_r("  from = org::path(org::project$quarto, \"rendered_quarto\"),", "\n")
   cat_to_run_r("  to = org::path(org::project$results_today, \"rendered_quarto\"),", "\n")
-  cat_to_run_r("  overwite_to = TRUE", "\n")
+  cat_to_run_r("  overwrite_to = TRUE", "\n")
   cat_to_run_r(")", "\n")
 
   ############
