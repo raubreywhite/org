@@ -48,6 +48,11 @@ ls_files_int <- function(
   }
   path <- normalizePath(path, mustWork = FALSE)
   retval <- list.files(path = path, pattern = regexp, full.names = T, include.dirs = T)
+  # remove @eaDir
+  eaDir_grep <- grep("@eaDir", retval)
+  if(length(eaDir_grep) > 0){
+    retval <- retval[-eaDir_grep]
+  }
   return(retval)
 }
 ls_files_int_vectorized <- Vectorize(ls_files_int, vectorize.args = "path", USE.NAMES = FALSE)
@@ -66,8 +71,8 @@ ls_files <- function(
     path = path,
     regexp = regexp
   )
-  if(length(path) == 1){
-    retval <- retval[[1]]
+  if(length(path) == 1 & !is.null(ncol(retval))){
+    retval <- retval[,1]
   }
   return(retval)
 }
