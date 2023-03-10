@@ -73,6 +73,8 @@ ls_files <- function(
   )
   if(length(path) == 1 & !is.null(ncol(retval))){
     retval <- retval[,1]
+  } else if(length(path) == 1 & is.list(retval)){
+    retval <- retval[[1]]
   }
   return(retval)
 }
