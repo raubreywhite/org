@@ -1,3 +1,7 @@
+# org 2024.6.4
+
+- Fixed an error with org::initialize_project where "//" at the start of a path will be removed.
+
 # org 2022.12.28
 
 - Inclusion of `create_project_quarto` that provides an example project of how to use `org` with [quarto](https://www.quarto.org).

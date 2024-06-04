@@ -33,7 +33,7 @@ path <- function(...){
   } else {
     retval <- dots[[1]]
   }
-  retval <- gsub("//", "/", retval)
+  retval <- gsub("([^/])//", "\\1/", retval)
   return(retval)
 }
 
