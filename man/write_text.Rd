@@ -7,8 +7,7 @@
 write_text(
   txt,
   file = "",
- 
-    header = "**THIS FILE IS CONSTANTLY OVERWRITTEN -- DO NOT MANUALLY EDIT**\\r\\n\\r\\n"
+  header = "**THIS FILE IS CONSTANTLY OVERWRITTEN -- DO NOT MANUALLY EDIT**\\r\\n\\r\\n"
 )
 }
 \arguments{
