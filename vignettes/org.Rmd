@@ -115,7 +115,7 @@ figure_2(d)
 
 All of your functions should be defined in `org::project$home/R`. The function `org::initialize_project` automatically sources all R scripts in `org::project$home/R`.
 
-## Versioning Research Articles
+## Research Article Versioning
 
 When writing a research article, multiple versions are often required (initial submission, followed by multiple resubmission variants based on the recommendations of peer reviewers). Rename `Run.R` and `R/` to include the submission date for each version to preserve the code that produced the results for every submission.
 
