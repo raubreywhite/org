@@ -14,8 +14,9 @@
 #' @export
 package_installed <- function(pkg, install_if_missing = FALSE){
   pkgs <- utils::installed.packages()[,"Package"]
-  if (!(pkg %in% pkgs) && install_if_missing) {
-    utils::install.packages(pkg)
+  uninstalled <- pkgs[!pkg %in% pkgs]
+  if (length(uninstalled) > 0 & install_if_missing) {
+    utils::install.packages(uninstalled)
     pkgs <- utils::installed.packages()[,"Package"]
   }
   return(pkg %in% pkgs)
