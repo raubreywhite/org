@@ -1,7 +1,5 @@
 ---
 title: "Introduction to org"
-author: "Richard Aubrey White"
-date: "2025-03-10"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Introduction to org}
