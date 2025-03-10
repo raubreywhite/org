@@ -1,7 +1,7 @@
 ---
 title: "Introduction to org"
 author: "Richard Aubrey White"
-date: "2020-02-17"
+date: "2025-03-10"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Introduction to org}
@@ -20,53 +20,53 @@ knitr::opts_chunk$set(
 
 The concept behind `org` is fairly simple - most analyses have three main sections:
 
-- code
-- results
-- data
+- Code
+- Results
+- Data
 
-Yet each of these sections have extremely different requirements.
+Each of these sections has unique requirements.
 
 Code should:
 
-- Be version controlled
-- Be publically accessible
-- Have 1 analysis pipeline that logically and sequentially details all steps of the data cleaning, analysis, and result generation
+- Be version controlled.
+- Be publically accessible.
+- Have a single analysis pipeline detailing all steps of data cleaning, analysis, and result generation.
 
 Results should:
 
-- Be immediately shared with close collaborators
-- Have each set of results saved and accessible, so that you can see how your results have changed over time (i.e. "if we run the code today, do we get similar results to yesterday?")
+- Be immediately shared with close collaborators.
+- Save each set of results and make them accessible to track changes over time.
 
 Data should:
 
-- Be encrypted (if sensitive)
-- Not stored on the cloud (if sensitive)
+- Be encrypted (if sensitive).
+- Not stored on the cloud (if sensitive).
 
 ## Code
 
 ### org::initialize_project
 
-`org::initialize_project` takes in 2+ arguments. It then saves its results (i.e. folder locations) in `org::project`, which you will use in all of your subsequent code.
+`org::initialize_project` takes in 2+ arguments. It then saves its results (i.e., folder locations) in `org::project`, which you will use in all subsequent code.
 
-`home` is the location of `run.R` and the `R/` folder. It will be accessible via `org::project$home` (but you will rarely need this).
-
-`results` is your results folder. It will create a folder inside `results` with today's date and it will be accessible via `org::project$results_today` (this is where you will store all of your results). Because the folder's name is today's date, this means that it automatically archives one copy of results per day. This allows you and your collaborators to easily check and see how the results have changed over time.
-
-`...` you can specify other folders if you want, and they will also be accessible via `org::project`. Some suggested ones are `raw` (raw data) and `clean` (clean data).
+- `home`: Location of `run.R` and the `R/` folder. Accessible via `org::project$home` (but you will rarely need this).
+- `results`: Results folder. Creates a folder inside `results` with today's date, accessible via `org::project$results_today` (this is where you will store all of your results). Because the folder's name is today's date, this means that it automatically archives one copy of results per day. This allows you and your collaborators to easily check and see how the results have changed over time.
+- `...`: Specify other folders if needed, which will also be accessible via `org::project` (e.g., `data_raw` for raw data, `data_clean` for clean data).
 
 ### run.R 
 
-`run.R` will be your masterfile. It will sequentially run through every part of your analysis:
+`run.R` will be your main file, sequentially running through every part of your analysis:
 
-- data cleaning
-- analysis
-- result generation
+- Data cleaning
+- Analysis
+- Result generation
 
-You will not have any other masterfiles, as this creates confusion when you need to return to your code 2 years later.
+All sections of code should be encapsulated in functions living in the `R/` folder.
+
+You should not have any other main files, as this creates confusion when you need to return to your code two years later. However, you can have different versions of `run.R` (e.g., `run_v01.R`, `run_v02.R`), where it is implicitly understood that the later versions supersede the earlier ones. Once `run_v03.R` exists, `run_v02.R` is considered deprecated and is only retained for historical archival purposes, not for active use.
 
 All sections of code (e.g. data cleaning, analyses for table 1, analyses for table 2, result generation for table 1, sensitivity analysis 1, etc) will be encapsulated in functions that live in the `R` folder.
 
-An example `run.R` might look like this:
+### Example `run.R`
 
 ```
 # Define the following 'special' locations:
@@ -80,14 +80,11 @@ org::initialize_project(
   env = .GlobalEnv,
   home = "/git/analyses/2019/analysis3/",
   results = "/dropbox/analyses_results/2019/analysis3/"
-  raw = "/data/analyses/2019/analysis3/"
+  data_raw = "/data/analyses/2019/analysis3/"
 )
 
-# It is a good practice to describe how the archived
-# results are changing from day-to-day.
-#
-# We recommend saving this information as a text file
-# stored in the `org::project$results` folder.
+# Describe changes in archived results day-to-day
+# Save this information in a text file in the `org::project$results` folder
 txt <- glue::glue("
   2019-01-01:
     Included:
@@ -107,10 +104,10 @@ org::write_text(
 library(data.table)
 library(ggplot2)
 
-# This function would access data located in org::project$raw
+# This function accesses data located in org::project$data_raw
 d <- clean_data()
 
-# These functions would save results to org::project$results_today
+# These functions save results to org::project$results_today
 table_1(d)
 figure_1(d)
 figure_2(d)
@@ -118,15 +115,15 @@ figure_2(d)
 
 ### R/
 
-All of your functions should be defined in `org::project$home/R`. The function `org::initialize_project` automatically sources all of the R scripts in `org::project$home/R`, making them available for use.
+All of your functions should be defined in `org::project$home/R`. The function `org::initialize_project` automatically sources all R scripts in `org::project$home/R`.
 
 ## Research Article Versioning (Submission/Resubmission)
 
-When writing a research article, multiple versions are often required (initial submission, followed by multiple resubmission variants based on the recommendations of peer reviewers).
+When writing a research article, multiple versions are often required (initial submission, followed by multiple resubmission variants based on the recommendations of peer reviewers). Rename `run.R` and `R/` to include the submission date for each version to preserve the code that produced the results for every submission.
 
-To account for this, on the initial submission of the article it is recommended to rename `run.R` and `R/` to `run_YYYY_MM_DD_submission_1.R` and `R_YYYY_MM_DD_submission_1/` (YYYY_MM_DD should be replaced with year, month, and date).
+On the initial submission of the article, rename `run.R` and `R/` to `run_YYYY_MM_DD_submission_1.R` and `R_YYYY_MM_DD_submission_1/` (YYYY_MM_DD should be replaced with year, month, and date).
 
-When making adjustments for the resubmission, the relevant files/folders should be called `run_YYYY_MM_DD_submission_2.R` and `R_YYYY_MM_DD_submission_2/` (YYYY_MM_DD should be replaced with year, month, and date).
+When making adjustments for the resubmission, rename the relevant files/folders to `run_YYYY_MM_DD_submission_2.R` and `R_YYYY_MM_DD_submission_2/` (YYYY_MM_DD should be replaced with year, month, and date).
 
 In doing so, you successfully preserve all of your code that produced the results for every submission, allowing you to easily ensure that all changes are deliberate and intentional.
 
@@ -134,9 +131,7 @@ In doing so, you successfully preserve all of your code that produced the result
 
 ### Best Practice
 
-Our very opinionated solution is as follows:
-
-Code should be stored in GitHub. Data should be stored locally in an encrypted volume. Results should be stored on Dropbox, with the results for each day stored in a different folder.
+Store code in GitHub, data locally in an encrypted volume, and results on Dropbox with each day's results in a different folder.
 
 ```
 # code goes here:
@@ -214,12 +209,12 @@ dropbox
 data
   +-- analyses
              +-- 2018
-             |      +-- analysis_1 <- org::project$raw
+             |      +-- analysis_1 <- org::project$data_raw
              |      |           +-- data.xlsx
-             |      +-- analysis_2 <- org::project$raw
+             |      +-- analysis_2 <- org::project$data_raw
              |      |           +-- data.xlsx
              +-- 2019
-                    +-- analysis_3 <- org::project$raw
+                    +-- analysis_3 <- org::project$data_raw
                                 +-- data.xlsx
 
 ```
@@ -231,13 +226,13 @@ org::initialize_project(
   env = .GlobalEnv,
   home = "/git/analyses/2019/analysis_3/",
   results = "/dropbox/analyses_results/2019/analysis_3/",
-  raw = "/data/analyses/2019/analysis_3/"
+  data_raw = "/data/analyses/2019/analysis_3/"
 )
 ```
 
-### Quarto
+### RMarkdown
 
-If you only have one folder on a shared network drive, without access to GitHub or Dropbox, and you would like to create an RMarkdown document, then we propose the following solution:
+For a single folder on a shared network drive, without access to GitHub or Dropbox, you can create an RMarkdown document with the following structure:
 
 ```
 # code goes here:
@@ -285,10 +280,9 @@ rmarkdown::render(
 )
 ```
 
-
 ### One Folder on a Shared Network Drive Without GitHub Access
 
-If you only have one folder on a shared network drive, without access to GitHub or Dropbox, then we propose the following solution:
+If you only have one folder on a shared network drive, without GitHub or Dropbox access, then we suggest the following structure:
 
 ```
 # code goes here:
@@ -306,7 +300,7 @@ project_name <- org::project$home
   |         +-- 2018-03-12 <- org::project$results_today
   |         |            +-- table_1.xlsx
   |         |            +-- figure_1.png
-  +-- data_raw <- org::project$raw
+  +-- data_raw <- org::project$data_raw
   |          +-- data.xlsx
 ```
 
@@ -317,6 +311,6 @@ org::initialize_project(
   env = .GlobalEnv,
   home = "/network/project_name/",
   results = "/network/project_name/results/",
-  raw = "/network/project_name/data_raw/"
+  data_raw = "/network/project_name/data_raw/"
 )
 ```
