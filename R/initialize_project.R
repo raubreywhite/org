@@ -61,9 +61,13 @@ set_results_internal <- function(results, proj){
 }
 
 #' Set results folder after initialization
-#' @param results A folder inside `results` with today's date will be created and it will be accessible via `org::project$results_today` (this is where you will store all of your results)
-#' @param proj The project environment (default is `org::project`)
-#' @returns Nothing. There is a side effect where the environments `proj` and `org::project` have the values $results and $results_today altered.
+#'
+#' This function sets the results folder in the project environment.
+#' A folder with today's date will be created inside the results folder.
+#'
+#' @param results A character vector specifying the results folder path(s).
+#' @param proj The project environment. Default is `org::project`.
+#' @return Nothing. Alters the `proj` environment to include `$results` and `$results_today`.
 #' @export
 set_results <- function(results, proj = org::project) {
   if (is.null(proj[["computer_id"]])) stop("not initialized")
@@ -141,11 +145,10 @@ source_to_environment <- function(
   }
 }
 
-#' Initializes project
+#' Initialize project
 #'
-#' `org::initialize_project` takes in 2+ arguments.
-#' It then saves folder locations in the return value (a new environment) and
-#' in `org::project`, which you will use in all of your subsequent code. An additional
+#' This function initializes the project by setting up folder locations and sourcing code files.
+#' It saves folder locations in a new environment and in `org::project`, which you will use in all of your subsequent code. An additional
 #' folder will be created on the user's file system (org::project$results_today) which
 #' corresponds to `results/YYYY-MM-DD`. The sourced folders are saved into org::project$env.
 #'
