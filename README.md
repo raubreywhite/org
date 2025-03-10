@@ -3,7 +3,7 @@
 
 ## Overview 
 
-[org](https://www.csids.no/org/) is a system to help you organize projects.
+[org](https://www.csids.no/org/) is framework to help you organize projects.
 
 Most analyses have three (or more) main sections: code, results, and data, each with different requirements (version control/sharing/encryption). You provide folder locations and 'org' helps you take care of the details.
 
