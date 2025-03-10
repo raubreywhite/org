@@ -3,13 +3,13 @@
 
 ## Overview 
 
-[org](https://www.csids.no/org/) is a system to help you organize projects. Most analyses have three (or more) main sections: code, results, and data, each with different requirements (version control/sharing/encryption). You provide folder locations and 'org' helps you take care of the details.
+[org](https://www.csids.no/org/) is a system to help you organize projects.
+
+Most analyses have three (or more) main sections: code, results, and data, each with different requirements (version control/sharing/encryption). You provide folder locations and 'org' helps you take care of the details.
 
 Read the introduction vignette [here](https://www.csids.no/org/articles/org.html) or run `help(package="org")`.
 
 ## csverse
-
-<a href="https://www.csids.no/packages.html"><img src="https://www.csids.no/packages/csverse.png" align="right" width="120" /></a>
 
 The [csverse](https://www.csids.no/packages.html) is a set of R packages developed to help solve problems that frequently occur when performing disease surveillance.
 
