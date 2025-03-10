@@ -2,8 +2,7 @@
 % Please edit documentation in R/utils_files.R
 \name{ls_files}
 \alias{ls_files}
-\title{List files and directories
-Equivalent to the unix \code{ls} command.}
+\title{List files and directories}
 \usage{
 ls_files(path = ".", regexp = NULL)
 }
@@ -16,6 +15,5 @@ ls_files(path = ".", regexp = NULL)
 filepaths and directory paths as a character vector
 }
 \description{
-List files and directories
 Equivalent to the unix \code{ls} command.
 }

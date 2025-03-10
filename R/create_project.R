@@ -28,8 +28,8 @@ create_project_quarto_internal_results <- function(
   cat_to_gitignore(".Rproj.user/", "\n")
 
   ############
-  # run.R
-  cat_to_run_r <- cat_to_filepath_function_factory(path(home, "run.R"))
+  # Run.R
+  cat_to_run_r <- cat_to_filepath_function_factory(path(home, "Run.R"))
 
   cat_to_run_r("# initialize the project", "\n", append = FALSE)
   cat_to_run_r("# note: remember to keep in sync with quarto/quarto.qmd", "\n")
@@ -91,7 +91,7 @@ create_project_quarto_internal_results <- function(
   cat_to_quarto_qmd("```{r}", "\n")
   cat_to_quarto_qmd("#| include: false", "\n")
   cat_to_quarto_qmd("# initialize the project", "\n")
-  cat_to_quarto_qmd("# note: remember to keep in sync with run.R", "\n")
+  cat_to_quarto_qmd("# note: remember to keep in sync with Run.R", "\n")
   cat_to_quarto_qmd("org::initialize_project(\n")
   cat_to_quarto_qmd("  env     = .GlobalEnv,", "\n")
   cat_to_quarto_qmd("  home    = \"", home, "\",", "\n")
@@ -172,8 +172,8 @@ create_project_quarto_external_results <- function(
   cat_to_gitignore(".Rproj.user/", "\n")
 
   ############
-  # run.R
-  cat_to_run_r <- cat_to_filepath_function_factory(path(home, "run.R"))
+  # Run.R
+  cat_to_run_r <- cat_to_filepath_function_factory(path(home, "Run.R"))
 
   cat_to_run_r("# initialize the project", "\n", append = FALSE)
   cat_to_run_r("# note: remember to keep in sync with quarto/quarto.qmd", "\n")
@@ -252,7 +252,7 @@ create_project_quarto_external_results <- function(
   cat_to_quarto_qmd("```{r}", "\n")
   cat_to_quarto_qmd("#| include: false", "\n")
   cat_to_quarto_qmd("# initialize the project", "\n")
-  cat_to_quarto_qmd("# note: remember to keep in sync with run.R", "\n")
+  cat_to_quarto_qmd("# note: remember to keep in sync with Run.R", "\n")
   cat_to_quarto_qmd("org::initialize_project(\n")
   cat_to_quarto_qmd("  env     = .GlobalEnv,", "\n")
   cat_to_quarto_qmd("  home    = \"", home, "\",", "\n")

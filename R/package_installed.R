@@ -1,4 +1,4 @@
-#' Check if a Package is Installed and Optionally Install it
+#' Check if a package is installed and optionally install it
 #'
 #' This function checks whether a specified package is installed in the current R environment.
 #' Optionally, it can install the package if it is not already installed.

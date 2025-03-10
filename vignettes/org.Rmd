@@ -46,13 +46,13 @@ Data should:
 
 `org::initialize_project` takes in 2+ arguments. It then saves its results (i.e., folder locations) in `org::project`, which you will use in all subsequent code.
 
-- `home`: Location of `run.R` and the `R/` folder. Accessible via `org::project$home` (but you will rarely need this).
+- `home`: Location of `Run.R` and the `R/` folder. Accessible via `org::project$home` (but you will rarely need this).
 - `results`: Results folder. Creates a folder inside `results` with today's date, accessible via `org::project$results_today` (this is where you will store all of your results). Because the folder's name is today's date, this means that it automatically archives one copy of results per day. This allows you and your collaborators to easily check and see how the results have changed over time.
 - `...`: Specify other folders if needed, which will also be accessible via `org::project` (e.g., `data_raw` for raw data, `data_clean` for clean data).
 
-### run.R 
+### Run.R 
 
-`run.R` will be your main file, sequentially running through every part of your analysis:
+`Run.R` will be your main file, sequentially running through every part of your analysis:
 
 - Data cleaning
 - Analysis
@@ -60,15 +60,15 @@ Data should:
 
 All sections of code should be encapsulated in functions living in the `R/` folder.
 
-You should not have any other main files, as this creates confusion when you need to return to your code two years later. However, you can have different versions of `run.R` (e.g., `run_v01.R`, `run_v02.R`), where it is implicitly understood that the later versions supersede the earlier ones. Once `run_v03.R` exists, `run_v02.R` is considered deprecated and is only retained for historical archival purposes, not for active use.
+You should not have any other main files, as this creates confusion when you need to return to your code two years later. However, you can have different versions of `Run.R` (e.g., `Run_v01.R`, `Run_v02.R`), where it is implicitly understood that the later versions supersede the earlier ones. Once `Run_v03.R` exists, `Run_v02.R` is considered deprecated and is only retained for historical archival purposes, not for active use.
 
 All sections of code (e.g. data cleaning, analyses for table 1, analyses for table 2, result generation for table 1, sensitivity analysis 1, etc) will be encapsulated in functions that live in the `R` folder.
 
-### Example `run.R`
+### Example `Run.R`
 
 ```
 # Define the following 'special' locations:
-# 'home' (i.e. run.R and R/ folder)
+# 'home' (i.e. Run.R and R/ folder)
 # 'results' (i.e. A folder with today's date will be created here)
 
 # Define any other locations you want:
@@ -117,9 +117,9 @@ All of your functions should be defined in `org::project$home/R`. The function `
 
 ## Versioning Research Articles
 
-When writing a research article, multiple versions are often required (initial submission, followed by multiple resubmission variants based on the recommendations of peer reviewers). Rename `run.R` and `R/` to include the submission date for each version to preserve the code that produced the results for every submission.
+When writing a research article, multiple versions are often required (initial submission, followed by multiple resubmission variants based on the recommendations of peer reviewers). Rename `Run.R` and `R/` to include the submission date for each version to preserve the code that produced the results for every submission.
 
-On the initial submission of the article, rename `run.R` and `R/` to `run_YYYY_MM_DD_submission_1.R` and `R_YYYY_MM_DD_submission_1/` (YYYY_MM_DD should be replaced with year, month, and date).
+On the initial submission of the article, rename `Run.R` and `R/` to `Run_YYYY_MM_DD_submission_1.R` and `R_YYYY_MM_DD_submission_1/` (YYYY_MM_DD should be replaced with year, month, and date).
 
 When making adjustments for the resubmission, rename the relevant files/folders to `run_YYYY_MM_DD_submission_2.R` and `R_YYYY_MM_DD_submission_2/` (YYYY_MM_DD should be replaced with year, month, and date).
 
@@ -137,14 +137,14 @@ git
   +-- analyses
              +-- 2018
              |      +-- analysis_1 <- org::project$home
-             |      |           +-- run.R
+             |      |           +-- Run.R
              |      |           +-- R
              |      |                  +-- clean_data.R
              |      |                  +-- descriptives.R
              |      |                  +-- analysis.R
              |      |                  +-- figure_1.R
              |      +-- analysis_2 <- org::project$home
-             |                  +-- run.R
+             |                  +-- Run.R
              |                  +-- R
              |                         +-- clean_data.R
              |                         +-- descriptives.R
@@ -152,7 +152,7 @@ git
              |                         +-- figure_1.R
              +-- 2019
                     +-- analysis_3 <- org::project$home
-                                +-- run.R
+                                +-- Run.R
                                 +-- R
                                        +-- clean_data.R
                                        +-- descriptives.R
@@ -217,7 +217,7 @@ data
 
 ```
 
-Suggested code for `run.R`:
+Suggested code for `Run.R`:
 
 ```
 org::initialize_project(
@@ -235,7 +235,7 @@ For a single folder on a shared network drive, without access to GitHub or Dropb
 ```
 # code goes here:
 project_name <- org::project$home
-  +-- run.R
+  +-- Run.R
   +-- R
   |      +-- CleanData.R
   |      +-- Descriptives.R
@@ -254,7 +254,7 @@ project_name <- org::project$home
   |          +-- data.xlsx
 ```
 
-Suggested code for `run.R`:
+Suggested code for `Run.R`:
 
 ```
 # Initialize the project
@@ -285,7 +285,7 @@ If you only have one folder on a shared network drive, without GitHub or Dropbox
 ```
 # code goes here:
 project_name <- org::project$home
-  +-- run.R
+  +-- Run.R
   +-- R
   |      +-- clean_data.R
   |      +-- descriptives.R
@@ -302,7 +302,7 @@ project_name <- org::project$home
   |          +-- data.xlsx
 ```
 
-Suggested code for `run.R`:
+Suggested code for `Run.R`:
 
 ```
 org::initialize_project(

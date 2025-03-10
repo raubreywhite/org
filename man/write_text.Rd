@@ -2,7 +2,7 @@
 % Please edit documentation in R/write_text.R
 \name{write_text}
 \alias{write_text}
-\title{Write Text to a File}
+\title{Write text to a file}
 \usage{
 write_text(
   txt,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/package_installed.R
 \name{package_installed}
 \alias{package_installed}
-\title{Check if a Package is Installed and Optionally Install it}
+\title{Check if a package is installed and optionally install it}
 \usage{
 package_installed(pkg, install_if_missing = FALSE)
 }

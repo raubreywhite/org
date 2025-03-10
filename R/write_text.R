@@ -6,7 +6,7 @@ convert_newline_linux_to_windows <- function(txt) {
   return(txt)
 }
 
-#' Write Text to a File
+#' Write text to a file
 #'
 #' This function writes text to a file, optionally including a header at the top of the file.
 #' The text and the header are converted from Linux newline format to Windows newline format before writing.

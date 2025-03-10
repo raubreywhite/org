@@ -58,6 +58,7 @@ ls_files_int <- function(
 ls_files_int_vectorized <- Vectorize(ls_files_int, vectorize.args = "path", USE.NAMES = FALSE)
 
 #' List files and directories
+#'
 #' Equivalent to the unix `ls` command.
 #' @param path A character vector of one or more paths.
 #' @param regexp A regular expression that is passed to `list.files`.
