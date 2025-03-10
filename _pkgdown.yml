@@ -5,7 +5,6 @@ template:
 
 reference:
 - title: "Package and Environment"
-  desc: "Package management and project environment."
   contents:
     - initialize_project
     - project
@@ -13,13 +12,11 @@ reference:
     - package_installed
 
 - title: "Project Creation"
-  desc: "Setting up and managing example projects using Quarto."
   contents:
     - create_project_quarto_external_results
     - create_project_quarto_internal_results
 
-- title: "File and Directory Management"
-  desc: "Utilities for working with files and directories."
+- title: "File and Directory Utilities"
   contents:
     - ls_files
     - move_directory
