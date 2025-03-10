@@ -4,24 +4,24 @@ template:
   package: csidstemplatepkgdown
 
 reference:
-  - title: "Package and Environment"
-    desc: "Functions related to package management and project environment."
-    contents:
-      - initialize_project
-      - project
-      - set_results
-      - package_installed
+- title: "Package and Environment"
+  desc: "Package management and project environment."
+  contents:
+    - initialize_project
+    - project
+    - set_results
+    - package_installed
 
-  - title: "Project Creation"
-    desc: "Functions for setting up and managing example projects using Quarto."
-    contents:
-      - create_project_quarto_external_results
-      - create_project_quarto_internal_results
+- title: "Project Creation"
+  desc: "Setting up and managing example projects using Quarto."
+  contents:
+    - create_project_quarto_external_results
+    - create_project_quarto_internal_results
 
-  - title: "File and Directory Management"
-    desc: "Utilities for working with files and directories."
-    contents:
-      - ls_files
-      - move_directory
-      - path
-      - write_text
+- title: "File and Directory Management"
+  desc: "Utilities for working with files and directories."
+  contents:
+    - ls_files
+    - move_directory
+    - path
+    - write_text
