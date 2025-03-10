@@ -15,7 +15,7 @@
 package_installed <- function(pkg, install_if_missing = FALSE){
   pkgs <- utils::installed.packages()[,"Package"]
   if (!(pkg %in% pkgs) && install_if_missing) {
-    install.packages(pkg)
+    utils::install.packages(pkg)
     pkgs <- utils::installed.packages()[,"Package"]
   }
   return(pkg %in% pkgs)
