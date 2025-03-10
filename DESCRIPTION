@@ -18,6 +18,6 @@ Suggests: testthat,
     rstudioapi,
     glue
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 VignetteBuilder: knitr
 Date/Publication: 2022-11-16 06:32:18 UTC

@@ -2,7 +2,7 @@
 % Please edit documentation in R/initialize_project.R
 \name{initialize_project}
 \alias{initialize_project}
-\title{Initializes project}
+\title{Initialize project}
 \usage{
 initialize_project(
   env = new.env(),
@@ -41,9 +41,8 @@ There is also a side effect where \code{org::project} mirrors these values.
 }
 }
 \description{
-\code{org::initialize_project} takes in 2+ arguments.
-It then saves folder locations in the return value (a new environment) and
-in \code{org::project}, which you will use in all of your subsequent code. An additional
+This function initializes the project by setting up folder locations and sourcing code files.
+It saves folder locations in a new environment and in \code{org::project}, which you will use in all of your subsequent code. An additional
 folder will be created on the user's file system (org::project$results_today) which
 corresponds to \code{results/YYYY-MM-DD}. The sourced folders are saved into org::project$env.
 }

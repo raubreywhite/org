@@ -2,19 +2,25 @@
 % Please edit documentation in R/package_installed.R
 \name{package_installed}
 \alias{package_installed}
-\title{Is a package installed?}
+\title{Check if a Package is Installed and Optionally Install it}
 \usage{
-package_installed(pkg)
+package_installed(pkg, install_if_missing = FALSE)
 }
 \arguments{
-\item{pkg}{Package name.}
+\item{pkg}{A character string specifying the name of the package to check.}
+
+\item{install_if_missing}{A logical value indicating whether to install the package if it is not installed. Default is \code{FALSE}.}
 }
 \value{
-Boolean. True if package is installed, false if not.
+A logical value: \code{TRUE} if the package is installed (or successfully installed), \code{FALSE} otherwise.
 }
 \description{
-Is a package installed?
+This function checks whether a specified package is installed in the current R environment.
+Optionally, it can install the package if it is not already installed.
 }
 \examples{
+\dontrun{
 org::package_installed("data.table")
+org::package_installed("ggplot2", install_if_missing = TRUE)
+}
 }

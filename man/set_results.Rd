@@ -7,13 +7,14 @@
 set_results(results, proj = org::project)
 }
 \arguments{
-\item{results}{A folder inside \code{results} with today's date will be created and it will be accessible via \code{org::project$results_today} (this is where you will store all of your results)}
+\item{results}{A character vector specifying the results folder path(s).}
 
-\item{proj}{The project environment (default is \code{org::project})}
+\item{proj}{The project environment. Default is \code{org::project}.}
 }
 \value{
-Nothing. There is a side effect where the environments \code{proj} and \code{org::project} have the values $results and $results_today altered.
+Nothing. Alters the \code{proj} environment to include \verb{$results} and \verb{$results_today}.
 }
 \description{
-Set results folder after initialization
+This function sets the results folder in the project environment.
+A folder with today's date will be created inside the results folder.
 }
