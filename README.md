@@ -76,15 +76,9 @@ org::project$results_today  # Today's results folder
 org::project$data_raw      # Raw data folder
 ```
 
-## Documentation
-
-- [Package Website](https://www.csids.no/org/)
-- [GitHub Repository](https://github.com/csids/org)
-- [Issue Tracker](https://github.com/csids/org/issues)
-
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please feel free to submit a [Pull Request](https://github.com/csids/org/pulls).
 
 ## License
 
