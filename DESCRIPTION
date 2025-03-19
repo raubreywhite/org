@@ -8,12 +8,10 @@ Authors@R: c(
 Description: A framework for organizing R projects with a standardized structure. 
     Most analyses consist of three main components: code, results, and data, 
     each with different requirements such as version control, sharing, and encryption. 
-
     This package provides tools to set up and manage project directories, handle 
     file paths consistently across operating systems, organize results using 
     date-based structures, source code from specified directories, create and 
     manage Quarto documents, and perform file operations safely. 
-
     It ensures consistency across projects while accommodating different 
     requirements for various types of content.
 Depends: R (>= 3.3.0)
