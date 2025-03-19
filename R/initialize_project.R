@@ -62,12 +62,16 @@ set_results_internal <- function(results, proj){
 
 #' Set results folder after initialization
 #'
-#' This function sets the results folder in the project environment.
-#' A folder with today's date will be created inside the results folder.
+#' This function sets the results folder in the project environment and creates a date-based subfolder.
+#' The date-based folder will be accessible via `proj$results_today` and will be automatically cleaned up
+#' if empty when new results are added.
 #'
-#' @param results A character vector specifying the results folder path(s).
+#' @param results A character vector specifying one or more possible results folder paths.
+#'               The first existing path will be used.
 #' @param proj The project environment. Default is `org::project`.
-#' @return Nothing. Alters the `proj` environment to include `$results` and `$results_today`.
+#' @return Nothing. Alters the `proj` environment to include:
+#'   - `$results`: The base results folder path
+#'   - `$results_today`: Path to today's results folder (format: YYYY-MM-DD)
 #' @export
 set_results <- function(results, proj = org::project) {
   if (is.null(proj[["computer_id"]])) stop("not initialized")
@@ -145,36 +149,48 @@ source_to_environment <- function(
   }
 }
 
-#' Initialize project
+#' Initialize project environment and structure
 #'
-#' This function initializes the project by setting up folder locations and sourcing code files.
-#' It saves folder locations in a new environment and in `org::project`, which you will use in all of your subsequent code. An additional
-#' folder will be created on the user's file system (org::project$results_today) which
-#' corresponds to `results/YYYY-MM-DD`. The sourced folders are saved into org::project$env.
+#' This function initializes a new R project by setting up folder locations and sourcing code files.
+#' It creates a standardized project structure with separate locations for code, results, and data.
+#' Results are automatically organized by date, and code can be sourced from specified directories.
 #'
-#' For more details see the help vignette:
-#' \code{vignette("intro", package = "org")}
-#' @param env The environment that the code will be sourced into (use `.GlobalEnv` to source code into the global environment)
-#' @param home The folder containing 'Run.R' and 'R/'
-#' @param results A folder inside `results` with today's date will be created and it will be accessible via `org::project$results_today` (this is where you will store all of your results)
-#' @param folders_to_be_sourced The names of folders that live inside `home` and all .r and .R files inside it will be sourced into the global environment.
-#' @param source_folders_absolute If `TRUE` then `folders_to_be_sourced` is an absolute folder reference. If `FALSE` then `folders_to_be_sourced` is relative and inside `home`.
-#' @param encode_from Folders current encoding (only used on Windows)
-#' @param encode_to Folders final encoding (only used on Windows)
-#' @param ... Other folders that you would like to reference
-#' @return Returns an environment that contains:
-#'   - Folder locations
-#'   - An environment called `env` into which the code has been sourced into.
-#' There is also a side effect where `org::project` mirrors these values.
+#' @param env The environment that the code will be sourced into. Use `.GlobalEnv` to source code
+#'           into the global environment. If a different environment is provided, all functions will
+#'           be sourced into that environment.
+#' @param home The folder containing 'Run.R' and 'R/'. This is the main project directory.
+#' @param results The base folder for storing results. A subfolder with today's date will be created
+#'                and accessible via `org::project$results_today`.
+#' @param folders_to_be_sourced Character vector of folder names inside `home` containing .R files
+#'                             to be sourced into the environment.
+#' @param source_folders_absolute If `TRUE`, `folders_to_be_sourced` is treated as absolute paths.
+#'                               If `FALSE`, paths are relative to `home`.
+#' @param encode_from Source encoding for file paths (only used on Windows)
+#' @param encode_to Target encoding for file paths (only used on Windows)
+#' @param ... Additional named arguments for other project folders (e.g., data, raw, etc.)
+#' @return An environment containing:
+#'   - All folder locations as named elements
+#'   - `$env`: The environment where code was sourced
+#'   - `$results_today`: Path to today's results folder
+#' @details
+#' The function performs several key operations:
+#' 1. Creates necessary directories if they don't exist
+#' 2. Sets up date-based results organization
+#' 3. Sources all .R files from specified directories
+#' 4. Handles path encoding for cross-platform compatibility
+#' 5. Maintains a mirror of settings in `org::project`
 #' @examples
 #' \donttest{
+#' # Initialize a new project
 #' org::initialize_project(
 #'   home = paste0(tempdir(), "/git/analyses/2019/analysis3/"),
 #'   results = paste0(tempdir(), "/dropbox/analyses_results/2019/analysis3/"),
 #'   raw = paste0(tempdir(), "/data/analyses/2019/analysis3/")
 #' )
-#' org::project$results_today
-#' org::project$raw
+#' 
+#' # Access project settings
+#' org::project$results_today  # Today's results folder
+#' org::project$raw           # Raw data folder
 #' }
 #' @export
 initialize_project <- function(

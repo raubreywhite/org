@@ -23,8 +23,17 @@ create_dir <- function(folder){
   dir.create(folder, showWarnings = FALSE, recursive = TRUE)
 }
 
-#' Construct path to a file or directory
-#' @param ... Character vectors that will be concatenated with "/" as a separator.
+#' Construct a file path from components
+#'
+#' This function joins path components using forward slashes, ensuring proper path
+#' formatting across operating systems. It handles multiple components and removes
+#' any double slashes that might occur.
+#'
+#' @param ... Character vectors that will be concatenated with "/" as a separator
+#' @return A character vector containing the constructed path
+#' @examples
+#' org::path("home", "user", "data.csv")  # Returns "home/user/data.csv"
+#' org::path("home//user", "data.csv")    # Returns "home/user/data.csv"
 #' @export
 path <- function(...){
   dots <- list(...)
@@ -57,12 +66,31 @@ ls_files_int <- function(
 }
 ls_files_int_vectorized <- Vectorize(ls_files_int, vectorize.args = "path", USE.NAMES = FALSE)
 
-#' List files and directories
+#' List files and directories recursively
 #'
-#' Equivalent to the unix `ls` command.
-#' @param path A character vector of one or more paths.
-#' @param regexp A regular expression that is passed to `list.files`.
-#' @return filepaths and directory paths as a character vector
+#' This function is equivalent to the Unix `ls` command but works across platforms.
+#' It can list files and directories matching a regular expression pattern.
+#'
+#' @param path A character vector of one or more paths to search
+#' @param regexp A regular expression pattern to filter files/directories
+#' @return A character vector of file and directory paths
+#' @details
+#' The function:
+#' - Handles both single and multiple paths
+#' - Supports regular expression filtering
+#' - Removes system-specific directories (e.g., @eaDir)
+#' - Returns full paths
+#' @examples
+#' \donttest{
+#' # List all files in current directory
+#' org::ls_files()
+#' 
+#' # List only R files
+#' org::ls_files(regexp = "\\.R$")
+#' 
+#' # List files in multiple directories
+#' org::ls_files(c("dir1", "dir2"))
+#' }
 #' @export
 ls_files <- function(
     path = ".",
@@ -80,6 +108,18 @@ ls_files <- function(
   return(retval)
 }
 
+#' Create a function to write to a specific file
+#'
+#' This function creates a closure that writes to a specified file path.
+#' It's useful for creating multiple functions that write to different files
+#' while maintaining consistent behavior.
+#'
+#' @param filepath The path to the file to write to
+#' @return A function that writes to the specified file with parameters:
+#'   - `...`: Content to write
+#'   - `sep`: Separator between elements (default: "")
+#'   - `append`: Whether to append to existing content (default: TRUE)
+#' @keywords internal
 cat_to_filepath_function_factory <- function(filepath){
   force(filepath)
   function(..., sep = "", append = TRUE){
@@ -87,10 +127,29 @@ cat_to_filepath_function_factory <- function(filepath){
   }
 }
 
-#' Move directory
-#' @param from Filepath or directory path.
-#' @param to Filepath or directory path.
-#' @param overwrite_to Boolean.
+#' Move a directory and its contents
+#'
+#' This function moves a directory and all its contents to a new location.
+#' It can optionally overwrite the destination if it already exists.
+#'
+#' @param from Source directory path
+#' @param to Destination directory path
+#' @param overwrite_to Whether to overwrite existing destination (default: FALSE)
+#' @return Nothing. Creates the destination directory and moves all contents.
+#' @details
+#' The function:
+#' - Creates the destination directory if it doesn't exist
+#' - Copies all files and subdirectories recursively
+#' - Removes the source directory after successful copy
+#' - Fails if source doesn't exist or destination exists (unless overwrite_to=TRUE)
+#' @examples
+#' \donttest{
+#' # Move a directory
+#' org::move_directory("old_dir", "new_dir")
+#' 
+#' # Move and overwrite existing directory
+#' org::move_directory("old_dir", "new_dir", overwrite_to = TRUE)
+#' }
 #' @export
 move_directory <- function(from, to, overwrite_to = FALSE){
   stopifnot(length(from) == 1)

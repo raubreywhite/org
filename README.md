@@ -1,23 +1,46 @@
 # org <a href="https://www.csids.no/org/"><img src="man/figures/logo.png" align="right" width="120" /></a>
 
+[![CRAN status](https://www.r-pkg.org/badges/version/org)](https://cran.r-project.org/package=org)
+[![CRAN downloads](https://cranlogs.r-pkg.org/badges/org)](https://cran.r-project.org/package=org)
 
-## Overview 
+## Overview
 
-[org](https://www.csids.no/org/) is framework to help you organize projects.
+[org](https://www.csids.no/org/) is a framework for organizing R projects with a standardized structure. It helps manage the three main components of most analyses:
 
-Most analyses have three (or more) main sections: code, results, and data, each with different requirements (version control/sharing/encryption). You provide folder locations and 'org' helps you take care of the details.
+- **Code**: Version-controlled analysis scripts
+- **Results**: Date-organized output files
+- **Data**: Securely stored input data
 
-Read the introduction vignette [here](https://www.csids.no/org/articles/org.html) or run `help(package="org")`.
+Each component has specific requirements and best practices that `org` helps enforce. The package provides tools to:
 
-## csverse
+- Set up and manage project directories
+- Handle file paths consistently across operating systems
+- Manage results with date-based organization
+- Source code from specified directories
+- Create and manage Quarto documents
+- Handle file operations safely
 
-The [csverse](https://www.csids.no/packages.html) is a set of R packages developed to help solve problems that frequently occur when performing disease surveillance.
+## Installation
 
-If you want to install the dev versions (or access packages that haven't been released on CRAN), run `usethis::edit_r_profile()` to edit your `.Rprofile`. 
+### From CRAN
 
-Then write in:
-
+```r
+install.packages("org")
 ```
+
+### Development Version
+
+To install the development version or access packages that haven't been released on CRAN:
+
+1. Edit your `.Rprofile`:
+
+```r
+usethis::edit_r_profile()
+```
+
+2. Add the following configuration:
+
+```r
 options(
   repos = structure(c(
     CSVERSE = "https://www.csids.no/drat/",
@@ -26,11 +49,43 @@ options(
 )
 ```
 
-Save the file and restart R.
+3. Restart R and install:
 
-You can now install [csverse](https://www.csids.no/packages.html) packages from our [drat repository](https://www.csids.no/drat/).
-
-```
+```r
 install.packages("org")
 ```
 
+## Getting Started
+
+1. Read the [introduction vignette](https://www.csids.no/plnr/articles/org.html)
+2. Run `help(package="org")` for detailed function documentation
+
+## Quick Example
+
+```r
+# Initialize a new project
+org::initialize_project(
+  env = .GlobalEnv,
+  home = "/path/to/project",      # Contains Run.R and R/ folder
+  results = "/path/to/results",   # Where results will be stored
+  data_raw = "/path/to/data"      # Raw data location
+)
+
+# Access project settings
+org::project$results_today  # Today's results folder
+org::project$data_raw      # Raw data folder
+```
+
+## Documentation
+
+- [Package Website](https://www.csids.no/org/)
+- [GitHub Repository](https://github.com/csids/org)
+- [Issue Tracker](https://github.com/csids/org/issues)
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This package is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

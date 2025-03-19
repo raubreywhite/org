@@ -1,6 +1,32 @@
-#' Create example project that uses quarto with results generated from within the .qmd file
-#' @param home Location of the 'home' directory.
-#' @param results Location of the 'results' directory.
+#' Create a Quarto project with internal results generation
+#'
+#' This function creates a new project structure that uses Quarto for documentation
+#' with results generated from within the Quarto document. The project includes:
+#' - R code directory
+#' - Quarto document setup
+#' - Results directory with date-based organization
+#' - Git configuration
+#' - Project initialization code
+#'
+#' @param home Location of the main project directory
+#' @param results Location of the results directory
+#' @return Nothing. Creates project structure and files.
+#' @details
+#' The function creates:
+#' - Basic project structure with R and Quarto directories
+#' - .gitignore files for R and Quarto
+#' - Run.R script for project initialization and document rendering
+#' - Quarto configuration (_quarto.yml)
+#' - Example Quarto document (quarto.qmd)
+#' - RStudio project file
+#' @examples
+#' \donttest{
+#' # Create a new project
+#' org::create_project_quarto_internal_results(
+#'   home = paste0(tempdir(), "/my_project"),
+#'   results = paste0(tempdir(), "/results")
+#' )
+#' }
 #' @export
 create_project_quarto_internal_results <- function(
   home,
@@ -142,9 +168,31 @@ create_project_quarto_internal_results <- function(
   }
 }
 
-#' Create example project that uses quarto with results generated outside the .qmd file
-#' @param home Location of the 'home' directory.
-#' @param results Location of the 'results' directory.
+#' Create a Quarto project with external results generation
+#'
+#' This function creates a new project structure that uses Quarto for documentation
+#' with results generated outside the Quarto document. This approach separates
+#' data processing from documentation, making it easier to manage large analyses.
+#'
+#' @param home Location of the main project directory
+#' @param results Location of the results directory
+#' @return Nothing. Creates project structure and files.
+#' @details
+#' The function creates:
+#' - Basic project structure with R and Quarto directories
+#' - .gitignore files for R and Quarto
+#' - Run.R script for project initialization, data processing, and document rendering
+#' - Quarto configuration (_quarto.yml)
+#' - Example Quarto document (quarto.qmd)
+#' - RStudio project file
+#' @examples
+#' \donttest{
+#' # Create a new project
+#' org::create_project_quarto_external_results(
+#'   home = paste0(tempdir(), "/my_project"),
+#'   results = paste0(tempdir(), "/results")
+#' )
+#' }
 #' @export
 create_project_quarto_external_results <- function(
     home,
