@@ -3,18 +3,18 @@
 \docType{data}
 \name{project}
 \alias{project}
-\title{Folders to be used/referenced}
+\title{Project folder locations}
 \format{
 An environment containing the following elements:
 \describe{
 \item{home}{The folder containing 'Run.R' and 'R/'}
-\item{results_today}{The folder inside \code{results} with today's date, which is created by \code{initialize_project}}
+\item{results_today}{The folder inside \code{results} with today's date, created by \code{initialize_project}}
 }
 }
 \usage{
 project
 }
 \description{
-This environment is used to store the locations of folders that are used in the project.
+An environment that stores the locations of folders used in the project.
 }
 \keyword{datasets}

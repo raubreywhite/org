@@ -2,15 +2,46 @@
 % Please edit documentation in R/create_project.R
 \name{create_project_quarto_internal_results}
 \alias{create_project_quarto_internal_results}
-\title{Create example project that uses quarto with results generated from within the .qmd file}
+\title{Create a Quarto project with internal results generation}
 \usage{
 create_project_quarto_internal_results(home, results)
 }
 \arguments{
-\item{home}{Location of the 'home' directory.}
+\item{home}{Location of the main project directory}
 
-\item{results}{Location of the 'results' directory.}
+\item{results}{Location of the results directory}
+}
+\value{
+Nothing. Creates project structure and files.
 }
 \description{
-Create example project that uses quarto with results generated from within the .qmd file
+This function creates a new project structure that uses Quarto for documentation
+with results generated from within the Quarto document. The project includes:
+\itemize{
+\item R code directory
+\item Quarto document setup
+\item Results directory with date-based organization
+\item Git configuration
+\item Project initialization code
+}
+}
+\details{
+The function creates:
+\itemize{
+\item Basic project structure with R and Quarto directories
+\item .gitignore files for R and Quarto
+\item Run.R script for project initialization and document rendering
+\item Quarto configuration (_quarto.yml)
+\item Example Quarto document (quarto.qmd)
+\item RStudio project file
+}
+}
+\examples{
+\dontrun{
+# Create a new project
+org::create_project_quarto_internal_results(
+  home = paste0(tempdir(), "/my_project"),
+  results = paste0(tempdir(), "/results")
+)
+}
 }

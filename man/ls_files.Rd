@@ -2,18 +2,40 @@
 % Please edit documentation in R/utils_files.R
 \name{ls_files}
 \alias{ls_files}
-\title{List files and directories}
+\title{List files and directories recursively}
 \usage{
 ls_files(path = ".", regexp = NULL)
 }
 \arguments{
-\item{path}{A character vector of one or more paths.}
+\item{path}{A character vector of one or more paths to search}
 
-\item{regexp}{A regular expression that is passed to \code{list.files}.}
+\item{regexp}{A regular expression pattern to filter files/directories}
 }
 \value{
-filepaths and directory paths as a character vector
+A character vector of file and directory paths
 }
 \description{
-Equivalent to the unix \code{ls} command.
+This function is equivalent to the Unix \code{ls} command but works across platforms.
+It can list files and directories matching a regular expression pattern.
+}
+\details{
+The function:
+\itemize{
+\item Handles both single and multiple paths
+\item Supports regular expression filtering
+\item Removes system-specific directories (e.g., @eaDir)
+\item Returns full paths
+}
+}
+\examples{
+\donttest{
+# List all files in current directory
+org::ls_files()
+
+# List only R files
+org::ls_files(regexp = "\\\\.R$")
+
+# List files in multiple directories
+org::ls_files(c("dir1", "dir2"))
+}
 }

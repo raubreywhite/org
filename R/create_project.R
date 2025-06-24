@@ -20,7 +20,7 @@
 #' - Example Quarto document (quarto.qmd)
 #' - RStudio project file
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Create a new project
 #' org::create_project_quarto_internal_results(
 #'   home = paste0(tempdir(), "/my_project"),
@@ -186,7 +186,7 @@ create_project_quarto_internal_results <- function(
 #' - Example Quarto document (quarto.qmd)
 #' - RStudio project file
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Create a new project
 #' org::create_project_quarto_external_results(
 #'   home = paste0(tempdir(), "/my_project"),

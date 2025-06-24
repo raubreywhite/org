@@ -1,3 +1,9 @@
+#' Select first existing folder from a list
+#'
+#' @param folders Character vector of folder paths to check
+#' @param name Name of the folder type for error messages
+#' @return List with folder path and id
+#' @keywords internal
 select_folder_that_exists <- function(folders, name) {
   retval <- NA
   id <- NA
@@ -23,6 +29,11 @@ select_folder_that_exists <- function(folders, name) {
   ))
 }
 
+#' Internal function to set results folder
+#'
+#' @param results Results folder path
+#' @param proj Project environment
+#' @keywords internal
 set_results_internal <- function(results, proj){
   if(is.null(results)) return()
   proj$results <- strip_and_then_add_trailing_forwardslash(
@@ -60,18 +71,20 @@ set_results_internal <- function(results, proj){
   }
 }
 
-#' Set results folder after initialization
+#' Set results folder after project initialization
 #'
-#' This function sets the results folder in the project environment and creates a date-based subfolder.
-#' The date-based folder will be accessible via `proj$results_today` and will be automatically cleaned up
-#' if empty when new results are added.
+#' Sets the results folder in the project environment and creates a date-based subfolder.
+#' The date-based folder is accessible via `proj$results_today` and empty date folders
+#' are automatically cleaned up when new results are added.
 #'
 #' @param results A character vector specifying one or more possible results folder paths.
-#'               The first existing path will be used.
+#'   The first existing path will be used.
 #' @param proj The project environment. Default is `org::project`.
-#' @return Nothing. Alters the `proj` environment to include:
-#'   - `$results`: The base results folder path
-#'   - `$results_today`: Path to today's results folder (format: YYYY-MM-DD)
+#' @return Nothing. Modifies the `proj` environment to include:
+#'   \describe{
+#'     \item{$results}{The base results folder path}
+#'     \item{$results_today}{Path to today's results folder (format: YYYY-MM-DD)}
+#'   }
 #' @export
 set_results <- function(results, proj = org::project) {
   if (is.null(proj[["computer_id"]])) stop("not initialized")
@@ -82,6 +95,16 @@ set_results <- function(results, proj = org::project) {
   set_results_internal(results, project)
 }
 
+#' Initialize project folder structure
+#'
+#' @param env Environment to source code into
+#' @param home Home directory path
+#' @param results Results directory path
+#' @param encode_from Source encoding
+#' @param encode_to Target encoding
+#' @param proj Project environment
+#' @param ... Additional folder arguments
+#' @keywords internal
 initialize_project_folders <- function(
   env,
   home,
@@ -123,6 +146,13 @@ initialize_project_folders <- function(
   }
 }
 
+#' Source R files into environment
+#'
+#' @param proj Project environment
+#' @param env Target environment for sourcing
+#' @param folders_to_be_sourced Folders containing R files
+#' @param source_folders_absolute Whether folder paths are absolute
+#' @keywords internal
 source_to_environment <- function(
   proj,
   env,
@@ -180,14 +210,14 @@ source_to_environment <- function(
 #' 4. Handles path encoding for cross-platform compatibility
 #' 5. Maintains a mirror of settings in `org::project`
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Initialize a new project
 #' org::initialize_project(
 #'   home = paste0(tempdir(), "/git/analyses/2019/analysis3/"),
 #'   results = paste0(tempdir(), "/dropbox/analyses_results/2019/analysis3/"),
 #'   raw = paste0(tempdir(), "/data/analyses/2019/analysis3/")
 #' )
-#' 
+#'
 #' # Access project settings
 #' org::project$results_today  # Today's results folder
 #' org::project$raw           # Raw data folder

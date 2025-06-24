@@ -2,19 +2,25 @@
 % Please edit documentation in R/initialize_project.R
 \name{set_results}
 \alias{set_results}
-\title{Set results folder after initialization}
+\title{Set results folder after project initialization}
 \usage{
 set_results(results, proj = org::project)
 }
 \arguments{
-\item{results}{A character vector specifying the results folder path(s).}
+\item{results}{A character vector specifying one or more possible results folder paths.
+The first existing path will be used.}
 
 \item{proj}{The project environment. Default is \code{org::project}.}
 }
 \value{
-Nothing. Alters the \code{proj} environment to include \verb{$results} and \verb{$results_today}.
+Nothing. Modifies the \code{proj} environment to include:
+\describe{
+\item{$results}{The base results folder path}
+\item{$results_today}{Path to today's results folder (format: YYYY-MM-DD)}
+}
 }
 \description{
-This function sets the results folder in the project environment.
-A folder with today's date will be created inside the results folder.
+Sets the results folder in the project environment and creates a date-based subfolder.
+The date-based folder is accessible via \code{proj$results_today} and empty date folders
+are automatically cleaned up when new results are added.
 }

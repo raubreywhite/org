@@ -6,15 +6,17 @@ convert_newline_linux_to_windows <- function(txt) {
   return(txt)
 }
 
-#' Write text to a file
+#' Write text to file
 #'
-#' This function writes text to a file, optionally including a header at the top of the file.
-#' The text and the header are converted from Linux newline format to Windows newline format before writing.
+#' Writes text to a file, optionally including a header at the top of the file.
+#' Text and header are converted from Linux newline format to Windows newline format before writing.
 #'
 #' @param txt A character string of text to be written to the file.
-#' @param file A character string specifying the file path. Passed through to `base::cat`. Default is an empty string, which writes to the console.
-#' @param header An optional character string header to be inserted at the top of the text file. Default is `**THIS FILE IS CONSTANTLY OVERWRITTEN -- DO NOT MANUALLY EDIT**\r\n\r\n`.
-#' @return No return value. The function is called for its side effect of writing to a file.
+#' @param file A character string specifying the file path. Passed through to `base::cat`. 
+#'   Default is an empty string, which writes to the console.
+#' @param header An optional character string header to be inserted at the top of the text file. 
+#'   Default is `**THIS FILE IS CONSTANTLY OVERWRITTEN -- DO NOT MANUALLY EDIT**\r\n\r\n`.
+#' @return No return value. Called for its side effect of writing to a file.
 #' @examples
 #' \dontrun{
 #' org::write_text("Sample text", "output.txt")

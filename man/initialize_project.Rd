@@ -2,7 +2,7 @@
 % Please edit documentation in R/initialize_project.R
 \name{initialize_project}
 \alias{initialize_project}
-\title{Initialize project}
+\title{Initialize project environment and structure}
 \usage{
 initialize_project(
   env = new.env(),
@@ -16,48 +16,61 @@ initialize_project(
 )
 }
 \arguments{
-\item{env}{The environment that the code will be sourced into (use \code{.GlobalEnv} to source code into the global environment)}
+\item{env}{The environment that the code will be sourced into. Use \code{.GlobalEnv} to source code
+into the global environment. If a different environment is provided, all functions will
+be sourced into that environment.}
 
-\item{home}{The folder containing 'Run.R' and 'R/'}
+\item{home}{The folder containing 'Run.R' and 'R/'. This is the main project directory.}
 
-\item{results}{A folder inside \code{results} with today's date will be created and it will be accessible via \code{org::project$results_today} (this is where you will store all of your results)}
+\item{results}{The base folder for storing results. A subfolder with today's date will be created
+and accessible via \code{org::project$results_today}.}
 
-\item{folders_to_be_sourced}{The names of folders that live inside \code{home} and all .r and .R files inside it will be sourced into the global environment.}
+\item{folders_to_be_sourced}{Character vector of folder names inside \code{home} containing .R files
+to be sourced into the environment.}
 
-\item{source_folders_absolute}{If \code{TRUE} then \code{folders_to_be_sourced} is an absolute folder reference. If \code{FALSE} then \code{folders_to_be_sourced} is relative and inside \code{home}.}
+\item{source_folders_absolute}{If \code{TRUE}, \code{folders_to_be_sourced} is treated as absolute paths.
+If \code{FALSE}, paths are relative to \code{home}.}
 
-\item{encode_from}{Folders current encoding (only used on Windows)}
+\item{encode_from}{Source encoding for file paths (only used on Windows)}
 
-\item{encode_to}{Folders final encoding (only used on Windows)}
+\item{encode_to}{Target encoding for file paths (only used on Windows)}
 
-\item{...}{Other folders that you would like to reference}
+\item{...}{Additional named arguments for other project folders (e.g., data, raw, etc.)}
 }
 \value{
-Returns an environment that contains:
+An environment containing:
 \itemize{
-\item Folder locations
-\item An environment called \code{env} into which the code has been sourced into.
-There is also a side effect where \code{org::project} mirrors these values.
+\item All folder locations as named elements
+\item \verb{$env}: The environment where code was sourced
+\item \verb{$results_today}: Path to today's results folder
 }
 }
 \description{
-This function initializes the project by setting up folder locations and sourcing code files.
-It saves folder locations in a new environment and in \code{org::project}, which you will use in all of your subsequent code. An additional
-folder will be created on the user's file system (org::project$results_today) which
-corresponds to \code{results/YYYY-MM-DD}. The sourced folders are saved into org::project$env.
+This function initializes a new R project by setting up folder locations and sourcing code files.
+It creates a standardized project structure with separate locations for code, results, and data.
+Results are automatically organized by date, and code can be sourced from specified directories.
 }
 \details{
-For more details see the help vignette:
-\code{vignette("intro", package = "org")}
+The function performs several key operations:
+\enumerate{
+\item Creates necessary directories if they don't exist
+\item Sets up date-based results organization
+\item Sources all .R files from specified directories
+\item Handles path encoding for cross-platform compatibility
+\item Maintains a mirror of settings in \code{org::project}
+}
 }
 \examples{
-\donttest{
+\dontrun{
+# Initialize a new project
 org::initialize_project(
   home = paste0(tempdir(), "/git/analyses/2019/analysis3/"),
   results = paste0(tempdir(), "/dropbox/analyses_results/2019/analysis3/"),
   raw = paste0(tempdir(), "/data/analyses/2019/analysis3/")
 )
-org::project$results_today
-org::project$raw
+
+# Access project settings
+org::project$results_today  # Today's results folder
+org::project$raw           # Raw data folder
 }
 }

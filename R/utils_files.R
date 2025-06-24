@@ -23,14 +23,14 @@ create_dir <- function(folder){
   dir.create(folder, showWarnings = FALSE, recursive = TRUE)
 }
 
-#' Construct a file path from components
+#' Construct file path from components
 #'
-#' This function joins path components using forward slashes, ensuring proper path
-#' formatting across operating systems. It handles multiple components and removes
+#' Joins path components using forward slashes, ensuring proper path
+#' formatting across operating systems. Handles multiple components and removes
 #' any double slashes that might occur.
 #'
-#' @param ... Character vectors that will be concatenated with "/" as a separator
-#' @return A character vector containing the constructed path
+#' @param ... Character vectors that will be concatenated with "/" as separator.
+#' @return A character vector containing the constructed path.
 #' @examples
 #' org::path("home", "user", "data.csv")  # Returns "home/user/data.csv"
 #' org::path("home//user", "data.csv")    # Returns "home/user/data.csv"
@@ -84,10 +84,10 @@ ls_files_int_vectorized <- Vectorize(ls_files_int, vectorize.args = "path", USE.
 #' \donttest{
 #' # List all files in current directory
 #' org::ls_files()
-#' 
+#'
 #' # List only R files
 #' org::ls_files(regexp = "\\.R$")
-#' 
+#'
 #' # List files in multiple directories
 #' org::ls_files(c("dir1", "dir2"))
 #' }
@@ -129,12 +129,12 @@ cat_to_filepath_function_factory <- function(filepath){
 
 #' Move a directory and its contents
 #'
-#' This function moves a directory and all its contents to a new location.
-#' It can optionally overwrite the destination if it already exists.
+#' Moves a directory and all its contents to a new location.
+#' Can optionally overwrite the destination if it already exists.
 #'
-#' @param from Source directory path
-#' @param to Destination directory path
-#' @param overwrite_to Whether to overwrite existing destination (default: FALSE)
+#' @param from Source directory path.
+#' @param to Destination directory path.
+#' @param overwrite_to Whether to overwrite existing destination (default: FALSE).
 #' @return Nothing. Creates the destination directory and moves all contents.
 #' @details
 #' The function:
@@ -143,10 +143,10 @@ cat_to_filepath_function_factory <- function(filepath){
 #' - Removes the source directory after successful copy
 #' - Fails if source doesn't exist or destination exists (unless overwrite_to=TRUE)
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Move a directory
 #' org::move_directory("old_dir", "new_dir")
-#' 
+#'
 #' # Move and overwrite existing directory
 #' org::move_directory("old_dir", "new_dir", overwrite_to = TRUE)
 #' }

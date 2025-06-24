@@ -1,3 +1,19 @@
+# Version 2025.6.24
+
+- Improved roxygen2 documentation formatting, grammar, and clarity across all exported functions.
+- Enhanced parameter descriptions with better punctuation and consistency.
+- Updated function titles to be more concise and direct.
+- Significantly expanded and improved the package vignette with:
+  - Enhanced introduction explaining why to use `org`
+  - Installation instructions for CRAN and GitHub
+  - Quick start section for new users
+  - Team collaboration examples showing multiple path usage
+  - Comprehensive function reference organized by category
+  - Common workflows and practical examples
+  - Cross-platform path construction guidance
+  - Troubleshooting section with solutions to common issues
+  - Better formatting and organization throughout
+
 # Version 2025.3.10
 
 - `package_installed` can now install packages if missing.

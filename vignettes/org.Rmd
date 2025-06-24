@@ -14,6 +14,51 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Why org?
+
+Managing research projects and data analyses can be challenging when dealing with:
+
+- **Inconsistent project structures** across different analyses
+- **Mixed requirements** for code (version control), results (sharing), and data (security)
+- **Collaboration difficulties** when team members use different folder structures
+- **Version tracking** for research submissions and revisions
+- **Cross-platform compatibility** issues with file paths
+
+The `org` package solves these problems by providing a standardized framework for organizing R projects with clear separation of concerns and consistent structure across all your analyses.
+
+## Installation
+
+```{r eval=FALSE}
+# Install from CRAN
+install.packages("org")
+
+# Or install development version from GitHub
+# devtools::install_github("csids/org")
+```
+
+## Quick Start
+
+Here's how to get started with your first `org` project:
+
+```{r eval=FALSE}
+library(org)
+
+# 1. Initialize your project structure
+org::initialize_project(
+  env = .GlobalEnv,
+  home = "my_analysis",
+  results = "my_results"
+)
+
+# 2. Access project paths
+org::project$home          # Your code location
+org::project$results_today # Today's results folder
+
+# 3. Use org functions in your analysis
+org::path("data", "file.csv")  # Cross-platform paths
+org::ls_files("R")             # List R files
+```
+
 ## Concept
 
 The concept behind `org` is straightforward - most analyses have three main sections:
@@ -122,6 +167,34 @@ When writing research articles, you often need multiple versions (initial submis
 
 This preserves the code that produced results for each submission, ensuring all changes are deliberate and intentional.
 
+## Team Collaboration
+
+When working with team members who have different folder structures, you can specify multiple possible paths. The `org` package will automatically select the first path that exists:
+
+```r
+# Team member setup - org will use the first existing path
+org::initialize_project(
+  env = .GlobalEnv,
+  home = c(
+    "/Users/teammate1/projects/analysis3/",  # Mac user
+    "/home/teammate2/analysis3/",            # Linux user  
+    "C:/Users/teammate3/analysis3/"          # Windows user
+  ),
+  results = c(
+    "/Users/teammate1/Dropbox/results/",
+    "/home/teammate2/dropbox/results/", 
+    "C:/Users/teammate3/Dropbox/results/"
+  ),
+  data_raw = c(
+    "/Users/teammate1/data/analysis3/",
+    "/home/teammate2/data/analysis3/",
+    "C:/shared_drive/data/analysis3/"
+  )
+)
+```
+
+This approach allows the same initialization code to work across different team members' machines without modification.
+
 ## Best Practices
 
 ### Recommended Structure
@@ -227,3 +300,114 @@ Understanding path components is important:
 | test.src               | Filename                  |
 
 A path specifies a location in a directory structure, while a filename only includes the file name itself. Directories only include directory name information.
+
+## Function Reference
+
+The `org` package provides several key functions for project management:
+
+### Core Functions
+
+- **`org::initialize_project()`**: Set up project structure and source R files
+- **`org::set_results()`**: Modify results folder after project initialization  
+- **`org::project`**: Environment containing all project folder locations
+
+### File Operations
+
+- **`org::path()`**: Construct cross-platform file paths
+- **`org::ls_files()`**: List files with optional pattern matching
+- **`org::move_directory()`**: Move directories safely
+- **`org::write_text()`**: Write text files with consistent formatting
+
+### Utility Functions
+
+- **`org::package_installed()`**: Check if packages are installed
+- **`org::create_project_quarto_internal_results()`**: Create Quarto projects with internal results
+- **`org::create_project_quarto_external_results()`**: Create Quarto projects with external results
+
+## Common Workflows
+
+### Setting Up a New Analysis
+
+```r
+# 1. Initialize project structure
+org::initialize_project(
+  env = .GlobalEnv,
+  home = "/path/to/your/analysis/",
+  results = "/path/to/results/",
+  data_raw = "/path/to/data/"
+)
+
+# 2. Create analysis functions in R/ folder
+# 3. Run analysis from Run.R  
+# 4. Results automatically saved to org::project$results_today
+```
+
+### Working with Existing Projects
+
+```r
+# Reinitialize existing project
+org::initialize_project(
+  env = .GlobalEnv,
+  home = "/existing/analysis/path/",
+  results = "/existing/results/path/"
+)
+
+# Update results location if needed
+org::set_results("/new/results/path/")
+```
+
+### Environment Management
+
+**Recommendation: Always use `.GlobalEnv`** - it makes life so much easier! All your functions will be directly accessible without having to worry about environment scoping issues.
+
+```r
+# Recommended approach - use .GlobalEnv
+org::initialize_project(env = .GlobalEnv, ...)
+
+# Only use custom environments in special cases (e.g., package development)
+my_env <- new.env()
+org::initialize_project(env = my_env, ...)
+```
+
+## Path Construction and Cross-Platform Compatibility
+
+The `org::path()` function ensures your code works across different operating systems:
+
+```r
+# Cross-platform path construction
+data_file <- org::path(org::project$data_raw, "survey_data.csv")
+output_file <- org::path(org::project$results_today, "analysis_results.xlsx")
+
+# Handles multiple path components
+nested_path <- org::path("folder1", "subfolder", "file.txt")
+
+# Removes double slashes automatically
+clean_path <- org::path("folder//", "//file.txt")  # Returns "folder/file.txt"
+```
+
+## Troubleshooting
+
+### Common Issues
+
+#### Path Issues
+- Always use `org::path()` for cross-platform compatibility
+- Avoid hardcoded absolute paths in shared code
+- Check that all specified directories exist and are accessible
+- Ensure you have write permissions to results directories
+
+#### Sourcing Problems
+```r
+# If functions aren't loading from R/ folder:
+# 1. Check that R files are in the correct directory
+org::ls_files(org::path(org::project$home, "R"))
+
+# 2. Verify file extensions are .R or .r
+# 3. Check for syntax errors in R files
+# 4. Restart R and reinitialize project if needed
+```
+
+### Getting Help
+
+- Check the package documentation: `help(package = "org")`
+- View function help: `?org::initialize_project`
+- Report issues at: https://github.com/csids/org/issues

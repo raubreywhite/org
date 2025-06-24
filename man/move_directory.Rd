@@ -2,17 +2,39 @@
 % Please edit documentation in R/utils_files.R
 \name{move_directory}
 \alias{move_directory}
-\title{Move directory}
+\title{Move a directory and its contents}
 \usage{
 move_directory(from, to, overwrite_to = FALSE)
 }
 \arguments{
-\item{from}{Filepath or directory path.}
+\item{from}{Source directory path.}
 
-\item{to}{Filepath or directory path.}
+\item{to}{Destination directory path.}
 
-\item{overwrite_to}{Boolean.}
+\item{overwrite_to}{Whether to overwrite existing destination (default: FALSE).}
+}
+\value{
+Nothing. Creates the destination directory and moves all contents.
 }
 \description{
-Move directory
+Moves a directory and all its contents to a new location.
+Can optionally overwrite the destination if it already exists.
+}
+\details{
+The function:
+\itemize{
+\item Creates the destination directory if it doesn't exist
+\item Copies all files and subdirectories recursively
+\item Removes the source directory after successful copy
+\item Fails if source doesn't exist or destination exists (unless overwrite_to=TRUE)
+}
+}
+\examples{
+\dontrun{
+# Move a directory
+org::move_directory("old_dir", "new_dir")
+
+# Move and overwrite existing directory
+org::move_directory("old_dir", "new_dir", overwrite_to = TRUE)
+}
 }
