@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Why org
+## Why org?
 
 Managing research projects and data analyses can be challenging when dealing with:
 
@@ -109,11 +109,11 @@ This is your main analysis script that orchestrates the entire workflow:
 
 All code sections should be encapsulated in functions in the `R/` folder. You should not have multiple main files, as this creates confusion when returning to your code later. However, you can have versioned files (e.g., `Run_v01.R`, `Run_v02.R`) where later versions supersede earlier ones.
 
-#### 3. `R/` Directory
+#### 3. `R/` directory
 
 All analysis functions should be defined in `org::project$home/R`. The `initialize_project` function automatically sources all R scripts in this directory.
 
-### Example Project Structure
+### Example project structure
 
 Here's a complete example of how to structure your project:
 

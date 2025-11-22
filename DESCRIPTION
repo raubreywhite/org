@@ -2,8 +2,7 @@ Package: org
 Title: Organising Projects
 Version: 2025.11.22
 Authors@R: c(
-  person(c("Richard","Aubrey"), "White", email = "hello@rwhite.no", role = c("aut", "cre"),comment = c(ORCID = "0000-0002-6747-1726")),
-  person("CSIDS", email = "hello@csids.no", role = c("cph"))
+  person(c("Richard","Aubrey"), "White", email = "hello@rwhite.no", role = c("aut", "cre"),comment = c(ORCID = "0000-0002-6747-1726"))
   )
 Description: A framework for organizing R projects with a standardized structure. 
     Most analyses consist of three main components: code, results, and data, 
@@ -26,6 +25,6 @@ Suggests: testthat,
     rstudioapi,
     glue
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 VignetteBuilder: knitr
 Date/Publication: 2022-11-16 06:32:18 UTC
