@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [main]
 
-name: Check and Deploy
+name: Check and deploy
 
 jobs:
   R-CMD-check:
