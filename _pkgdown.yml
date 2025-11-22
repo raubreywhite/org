@@ -1,7 +1,7 @@
 url: https://www.rwhite.no/org/
 
-template:
-  package: csidstemplatepkgdown
+# template:
+#   package: csidstemplatepkgdown
 
 reference:
 - title: "Package and Environment"

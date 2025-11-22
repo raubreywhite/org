@@ -20,47 +20,18 @@ Each component has specific requirements and best practices that `org` helps enf
 - Create and manage Quarto documents
 - Handle file operations safely
 
-## Installation
-
-### From CRAN
+## Installation from CRAN
 
 ```r
 install.packages("org")
 ```
 
-### Development Version
-
-To install the development version or access packages that haven't been released on CRAN:
-
-1. Edit your `.Rprofile`:
-
-```r
-usethis::edit_r_profile()
-```
-
-2. Add the following configuration:
-
-```r
-options(
-  repos = structure(c(
-    RWHITE = "https://www.rwhite.no/drat/",
-    CRAN   = "https://cran.rstudio.com"
-  ))
-)
-```
-
-3. Restart R and install:
-
-```r
-install.packages("org")
-```
-
-## Getting Started
+## Getting started
 
 1. Read the [introduction vignette](https://www.rwhite.no/org/articles/org.html)
 2. Run `help(package="org")` for detailed function documentation
 
-## Quick Example
+## Quick example
 
 ```r
 # Initialize a new project
