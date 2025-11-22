@@ -51,6 +51,10 @@ jobs:
           extra-packages: any::pkgdown
           needs: website
 
+      - name: Install package
+        run: devtools::install()
+        shell: Rscript {0}
+
       - name: Build site
         run: pkgdown::build_site_github_pages()
         shell: Rscript {0}
