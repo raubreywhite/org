@@ -1,11 +1,11 @@
-# org <a href="https://www.csids.no/org/"><img src="man/figures/logo.png" align="right" width="120" /></a>
+# org <a href="https://www.rwhite.no/org/"><img src="man/figures/logo.png" align="right" width="120" /></a>
 
 [![CRAN status](https://www.r-pkg.org/badges/version/org)](https://cran.r-project.org/package=org)
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/org)](https://cran.r-project.org/package=org)
 
 ## Overview
 
-[org](https://www.csids.no/org/) is a framework for organizing R projects with a standardized structure. It helps manage the three main components of most analyses:
+[org](https://www.rwhite.no/org/) is a framework for organizing R projects with a standardized structure. It helps manage the three main components of most analyses:
 
 - **Code**: Version-controlled analysis scripts
 - **Results**: Date-organized output files
@@ -43,8 +43,8 @@ usethis::edit_r_profile()
 ```r
 options(
   repos = structure(c(
-    CSVERSE = "https://www.csids.no/drat/",
-    CRAN    = "https://cran.rstudio.com"
+    RWHITE = "https://www.rwhite.no/drat/",
+    CRAN   = "https://cran.rstudio.com"
   ))
 )
 ```
@@ -57,7 +57,7 @@ install.packages("org")
 
 ## Getting Started
 
-1. Read the [introduction vignette](https://www.csids.no/plnr/articles/org.html)
+1. Read the [introduction vignette](https://www.rwhite.no/org/articles/org.html)
 2. Run `help(package="org")` for detailed function documentation
 
 ## Quick Example
@@ -78,7 +78,7 @@ org::project$data_raw      # Raw data folder
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a [Pull Request](https://github.com/csids/org/pulls).
+Contributions are welcome! Please feel free to submit a [Pull Request](https://github.com/raubreywhite/org/pulls).
 
 ## License
 

@@ -16,7 +16,7 @@ Description: A framework for organizing R projects with a standardized structure
     requirements for various types of content.
 Depends: R (>= 3.3.0)
 License: MIT + file LICENSE
-URL: https://www.csids.no/org/, https://github.com/csids/org
+URL: https://www.rwhite.no/org/, https://github.com/raubreywhite/org
 BugReports: https://github.com/csids/org/issues
 Encoding: UTF-8
 Imports: utils

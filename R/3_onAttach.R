@@ -11,6 +11,6 @@
     "org ",
     version,
     "\n",
-    "https://www.csids.no/org/"
+    "https://www.rwhite.no/org/"
   ))
 }
