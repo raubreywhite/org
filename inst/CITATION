@@ -1,0 +1,9 @@
+bibentry(
+   bibtype = "Manual",
+   title = "org: Organising Projects",
+   author = person("Richard Aubrey White"),
+   address = "Oslo, Norway",
+   year = 2025,
+   url = "https://www.rwhite.no/org/",
+   doi = "10.32614/CRAN.package.org"
+   )
