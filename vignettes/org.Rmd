@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Why org?
+## Why org
 
 Managing research projects and data analyses can be challenging when dealing with:
 
@@ -36,7 +36,7 @@ install.packages("org")
 # devtools::install_github("csids/org")
 ```
 
-## Quick Start
+## Quick start
 
 Here's how to get started with your first `org` project:
 
@@ -69,27 +69,27 @@ The concept behind `org` is straightforward - most analyses have three main sect
 
 Each section has unique requirements:
 
-### Code Requirements
+### Code requirements
 - Must be version controlled
 - Should be publicly accessible
 - Needs a single analysis pipeline documenting all steps
 - Should be organized into modular functions
 
-### Results Requirements
+### Results requirements
 - Must be immediately shareable with collaborators
 - Should maintain a history of changes over time
 - Should be organized by date for tracking
 - Should be stored in a shared location (e.g., Dropbox)
 
-### Data Requirements
+### Data requirements
 - Should be encrypted if sensitive
 - Should not be stored on cloud if sensitive
 - Should be organized by project/analysis
 - Should maintain clear separation from code and results
 
-## Project Structure
+## Project structure
 
-### Core Components
+### Core components
 
 #### 1. `org::initialize_project`
 
@@ -153,7 +153,7 @@ figure_1(d)        # Saves to org::project$results_today
 figure_2(d)        # Saves to org::project$results_today
 ```
 
-## Research Article Versioning
+## Research article versioning
 
 When writing research articles, you often need multiple versions (initial submission, resubmissions). `org` helps manage this by using date-based versioning:
 
@@ -167,7 +167,7 @@ When writing research articles, you often need multiple versions (initial submis
 
 This preserves the code that produced results for each submission, ensuring all changes are deliberate and intentional.
 
-## Team Collaboration
+## Team collaboration
 
 When working with team members who have different folder structures, you can specify multiple possible paths. The `org` package will automatically select the first path that exists:
 
@@ -195,9 +195,9 @@ org::initialize_project(
 
 This approach allows the same initialization code to work across different team members' machines without modification.
 
-## Best Practices
+## Best practices
 
-### Recommended Structure
+### Recommended structure
 
 Store your project components in appropriate locations:
 
@@ -242,9 +242,9 @@ data/
         └── analysis_3/
 ```
 
-### Alternative Structures
+### Alternative structures
 
-#### RMarkdown Project
+#### RMarkdown project
 
 For projects on a shared network drive without GitHub/Dropbox:
 
@@ -266,7 +266,7 @@ project_name/              # org::project$home
     └── data.xlsx
 ```
 
-#### Single Folder Project
+#### Single folder project
 
 For projects with limited access:
 
@@ -286,7 +286,7 @@ project_name/              # org::project$home
     └── data.xlsx
 ```
 
-## Path Naming Conventions
+## Path naming conventions
 
 Understanding path components is important:
 
@@ -301,32 +301,32 @@ Understanding path components is important:
 
 A path specifies a location in a directory structure, while a filename only includes the file name itself. Directories only include directory name information.
 
-## Function Reference
+## Function reference
 
 The `org` package provides several key functions for project management:
 
-### Core Functions
+### Core functions
 
 - **`org::initialize_project()`**: Set up project structure and source R files
 - **`org::set_results()`**: Modify results folder after project initialization  
 - **`org::project`**: Environment containing all project folder locations
 
-### File Operations
+### File operations
 
 - **`org::path()`**: Construct cross-platform file paths
 - **`org::ls_files()`**: List files with optional pattern matching
 - **`org::move_directory()`**: Move directories safely
 - **`org::write_text()`**: Write text files with consistent formatting
 
-### Utility Functions
+### Utility functions
 
 - **`org::package_installed()`**: Check if packages are installed
 - **`org::create_project_quarto_internal_results()`**: Create Quarto projects with internal results
 - **`org::create_project_quarto_external_results()`**: Create Quarto projects with external results
 
-## Common Workflows
+## Common workflows
 
-### Setting Up a New Analysis
+### Setting up a new analysis
 
 ```r
 # 1. Initialize project structure
@@ -342,7 +342,7 @@ org::initialize_project(
 # 4. Results automatically saved to org::project$results_today
 ```
 
-### Working with Existing Projects
+### Working with existing projects
 
 ```r
 # Reinitialize existing project
@@ -356,7 +356,7 @@ org::initialize_project(
 org::set_results("/new/results/path/")
 ```
 
-### Environment Management
+### Environment management
 
 **Recommendation: Always use `.GlobalEnv`** - it makes life so much easier! All your functions will be directly accessible without having to worry about environment scoping issues.
 
@@ -369,7 +369,7 @@ my_env <- new.env()
 org::initialize_project(env = my_env, ...)
 ```
 
-## Path Construction and Cross-Platform Compatibility
+## Path construction and cross-platform compatibility
 
 The `org::path()` function ensures your code works across different operating systems:
 
@@ -387,15 +387,15 @@ clean_path <- org::path("folder//", "//file.txt")  # Returns "folder/file.txt"
 
 ## Troubleshooting
 
-### Common Issues
+### Common issues
 
-#### Path Issues
+#### Path issues
 - Always use `org::path()` for cross-platform compatibility
 - Avoid hardcoded absolute paths in shared code
 - Check that all specified directories exist and are accessible
 - Ensure you have write permissions to results directories
 
-#### Sourcing Problems
+#### Sourcing problems
 ```r
 # If functions aren't loading from R/ folder:
 # 1. Check that R files are in the correct directory
@@ -406,8 +406,8 @@ org::ls_files(org::path(org::project$home, "R"))
 # 4. Restart R and reinitialize project if needed
 ```
 
-### Getting Help
+### Getting help
 
 - Check the package documentation: `help(package = "org")`
 - View function help: `?org::initialize_project`
-- Report issues at: https://github.com/csids/org/issues
+- Report issues at: https://github.com/raubreywhite/org/issues
