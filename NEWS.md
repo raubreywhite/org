@@ -1,3 +1,13 @@
+# Version 2026.4.9
+
+- Added `install_missing_packages` argument to `initialize_project()`. Scans
+  `folders_to_be_sourced` for `library()`, `require()`, and `pkg::` usage.
+  Errors on missing packages by default; set `install_missing_packages = TRUE`
+  to auto-install via `pak` (falls back to `install.packages()`).
+- Removed `package_installed()`.
+- Removed `create_project_quarto_internal_results()` and
+  `create_project_quarto_external_results()`.
+
 # Version 2025.6.24
 
 - Improved roxygen2 documentation formatting, grammar, and clarity across all exported functions.

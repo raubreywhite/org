@@ -9,6 +9,7 @@ initialize_project(
   home = NULL,
   results = NULL,
   folders_to_be_sourced = "R",
+  install_missing_packages = FALSE,
   source_folders_absolute = FALSE,
   encode_from = "UTF-8",
   encode_to = "latin1",
@@ -27,6 +28,11 @@ and accessible via \code{org::project$results_today}.}
 
 \item{folders_to_be_sourced}{Character vector of folder names inside \code{home} containing .R files
 to be sourced into the environment.}
+
+\item{install_missing_packages}{If \code{TRUE}, scans \code{folders_to_be_sourced} for package
+dependencies (via \code{library()}, \code{require()}, and \verb{pkg::} usage) and installs any
+missing packages using \code{pak} before sourcing. Falls back to \code{install.packages()}
+if \code{pak} is not available. Default is \code{FALSE}.}
 
 \item{source_folders_absolute}{If \code{TRUE}, \code{folders_to_be_sourced} is treated as absolute paths.
 If \code{FALSE}, paths are relative to \code{home}.}

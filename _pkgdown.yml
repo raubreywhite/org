@@ -9,12 +9,6 @@ reference:
     - initialize_project
     - project
     - set_results
-    - package_installed
-
-- title: "Project Creation"
-  contents:
-    - create_project_quarto_external_results
-    - create_project_quarto_internal_results
 
 - title: "File and Directory Utilities"
   contents:

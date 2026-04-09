@@ -193,6 +193,10 @@ source_to_environment <- function(
 #'                and accessible via `org::project$results_today`.
 #' @param folders_to_be_sourced Character vector of folder names inside `home` containing .R files
 #'                             to be sourced into the environment.
+#' @param install_missing_packages If `TRUE`, scans `folders_to_be_sourced` for package
+#'   dependencies (via `library()`, `require()`, and `pkg::` usage) and installs any
+#'   missing packages using `pak` before sourcing. Falls back to `install.packages()`
+#'   if `pak` is not available. Default is `FALSE`.
 #' @param source_folders_absolute If `TRUE`, `folders_to_be_sourced` is treated as absolute paths.
 #'                               If `FALSE`, paths are relative to `home`.
 #' @param encode_from Source encoding for file paths (only used on Windows)
@@ -228,6 +232,7 @@ initialize_project <- function(
   home = NULL,
   results = NULL,
   folders_to_be_sourced = "R",
+  install_missing_packages = FALSE,
   source_folders_absolute = FALSE,
   encode_from = "UTF-8",
   encode_to = "latin1",
@@ -251,6 +256,17 @@ initialize_project <- function(
       proj = p,
       ...
     )
+  }
+
+  source_folders <- if (source_folders_absolute) {
+    folders_to_be_sourced
+  } else {
+    path(proj$home, folders_to_be_sourced)
+  }
+  if (install_missing_packages) {
+    do_install_missing_packages(source_folders)
+  } else {
+    check_missing_packages(source_folders)
   }
 
   source_to_environment(

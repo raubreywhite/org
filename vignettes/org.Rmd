@@ -318,12 +318,6 @@ The `org` package provides several key functions for project management:
 - **`org::move_directory()`**: Move directories safely
 - **`org::write_text()`**: Write text files with consistent formatting
 
-### Utility functions
-
-- **`org::package_installed()`**: Check if packages are installed
-- **`org::create_project_quarto_internal_results()`**: Create Quarto projects with internal results
-- **`org::create_project_quarto_external_results()`**: Create Quarto projects with external results
-
 ## Common workflows
 
 ### Setting up a new analysis
