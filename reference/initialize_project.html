@@ -19,7 +19,7 @@ Results are automatically organized by date, and code can be sourced from specif
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">org</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2025.11.24</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2026.4.9</span>
       </span>
     </div>
 
@@ -65,6 +65,7 @@ Results are automatically organized by date, and code can be sourced from specif
 <span>  home <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  results <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  folders_to_be_sourced <span class="op">=</span> <span class="st">"R"</span>,</span>
+<span>  install_missing_packages <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  source_folders_absolute <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  encode_from <span class="op">=</span> <span class="st">"UTF-8"</span>,</span>
 <span>  encode_to <span class="op">=</span> <span class="st">"latin1"</span>,</span>
@@ -94,6 +95,13 @@ and accessible via <code>org::project$results_today</code>.</p></dd>
 <dt id="arg-folders-to-be-sourced">folders_to_be_sourced<a class="anchor" aria-label="anchor" href="#arg-folders-to-be-sourced"></a></dt>
 <dd><p>Character vector of folder names inside <code>home</code> containing .R files
 to be sourced into the environment.</p></dd>
+
+
+<dt id="arg-install-missing-packages">install_missing_packages<a class="anchor" aria-label="anchor" href="#arg-install-missing-packages"></a></dt>
+<dd><p>If <code>TRUE</code>, scans <code>folders_to_be_sourced</code> for package
+dependencies (via <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code>, <code><a href="https://rdrr.io/r/base/library.html" class="external-link">require()</a></code>, and <code>pkg::</code> usage) and installs any
+missing packages using <code>pak</code> before sourcing. Falls back to <code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages()</a></code>
+if <code>pak</code> is not available. Default is <code>FALSE</code>.</p></dd>
 
 
 <dt id="arg-source-folders-absolute">source_folders_absolute<a class="anchor" aria-label="anchor" href="#arg-source-folders-absolute"></a></dt>

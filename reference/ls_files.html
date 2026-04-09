@@ -18,7 +18,7 @@ It can list files and directories matching a regular expression pattern."><meta 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">org</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2025.11.24</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2026.4.9</span>
       </span>
     </div>
 
@@ -90,13 +90,15 @@ It can list files and directories matching a regular expression pattern.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># List all files in current directory</span></span></span>
 <span class="r-in"><span><span class="fu">org</span><span class="fu">::</span><span class="fu">ls_files</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/org/org/docs/reference/cat_to_filepath_function_factory.html"      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/home/runner/work/org/org/docs/reference/create_project_quarto_external_results.html"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "/home/runner/work/org/org/docs/reference/create_project_quarto_internal_results.html"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "/home/runner/work/org/org/docs/reference/figures"                                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5] "/home/runner/work/org/org/docs/reference/index.html"                                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [6] "/home/runner/work/org/org/docs/reference/initialize_project.html"                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [7] "/home/runner/work/org/org/docs/reference/initialize_project_folders.html"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/org/org/docs/reference/cat_to_filepath_function_factory.html"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/home/runner/work/org/org/docs/reference/check_missing_packages.html"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "/home/runner/work/org/org/docs/reference/do_install_missing_packages.html"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "/home/runner/work/org/org/docs/reference/extract_packages.html"                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5] "/home/runner/work/org/org/docs/reference/figures"                              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6] "/home/runner/work/org/org/docs/reference/find_missing_packages.html"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7] "/home/runner/work/org/org/docs/reference/index.html"                           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [8] "/home/runner/work/org/org/docs/reference/initialize_project.html"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [9] "/home/runner/work/org/org/docs/reference/initialize_project_folders.html"      </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># List only R files</span></span></span>
 <span class="r-in"><span><span class="fu">org</span><span class="fu">::</span><span class="fu">ls_files</span><span class="op">(</span>regexp <span class="op">=</span> <span class="st">"\\.R$"</span><span class="op">)</span></span></span>
