@@ -1,0 +1,68 @@
+# List files and directories recursively
+
+This function is equivalent to the Unix `ls` command but works across
+platforms. It can list files and directories matching a regular
+expression pattern.
+
+## Usage
+
+``` r
+ls_files(path = ".", regexp = NULL)
+```
+
+## Arguments
+
+- path:
+
+  A character vector of one or more paths to search
+
+- regexp:
+
+  A regular expression pattern to filter files/directories
+
+## Value
+
+A character vector of file and directory paths
+
+## Details
+
+The function:
+
+- Handles both single and multiple paths
+
+- Supports regular expression filtering
+
+- Removes system-specific directories (e.g., @eaDir)
+
+- Returns full paths
+
+## Examples
+
+``` r
+# \donttest{
+# List all files in current directory
+org::ls_files()
+#> [1] "/home/runner/work/org/org/docs/reference/cat_to_filepath_function_factory.html"
+#> [2] "/home/runner/work/org/org/docs/reference/check_missing_packages.html"          
+#> [3] "/home/runner/work/org/org/docs/reference/do_install_missing_packages.html"     
+#> [4] "/home/runner/work/org/org/docs/reference/extract_packages.html"                
+#> [5] "/home/runner/work/org/org/docs/reference/figures"                              
+#> [6] "/home/runner/work/org/org/docs/reference/find_missing_packages.html"           
+#> [7] "/home/runner/work/org/org/docs/reference/index.html"                           
+#> [8] "/home/runner/work/org/org/docs/reference/initialize_project.html"              
+#> [9] "/home/runner/work/org/org/docs/reference/initialize_project_folders.html"      
+
+# List only R files
+org::ls_files(regexp = "\\.R$")
+#> character(0)
+
+# List files in multiple directories
+org::ls_files(c("dir1", "dir2"))
+#> [[1]]
+#> character(0)
+#> 
+#> [[2]]
+#> character(0)
+#> 
+# }
+```

@@ -1,0 +1,430 @@
+# Introduction to org
+
+## Why org?
+
+Managing research projects and data analyses can be challenging when
+dealing with:
+
+- **Inconsistent project structures** across different analyses
+- **Mixed requirements** for code (version control), results (sharing),
+  and data (security)
+- **Collaboration difficulties** when team members use different folder
+  structures
+- **Version tracking** for research submissions and revisions
+- **Cross-platform compatibility** issues with file paths
+
+The `org` package solves these problems by providing a standardized
+framework for organizing R projects with clear separation of concerns
+and consistent structure across all your analyses.
+
+## Installation
+
+``` r
+# Install from CRAN
+install.packages("org")
+
+# Or install development version from GitHub
+# devtools::install_github("csids/org")
+```
+
+## Quick start
+
+Here’s how to get started with your first `org` project:
+
+``` r
+library(org)
+
+# 1. Initialize your project structure
+org::initialize_project(
+  env = .GlobalEnv,
+  home = "my_analysis",
+  results = "my_results"
+)
+
+# 2. Access project paths
+org::project$home          # Your code location
+org::project$results_today # Today's results folder
+
+# 3. Use org functions in your analysis
+org::path("data", "file.csv")  # Cross-platform paths
+org::ls_files("R")             # List R files
+```
+
+## Concept
+
+The concept behind `org` is straightforward - most analyses have three
+main sections:
+
+- **Code**: Analysis scripts and functions
+- **Results**: Output files and figures
+- **Data**: Input data files
+
+Each section has unique requirements:
+
+### Code requirements
+
+- Must be version controlled
+- Should be publicly accessible
+- Needs a single analysis pipeline documenting all steps
+- Should be organized into modular functions
+
+### Results requirements
+
+- Must be immediately shareable with collaborators
+- Should maintain a history of changes over time
+- Should be organized by date for tracking
+- Should be stored in a shared location (e.g., Dropbox)
+
+### Data requirements
+
+- Should be encrypted if sensitive
+- Should not be stored on cloud if sensitive
+- Should be organized by project/analysis
+- Should maintain clear separation from code and results
+
+## Project structure
+
+### Core components
+
+#### 1. `org::initialize_project`
+
+This is the main function that sets up your project structure. It takes
+2+ arguments and saves folder locations in
+[`org::project`](https://www.rwhite.no/org/reference/project.md) for use
+throughout your analysis:
+
+- `home`: Location of `Run.R` and the `R/` folder (accessible via
+  `org::project$home`)
+- `results`: Results folder that creates date-based subfolders
+  (accessible via `org::project$results_today`)
+- `...`: Additional folders as needed (e.g., `data_raw`, `data_clean`)
+
+#### 2. `Run.R`
+
+This is your main analysis script that orchestrates the entire workflow:
+
+- Data cleaning
+- Analysis
+- Result generation
+
+All code sections should be encapsulated in functions in the `R/`
+folder. You should not have multiple main files, as this creates
+confusion when returning to your code later. However, you can have
+versioned files (e.g., `Run_v01.R`, `Run_v02.R`) where later versions
+supersede earlier ones.
+
+#### 3. `R/` directory
+
+All analysis functions should be defined in `org::project$home/R`. The
+`initialize_project` function automatically sources all R scripts in
+this directory.
+
+### Example project structure
+
+Here’s a complete example of how to structure your project:
+
+``` r
+# Initialize the project
+org::initialize_project(
+  env = .GlobalEnv,
+  home = "/git/analyses/2019/analysis3/",
+  results = "/dropbox/analyses_results/2019/analysis3/",
+  data_raw = "/data/analyses/2019/analysis3/"
+)
+
+# Document changes in archived results
+txt <- glue::glue("
+  2019-01-01:
+    Included:
+    - Table 1
+    - Table 2
+  
+  2019-02-02:
+    Changed Table 1 from mean -> median
+", .trim=FALSE)
+
+org::write_text(
+  txt = txt,
+  file = fs::path(org::project$results, "info.txt")
+)
+
+# Load required packages
+library(data.table)
+library(ggplot2)
+
+# Run analysis
+d <- clean_data()  # Accesses data from org::project$data_raw
+table_1(d)         # Saves to org::project$results_today
+figure_1(d)        # Saves to org::project$results_today
+figure_2(d)        # Saves to org::project$results_today
+```
+
+## Research article versioning
+
+When writing research articles, you often need multiple versions
+(initial submission, resubmissions). `org` helps manage this by using
+date-based versioning:
+
+1.  Initial submission:
+    - Rename `Run.R` to `Run_YYYY_MM_DD_submission_1.R`
+    - Rename `R/` to `R_YYYY_MM_DD_submission_1/`
+2.  Resubmission:
+    - Create new files with updated dates
+    - Keep old versions for reference
+
+This preserves the code that produced results for each submission,
+ensuring all changes are deliberate and intentional.
+
+## Team collaboration
+
+When working with team members who have different folder structures, you
+can specify multiple possible paths. The `org` package will
+automatically select the first path that exists:
+
+``` r
+# Team member setup - org will use the first existing path
+org::initialize_project(
+  env = .GlobalEnv,
+  home = c(
+    "/Users/teammate1/projects/analysis3/",  # Mac user
+    "/home/teammate2/analysis3/",            # Linux user  
+    "C:/Users/teammate3/analysis3/"          # Windows user
+  ),
+  results = c(
+    "/Users/teammate1/Dropbox/results/",
+    "/home/teammate2/dropbox/results/", 
+    "C:/Users/teammate3/Dropbox/results/"
+  ),
+  data_raw = c(
+    "/Users/teammate1/data/analysis3/",
+    "/home/teammate2/data/analysis3/",
+    "C:/shared_drive/data/analysis3/"
+  )
+)
+```
+
+This approach allows the same initialization code to work across
+different team members’ machines without modification.
+
+## Best practices
+
+### Recommended structure
+
+Store your project components in appropriate locations:
+
+    # Code (GitHub)
+    git/
+    └── analyses/
+        ├── 2018/
+        │   ├── analysis_1/          # org::project$home
+        │   │   ├── Run.R
+        │   │   └── R/
+        │   │       ├── clean_data.R
+        │   │       ├── descriptives.R
+        │   │       ├── analysis.R
+        │   │       └── figure_1.R
+        │   └── analysis_2/
+        └── 2019/
+            └── analysis_3/
+
+    # Results (Dropbox)
+    dropbox/
+    └── analyses_results/
+        ├── 2018/
+        │   ├── analysis_1/          # org::project$results
+        │   │   ├── 2018-03-12/     # org::project$results_today
+        │   │   │   ├── table_1.xlsx
+        │   │   │   └── figure_1.png
+        │   │   ├── 2018-03-15/
+        │   │   └── 2018-03-18/
+        │   └── analysis_2/
+        └── 2019/
+            └── analysis_3/
+
+    # Data (Local)
+    data/
+    └── analyses/
+        ├── 2018/
+        │   ├── analysis_1/          # org::project$data_raw
+        │   │   └── data.xlsx
+        │   └── analysis_2/
+        └── 2019/
+            └── analysis_3/
+
+### Alternative structures
+
+#### RMarkdown project
+
+For projects on a shared network drive without GitHub/Dropbox:
+
+    project_name/              # org::project$home
+    ├── Run.R
+    ├── R/
+    │   ├── CleanData.R
+    │   ├── Descriptives.R
+    │   ├── Analysis1.R
+    │   └── Graphs1.R
+    ├── paper/
+    │   └── paper.Rmd
+    ├── results/              # org::project$results
+    │   └── 2018-03-12/      # org::project$results_today
+    │       ├── table1.xlsx
+    │       └── figure1.png
+    └── data_raw/            # org::project$data_raw
+        └── data.xlsx
+
+#### Single folder project
+
+For projects with limited access:
+
+    project_name/              # org::project$home
+    ├── Run.R
+    ├── R/
+    │   ├── clean_data.R
+    │   ├── descriptives.R
+    │   ├── analysis.R
+    │   └── figure_1.R
+    ├── results/              # org::project$results
+    │   └── 2018-03-12/      # org::project$results_today
+    │       ├── table_1.xlsx
+    │       └── figure_1.png
+    └── data_raw/            # org::project$data_raw
+        └── data.xlsx
+
+## Path naming conventions
+
+Understanding path components is important:
+
+| Component              | Name                      |
+|------------------------|---------------------------|
+| /home/richard/test.src | Absolute (file)path       |
+| richard/test.src       | Relative (file)path       |
+| /home/richard/         | Absolute (directory) path |
+| ./richard/             | Relative (directory) path |
+| richard                | Directory                 |
+| test.src               | Filename                  |
+
+A path specifies a location in a directory structure, while a filename
+only includes the file name itself. Directories only include directory
+name information.
+
+## Function reference
+
+The `org` package provides several key functions for project management:
+
+### Core functions
+
+- **[`org::initialize_project()`](https://www.rwhite.no/org/reference/initialize_project.md)**:
+  Set up project structure and source R files
+- **[`org::set_results()`](https://www.rwhite.no/org/reference/set_results.md)**:
+  Modify results folder after project initialization  
+- **[`org::project`](https://www.rwhite.no/org/reference/project.md)**:
+  Environment containing all project folder locations
+
+### File operations
+
+- **[`org::path()`](https://www.rwhite.no/org/reference/path.md)**:
+  Construct cross-platform file paths
+- **[`org::ls_files()`](https://www.rwhite.no/org/reference/ls_files.md)**:
+  List files with optional pattern matching
+- **[`org::move_directory()`](https://www.rwhite.no/org/reference/move_directory.md)**:
+  Move directories safely
+- **[`org::write_text()`](https://www.rwhite.no/org/reference/write_text.md)**:
+  Write text files with consistent formatting
+
+## Common workflows
+
+### Setting up a new analysis
+
+``` r
+# 1. Initialize project structure
+org::initialize_project(
+  env = .GlobalEnv,
+  home = "/path/to/your/analysis/",
+  results = "/path/to/results/",
+  data_raw = "/path/to/data/"
+)
+
+# 2. Create analysis functions in R/ folder
+# 3. Run analysis from Run.R  
+# 4. Results automatically saved to org::project$results_today
+```
+
+### Working with existing projects
+
+``` r
+# Reinitialize existing project
+org::initialize_project(
+  env = .GlobalEnv,
+  home = "/existing/analysis/path/",
+  results = "/existing/results/path/"
+)
+
+# Update results location if needed
+org::set_results("/new/results/path/")
+```
+
+### Environment management
+
+**Recommendation: Always use `.GlobalEnv`** - it makes life so much
+easier! All your functions will be directly accessible without having to
+worry about environment scoping issues.
+
+``` r
+# Recommended approach - use .GlobalEnv
+org::initialize_project(env = .GlobalEnv, ...)
+
+# Only use custom environments in special cases (e.g., package development)
+my_env <- new.env()
+org::initialize_project(env = my_env, ...)
+```
+
+## Path construction and cross-platform compatibility
+
+The [`org::path()`](https://www.rwhite.no/org/reference/path.md)
+function ensures your code works across different operating systems:
+
+``` r
+# Cross-platform path construction
+data_file <- org::path(org::project$data_raw, "survey_data.csv")
+output_file <- org::path(org::project$results_today, "analysis_results.xlsx")
+
+# Handles multiple path components
+nested_path <- org::path("folder1", "subfolder", "file.txt")
+
+# Removes double slashes automatically
+clean_path <- org::path("folder//", "//file.txt")  # Returns "folder/file.txt"
+```
+
+## Troubleshooting
+
+### Common issues
+
+#### Path issues
+
+- Always use
+  [`org::path()`](https://www.rwhite.no/org/reference/path.md) for
+  cross-platform compatibility
+- Avoid hardcoded absolute paths in shared code
+- Check that all specified directories exist and are accessible
+- Ensure you have write permissions to results directories
+
+#### Sourcing problems
+
+``` r
+# If functions aren't loading from R/ folder:
+# 1. Check that R files are in the correct directory
+org::ls_files(org::path(org::project$home, "R"))
+
+# 2. Verify file extensions are .R or .r
+# 3. Check for syntax errors in R files
+# 4. Restart R and reinitialize project if needed
+```
+
+### Getting help
+
+- Check the package documentation:
+  [`help(package = "org")`](https://www.rwhite.no/org/reference)
+- View function help:
+  [`?org::initialize_project`](https://www.rwhite.no/org/reference/initialize_project.md)
+- Report issues at: <https://github.com/raubreywhite/org/issues>
