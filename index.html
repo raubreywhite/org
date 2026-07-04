@@ -8,7 +8,8 @@
 <title>Organising Projects • org</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/IBM_Plex_Mono-0.4.10/font.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/Source_Sans_3-0.4.10/font.css" rel="stylesheet">
+<link href="deps/IBM_Plex_Mono-0.4.10/font.css" rel="stylesheet">
 <link href="deps/Newsreader-0.4.10/font.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
@@ -16,13 +17,12 @@
 <meta name="description" content="A framework for organizing R projects with a standardized structure. Most analyses consist of three main components: code, results, and data, each with different requirements such as version control, sharing, and encryption. This package provides tools to set up and manage project directories, handle file paths consistently across operating systems, organize results using date-based structures, source code from specified directories, and perform file operations safely. It ensures consistency across projects while accommodating different requirements for various types of content.">
 <meta property="og:description" content="A framework for organizing R projects with a standardized structure. Most analyses consist of three main components: code, results, and data, each with different requirements such as version control, sharing, and encryption. This package provides tools to set up and manage project directories, handle file paths consistently across operating systems, organize results using date-based structures, source code from specified directories, and perform file operations safely. It ensures consistency across projects while accommodating different requirements for various types of content.">
 <meta property="og:image" content="https://www.rwhite.no/org/logo.png">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-dark" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="index.html">org</a>
 
@@ -35,9 +35,21 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="articles/org.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-packages" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">packages</button>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-packages">
+<li><a class="external-link dropdown-item" href="https://www.rwhite.no/cohort/">cohort — cohort construction with provenance</a></li>
+    <li><a class="external-link dropdown-item" href="https://www.rwhite.no/plnr/">plnr — plan &amp; fan out analyses</a></li>
+    <li><a class="dropdown-item" href="https://www.rwhite.no/org/">org — project paths &amp; structure</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="external-link dropdown-item" href="https://www.rwhite.no/">rwhite.no</a></li>
+  </ul>
+</li>
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
 </form></li>
@@ -48,79 +60,62 @@
 
   </div>
 </nav><div class="container template-home">
-<div class="row">
-  <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header">
-<img src="logo.png" class="logo" alt=""><h1 id="org-">org 
-<a class="anchor" aria-label="anchor" href="#org-"></a>
-</h1>
+
+<div class="rw-hero">
+  <div class="rw-hero-body">
+    <p class="overline">R package · Project structure</p>
+    <div class="page-header">
+<img src="logo.png" class="logo" alt=""><h1>Organise projects: code, results, data.</h1>
 </div>
-<p><a href="https://cran.r-project.org/package=org" class="external-link"><img src="https://www.r-pkg.org/badges/version/org" alt="CRAN status"></a> <a href="https://cran.r-project.org/package=org" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/org" alt="CRAN downloads"></a></p>
-<div class="section level2">
-<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
-</h2>
-<p><a href="https://www.rwhite.no/org/">org</a> is a framework for organizing R projects with a standardized structure. It helps manage the three main components of most analyses:</p>
-<ul>
-<li>
-<strong>Code</strong>: Version-controlled analysis scripts</li>
-<li>
-<strong>Results</strong>: Date-organized output files</li>
-<li>
-<strong>Data</strong>: Securely stored input data</li>
-</ul>
-<p>Each component has specific requirements and best practices that <code>org</code> helps enforce. The package provides tools to:</p>
-<ul>
-<li>Set up and manage project directories</li>
-<li>Handle file paths consistently across operating systems</li>
-<li>Manage results with date-based organization</li>
-<li>Source code from specified directories</li>
-<li>Create and manage Quarto documents</li>
-<li>Handle file operations safely</li>
-</ul>
+    <div class="rw-rule"></div>
+    <p class="rw-lede">A standardised project layout with consistent cross-platform paths, date-organised results, and safe file handling — so every analysis is laid out <em>the same way</em>.
+</p>
+    <p class="rw-cta"><a class="rw-btn" href="articles/org.html">Get started</a> <a class="rw-btn-link" href="reference/index.html">Browse the reference →</a></p>
+  </div>
+  <div class="rw-hero-art"><img src="logo.png" alt="org logo"></div>
 </div>
-<div class="section level2">
-<h2 id="installation-from-cran">Installation from CRAN<a class="anchor" aria-label="anchor" href="#installation-from-cran"></a>
-</h2>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"org"</span><span class="op">)</span></span></code></pre></div>
+
+<div class="rw-home">
+  <main id="main" class="rw-home-main"><p class="rw-section">
+What’s inside
+</p>
+<div class="rw-cards">
+<div class="rw-card">
+<div class="rw-card-num">
+01
 </div>
-<div class="section level2">
-<h2 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
-</h2>
-<ol style="list-style-type: decimal">
-<li>Read the <a href="https://www.rwhite.no/org/articles/org.html">introduction vignette</a>
-</li>
-<li>Run <code><a href="https://www.rwhite.no/org/reference">help(package="org")</a></code> for detailed function documentation</li>
-</ol>
+<h3>
+Standard layout
+</h3>
+<p>
+Separate code, results, and data — each with the handling it needs: version control, sharing, and encryption.
+</p>
 </div>
-<div class="section level2">
-<h2 id="quick-example">Quick example<a class="anchor" aria-label="anchor" href="#quick-example"></a>
-</h2>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Initialize a new project</span></span>
-<span><span class="fu">org</span><span class="fu">::</span><span class="fu"><a href="reference/initialize_project.html">initialize_project</a></span><span class="op">(</span></span>
-<span>  env <span class="op">=</span> <span class="va">.GlobalEnv</span>,</span>
-<span>  home <span class="op">=</span> <span class="st">"/path/to/project"</span>,      <span class="co"># Contains Run.R and R/ folder</span></span>
-<span>  results <span class="op">=</span> <span class="st">"/path/to/results"</span>,   <span class="co"># Where results will be stored</span></span>
-<span>  data_raw <span class="op">=</span> <span class="st">"/path/to/data"</span>      <span class="co"># Raw data location</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Access project settings</span></span>
-<span><span class="fu">org</span><span class="fu">::</span><span class="va"><a href="reference/project.html">project</a></span><span class="op">$</span><span class="va">results_today</span>  <span class="co"># Today's results folder</span></span>
-<span><span class="fu">org</span><span class="fu">::</span><span class="va"><a href="reference/project.html">project</a></span><span class="op">$</span><span class="va">data_raw</span>      <span class="co"># Raw data folder</span></span></code></pre></div>
+<div class="rw-card">
+<div class="rw-card-num">
+02
 </div>
-<div class="section level2">
-<h2 id="contributing">Contributing<a class="anchor" aria-label="anchor" href="#contributing"></a>
-</h2>
-<p>Contributions are welcome! Please feel free to submit a <a href="https://github.com/raubreywhite/org/pulls" class="external-link">Pull Request</a>.</p>
+<h3>
+Consistent paths
+</h3>
+<p>
+Build file paths that resolve the same way across operating systems, with no hard-coded absolutes in your scripts.
+</p>
 </div>
-<div class="section level2">
-<h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
-</h2>
-<p>This package is licensed under the MIT License - see the <a href="LICENSE">LICENSE</a> file for details.</p>
+<div class="rw-card">
+<div class="rw-card-num">
+03
+</div>
+<h3>
+Date-organised results
+</h3>
+<p>
+Write today’s output to a dated folder automatically, keeping every run’s results neatly side by side.
+</p>
 </div>
 </div>
-  </main><aside class="col-md-3"><div class="links">
+
+  </main><aside class="rw-home-aside"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li><a href="https://cloud.r-project.org/package=org" class="external-link">View on CRAN</a></li>
@@ -161,11 +156,13 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Crafted by <a href="https://www.rwhite.no" class="external-link">Richard Aubrey White</a>.</p>
+  <p>Crafted by <a href="https://www.rwhite.no" class="external-link">Richard Aubrey White</a>.
+<nav class="rw-family" aria-label="rwhite.no packages"><a class="external-link rw-family-label" href="https://www.rwhite.no/">rwhite.no ↗</a> <a href="https://www.rwhite.no/cohort/" class="external-link">cohort</a> <a href="https://www.rwhite.no/plnr/" class="external-link">plnr</a> <a href="https://www.rwhite.no/org/">org</a>
+</nav></p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Crafted by <a href="https://www.rwhite.no" class="external-link">Richard Aubrey White</a>.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
