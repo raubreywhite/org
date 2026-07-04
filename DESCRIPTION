@@ -18,6 +18,7 @@ License: MIT + file LICENSE
 URL: https://www.rwhite.no/org/, https://github.com/raubreywhite/org
 BugReports: https://github.com/raubreywhite/org/issues
 Encoding: UTF-8
+Config/Needs/website: raubreywhite/pkgdowntemplate
 Imports: utils
 Suggests: testthat,
     knitr,

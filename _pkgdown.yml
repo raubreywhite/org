@@ -1,25 +1,22 @@
 url: https://www.rwhite.no/org/
 
 template:
-  bootstrap: 5
-  bslib:
-    heading_font: { google: "Newsreader" }
-    code_font:    { google: "IBM Plex Mono" }
-    primary: "#8a1c1c"
-    bg: "#ffffff"
-    fg: "#231c16"
-    link-color: "#8a1c1c"
-    border-radius: "0.15rem"
-  includes:
-    in_header: >
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-navbar:
-  bg: dark
-  type: dark
-  structure:
-    left:  [reference, articles]
-    right: [search, github]
+  package: pkgdowntemplate
+  params:
+    hero:
+      overline: "R package · Project structure"
+      title: "Organise projects: code, results, data."
+      lede: >
+        A standardised project layout with consistent cross-platform paths,
+        date-organised results, and safe file handling — so every analysis is
+        laid out <em>the same way</em>.
+      cta:
+        primary:
+          text: "Get started"
+          href: "articles/org.html"
+        secondary:
+          text: "Browse the reference →"
+          href: "reference/index.html"
 
 reference:
 - title: "Package and Environment"
@@ -34,13 +31,6 @@ reference:
     - move_directory
     - path
     - write_text
-
-footer:
-  structure:
-    #left: csids
-    right: developed_by
-  components:
-    #csids: <a href='https://www.csids.no'><img src='https://www.csids.no/resources/logo/logo_full_blue.svg' width=200></a>
 
 authors:
   footer:
