@@ -24,3 +24,29 @@ Sets the results folder in the project environment and creates a date-based subf
 The date-based folder is accessible via \code{proj$results_today} and empty date folders
 are automatically cleaned up when new results are added.
 }
+\examples{
+home <- file.path(tempdir(), "org_set_results_example")
+dir.create(file.path(home, "R"), recursive = TRUE, showWarnings = FALSE)
+
+proj <- org::initialize_project(
+  home = home,
+  results = file.path(home, "results_a")
+)
+org::project$results_today
+
+# Point the project at a different results folder
+org::set_results(file.path(home, "results_b"))
+org::project$results_today
+dir.exists(org::project$results_today)
+
+unlink(home, recursive = TRUE)
+}
+\seealso{
+\code{vignette("org")}, whose "Common workflows" section shows when to
+change the results folder after a project is already initialized.
+
+Other project setup: 
+\code{\link{initialize_project}()},
+\code{\link{project}}
+}
+\concept{project setup}

@@ -34,8 +34,10 @@ select_folder_that_exists <- function(folders, name) {
 #' @param results Results folder path
 #' @param proj Project environment
 #' @keywords internal
-set_results_internal <- function(results, proj){
-  if(is.null(results)) return()
+set_results_internal <- function(results, proj) {
+  if (is.null(results)) {
+    return()
+  }
   proj$results <- strip_and_then_add_trailing_forwardslash(
     select_folder_that_exists(results, "results")[["folder"]]
   )
@@ -50,9 +52,17 @@ set_results_internal <- function(results, proj){
   }
 
   for (i in names(proj)) {
-    if (i == "computer_id") next
-    if (!is.null(proj[[i]]) & !is.na(proj[[i]])) {
-      if (!dir.exists(proj[[i]])) dir.create(proj[[i]], showWarnings = FALSE, recursive = TRUE)
+    if (i == "computer_id") {
+      next
+    }
+    # proj also holds non-path entries (e.g. `env`), which is.na() cannot test
+    if (!is.character(proj[[i]])) {
+      next
+    }
+    if (!is.na(proj[[i]])) {
+      if (!dir.exists(proj[[i]])) {
+        dir.create(proj[[i]], showWarnings = FALSE, recursive = TRUE)
+      }
     }
   }
 
@@ -60,9 +70,13 @@ set_results_internal <- function(results, proj){
   if (!is.null(proj$results)) {
     for (f in list.files(proj$results)) {
       if (grepl("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]", f)) {
-        if (f == today) next # don't want to delete today's folder
+        if (f == today) {
+          next
+        } # don't want to delete today's folder
         f2 <- file.path(proj$results, f)
-        if (file.exists(f2) && !dir.exists(f2)) next # dont delete files
+        if (file.exists(f2) && !dir.exists(f2)) {
+          next
+        } # dont delete files
         if (length(list.files(f2)) == 0) {
           unlink(f2, recursive = T)
         }
@@ -85,11 +99,32 @@ set_results_internal <- function(results, proj){
 #'     \item{$results}{The base results folder path}
 #'     \item{$results_today}{Path to today's results folder (format: YYYY-MM-DD)}
 #'   }
+#' @examples
+#' home <- file.path(tempdir(), "org_set_results_example")
+#' dir.create(file.path(home, "R"), recursive = TRUE, showWarnings = FALSE)
+#'
+#' proj <- org::initialize_project(
+#'   home = home,
+#'   results = file.path(home, "results_a")
+#' )
+#' org::project$results_today
+#'
+#' # Point the project at a different results folder
+#' org::set_results(file.path(home, "results_b"))
+#' org::project$results_today
+#' dir.exists(org::project$results_today)
+#'
+#' unlink(home, recursive = TRUE)
+#' @family project setup
+#' @seealso `vignette("org")`, whose "Common workflows" section shows when to
+#'   change the results folder after a project is already initialized.
 #' @export
 set_results <- function(results, proj = org::project) {
-  if (is.null(proj[["computer_id"]])) stop("not initialized")
+  if (is.null(proj[["computer_id"]])) {
+    stop("not initialized")
+  }
 
-  if(!identical(proj, project)){
+  if (!identical(proj, project)) {
     set_results_internal(results, proj)
   }
   set_results_internal(results, project)
@@ -113,25 +148,44 @@ initialize_project_folders <- function(
   encode_to,
   proj,
   ...
-){
+) {
   temp_env <- new.env()
 
-  temp_env$home <- strip_and_then_add_trailing_forwardslash(home, encode_from = encode_from, encode_to = encode_to)
-  if(!is.null(results)) temp_env$results <- strip_and_then_add_trailing_forwardslash(results, encode_from = encode_from, encode_to = encode_to)
+  temp_env$home <- strip_and_then_add_trailing_forwardslash(
+    home,
+    encode_from = encode_from,
+    encode_to = encode_to
+  )
+  if (!is.null(results)) {
+    temp_env$results <- strip_and_then_add_trailing_forwardslash(
+      results,
+      encode_from = encode_from,
+      encode_to = encode_to
+    )
+  }
 
   today <- format.Date(Sys.time(), "%Y-%m-%d")
 
   arguments <- list(...)
   for (i in seq_along(arguments)) {
-    temp_env[[names(arguments)[i]]] <- strip_and_then_add_trailing_forwardslash(arguments[[i]], encode_from = encode_from, encode_to = encode_to)
+    temp_env[[names(arguments)[i]]] <- strip_and_then_add_trailing_forwardslash(
+      arguments[[i]],
+      encode_from = encode_from,
+      encode_to = encode_to
+    )
   }
 
   # If multiple files were provided, then select the folder that exists
   for (i in names(temp_env)) {
-    if (i == "computer_id") next
+    if (i == "computer_id") {
+      next
+    }
     if (!is.null(temp_env[[i]])) {
       if (i == "home") {
-        temp_env[["computer_id"]] <- select_folder_that_exists(temp_env[[i]], i)[["id"]]
+        temp_env[["computer_id"]] <- select_folder_that_exists(
+          temp_env[[i]],
+          i
+        )[["id"]]
       }
       temp_env[[i]] <- select_folder_that_exists(temp_env[[i]], i)[["folder"]]
     }
@@ -141,7 +195,7 @@ initialize_project_folders <- function(
   set_results_internal(results = results, proj = temp_env)
 
   # copy temp_env to proj
-  for(i in names(temp_env)){
+  for (i in names(temp_env)) {
     proj[[i]] <- temp_env[[i]]
   }
 }
@@ -158,7 +212,7 @@ source_to_environment <- function(
   env,
   folders_to_be_sourced,
   source_folders_absolute
-){
+) {
   for (i in folders_to_be_sourced) {
     if (source_folders_absolute) {
       folder <- i
@@ -171,7 +225,12 @@ source_to_environment <- function(
       create_dir(folder)
     }
 
-    message(paste0("Sourcing all code inside ", folder, " into ", environmentName(env)))
+    message(paste0(
+      "Sourcing all code inside ",
+      folder,
+      " into ",
+      environmentName(env)
+    ))
     # fileSources <- file.path(folder, list.files(folder, pattern = "*.[rR]$"))
     file_sources <- ls_files(folder, regexp = "*.[rR]$")
 
@@ -214,18 +273,29 @@ source_to_environment <- function(
 #' 4. Handles path encoding for cross-platform compatibility
 #' 5. Maintains a mirror of settings in `org::project`
 #' @examples
-#' \dontrun{
-#' # Initialize a new project
-#' org::initialize_project(
-#'   home = paste0(tempdir(), "/git/analyses/2019/analysis3/"),
-#'   results = paste0(tempdir(), "/dropbox/analyses_results/2019/analysis3/"),
-#'   raw = paste0(tempdir(), "/data/analyses/2019/analysis3/")
+#' # A minimal project: a home folder holding an R/ folder of functions
+#' home <- file.path(tempdir(), "org_init_example", "analysis3")
+#' dir.create(file.path(home, "R"), recursive = TRUE, showWarnings = FALSE)
+#' writeLines("greet <- function() 'hello'", file.path(home, "R", "greet.R"))
+#'
+#' proj <- org::initialize_project(
+#'   home = home,
+#'   results = file.path(tempdir(), "org_init_example", "results"),
+#'   raw = file.path(tempdir(), "org_init_example", "raw")
 #' )
 #'
-#' # Access project settings
-#' org::project$results_today  # Today's results folder
-#' org::project$raw           # Raw data folder
-#' }
+#' # Folder locations, both on the returned environment and on org::project
+#' proj$results_today # Today's results folder
+#' proj$raw # Raw data folder
+#' org::project$results_today
+#'
+#' # Everything in home/R/ has been sourced into `env`
+#' proj$env$greet()
+#'
+#' unlink(file.path(tempdir(), "org_init_example"), recursive = TRUE)
+#' @family project setup
+#' @seealso `vignette("org")` for the recommended project layout, and its
+#'   "Team collaboration" section for giving one folder several possible paths.
 #' @export
 initialize_project <- function(
   env = new.env(),
@@ -237,16 +307,17 @@ initialize_project <- function(
   encode_from = "UTF-8",
   encode_to = "latin1",
   ...
-  ) {
-
+) {
   stopifnot(!is.null(home))
 
-  if(!identical(env, .GlobalEnv)){
-    message("You are NOT sourcing into .GlobalEnv. All functions will be sourced into an environment that is returned from this function.")
+  if (!identical(env, .GlobalEnv)) {
+    message(
+      "You are NOT sourcing into .GlobalEnv. All functions will be sourced into an environment that is returned from this function."
+    )
   }
 
   proj <- new.env()
-  for(p in c(project, proj)){
+  for (p in c(project, proj)) {
     initialize_project_folders(
       env = env,
       home = home,

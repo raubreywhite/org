@@ -1,3 +1,21 @@
+# Version 2026.8.3
+
+- Fixed `set_results()`, which failed with "invalid filename argument" whenever
+  it was called after `initialize_project()`. `initialize_project()` stores the
+  sourcing environment in `org::project$env`; the folder-creation loop applied
+  `is.na()` to it, which returns `FALSE` with a warning rather than skipping,
+  so the environment reached `dir.exists()` and that is what threw. Non-character
+  entries are now skipped. Multi-element character paths remain unsupported, as
+  before.
+- Added runnable examples to `project` and `set_results()`, which previously had
+  none.
+- Replaced the `\dontrun{}` examples on `initialize_project()`,
+  `move_directory()`, and `write_text()` with examples that run against
+  `tempdir()`.
+- Added `@family` cross-links (project setup; file utilities) and a `@seealso`
+  pointing at `vignette("org")` to all seven exported objects.
+- Added `index.md`, `pkgdown/`, and `Rplots.pdf` to `.Rbuildignore`.
+
 # Version 2026.4.9
 
 - Added `install_missing_packages` argument to `initialize_project()`. Scans

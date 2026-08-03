@@ -39,3 +39,13 @@ org::ls_files(regexp = "\\\\.R$")
 org::ls_files(c("dir1", "dir2"))
 }
 }
+\seealso{
+\code{vignette("org")}, whose "Troubleshooting" section uses this
+function to check which files a project will source.
+
+Other file utilities: 
+\code{\link{move_directory}()},
+\code{\link{path}()},
+\code{\link{write_text}()}
+}
+\concept{file utilities}

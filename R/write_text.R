@@ -1,5 +1,6 @@
 convert_newline_linux_to_windows <- function(txt) {
-  needs_converting <- length(grep("\\n", txt)) > 0 & length(grep("\\r\\n", txt)) == 0
+  needs_converting <- length(grep("\\n", txt)) > 0 &
+    length(grep("\\r\\n", txt)) == 0
   if (needs_converting) {
     txt <- gsub("\\n", "\r\n", txt)
   }
@@ -12,18 +13,31 @@ convert_newline_linux_to_windows <- function(txt) {
 #' Text and header are converted from Linux newline format to Windows newline format before writing.
 #'
 #' @param txt A character string of text to be written to the file.
-#' @param file A character string specifying the file path. Passed through to `base::cat`. 
+#' @param file A character string specifying the file path. Passed through to `base::cat`.
 #'   Default is an empty string, which writes to the console.
-#' @param header An optional character string header to be inserted at the top of the text file. 
+#' @param header An optional character string header to be inserted at the top of the text file.
 #'   Default is `**THIS FILE IS CONSTANTLY OVERWRITTEN -- DO NOT MANUALLY EDIT**\r\n\r\n`.
 #' @return No return value. Called for its side effect of writing to a file.
 #' @examples
-#' \dontrun{
-#' org::write_text("Sample text", "output.txt")
-#' org::write_text("Another piece of text", "output.txt", "Custom Header\r\n\r\n")
-#' }
+#' f <- file.path(tempdir(), "output.txt")
+#'
+#' org::write_text("Sample text", f)
+#' readLines(f, warn = FALSE)
+#'
+#' # A custom header replaces the default one. The file is overwritten.
+#' org::write_text("Another piece of text", f, "Custom Header\r\n\r\n")
+#' readLines(f, warn = FALSE)
+#'
+#' unlink(f)
+#' @family file utilities
+#' @seealso `vignette("org")`, whose "Example project structure" section uses
+#'   this function to keep a change log beside the results.
 #' @export
-write_text <- function(txt, file = "", header = "**THIS FILE IS CONSTANTLY OVERWRITTEN -- DO NOT MANUALLY EDIT**\r\n\r\n") {
+write_text <- function(
+  txt,
+  file = "",
+  header = "**THIS FILE IS CONSTANTLY OVERWRITTEN -- DO NOT MANUALLY EDIT**\r\n\r\n"
+) {
   header <- convert_newline_linux_to_windows(header)
   txt <- convert_newline_linux_to_windows(txt)
 

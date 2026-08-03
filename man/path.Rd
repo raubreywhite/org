@@ -21,3 +21,13 @@ any double slashes that might occur.
 org::path("home", "user", "data.csv")  # Returns "home/user/data.csv"
 org::path("home//user", "data.csv")    # Returns "home/user/data.csv"
 }
+\seealso{
+\code{vignette("org")}, whose "Path construction and cross-platform
+compatibility" section shows how this function is used in an analysis.
+
+Other file utilities: 
+\code{\link{ls_files}()},
+\code{\link{move_directory}()},
+\code{\link{write_text}()}
+}
+\concept{file utilities}

@@ -17,3 +17,6 @@ _pkgdown.yml
 .github
 CLAUDE.md
 .claude
+^index\.md$
+^pkgdown$
+^Rplots\.pdf$

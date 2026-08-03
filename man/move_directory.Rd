@@ -30,11 +30,32 @@ The function:
 }
 }
 \examples{
-\dontrun{
-# Move a directory
-org::move_directory("old_dir", "new_dir")
+from <- file.path(tempdir(), "org_move_from")
+to <- file.path(tempdir(), "org_move_to")
+dir.create(from, showWarnings = FALSE)
+writeLines("first", file.path(from, "a.txt"))
 
-# Move and overwrite existing directory
-org::move_directory("old_dir", "new_dir", overwrite_to = TRUE)
+# Move a directory
+org::move_directory(from, to)
+dir.exists(from) # FALSE, the source is gone
+list.files(to) # "a.txt"
+
+# Move and overwrite existing directory. The destination is replaced,
+# not merged, so "a.txt" does not survive.
+dir.create(from, showWarnings = FALSE)
+writeLines("second", file.path(from, "b.txt"))
+org::move_directory(from, to, overwrite_to = TRUE)
+list.files(to) # "b.txt"
+
+unlink(to, recursive = TRUE)
 }
+\seealso{
+\code{vignette("org")}, whose "Function reference" section lists this
+alongside the other file operations.
+
+Other file utilities: 
+\code{\link{ls_files}()},
+\code{\link{path}()},
+\code{\link{write_text}()}
 }
+\concept{file utilities}

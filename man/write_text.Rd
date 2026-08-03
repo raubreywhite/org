@@ -27,8 +27,24 @@ Writes text to a file, optionally including a header at the top of the file.
 Text and header are converted from Linux newline format to Windows newline format before writing.
 }
 \examples{
-\dontrun{
-org::write_text("Sample text", "output.txt")
-org::write_text("Another piece of text", "output.txt", "Custom Header\r\n\r\n")
+f <- file.path(tempdir(), "output.txt")
+
+org::write_text("Sample text", f)
+readLines(f, warn = FALSE)
+
+# A custom header replaces the default one. The file is overwritten.
+org::write_text("Another piece of text", f, "Custom Header\r\n\r\n")
+readLines(f, warn = FALSE)
+
+unlink(f)
 }
+\seealso{
+\code{vignette("org")}, whose "Example project structure" section uses
+this function to keep a change log beside the results.
+
+Other file utilities: 
+\code{\link{ls_files}()},
+\code{\link{move_directory}()},
+\code{\link{path}()}
 }
+\concept{file utilities}

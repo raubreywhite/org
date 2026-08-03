@@ -67,16 +67,33 @@ The function performs several key operations:
 }
 }
 \examples{
-\dontrun{
-# Initialize a new project
-org::initialize_project(
-  home = paste0(tempdir(), "/git/analyses/2019/analysis3/"),
-  results = paste0(tempdir(), "/dropbox/analyses_results/2019/analysis3/"),
-  raw = paste0(tempdir(), "/data/analyses/2019/analysis3/")
+# A minimal project: a home folder holding an R/ folder of functions
+home <- file.path(tempdir(), "org_init_example", "analysis3")
+dir.create(file.path(home, "R"), recursive = TRUE, showWarnings = FALSE)
+writeLines("greet <- function() 'hello'", file.path(home, "R", "greet.R"))
+
+proj <- org::initialize_project(
+  home = home,
+  results = file.path(tempdir(), "org_init_example", "results"),
+  raw = file.path(tempdir(), "org_init_example", "raw")
 )
 
-# Access project settings
-org::project$results_today  # Today's results folder
-org::project$raw           # Raw data folder
+# Folder locations, both on the returned environment and on org::project
+proj$results_today # Today's results folder
+proj$raw # Raw data folder
+org::project$results_today
+
+# Everything in home/R/ has been sourced into `env`
+proj$env$greet()
+
+unlink(file.path(tempdir(), "org_init_example"), recursive = TRUE)
 }
+\seealso{
+\code{vignette("org")} for the recommended project layout, and its
+"Team collaboration" section for giving one folder several possible paths.
+
+Other project setup: 
+\code{\link{project}},
+\code{\link{set_results}()}
 }
+\concept{project setup}

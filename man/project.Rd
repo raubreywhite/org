@@ -17,4 +17,33 @@ project
 \description{
 An environment that stores the locations of folders used in the project.
 }
+\examples{
+home <- file.path(tempdir(), "org_project_example")
+dir.create(file.path(home, "R"), recursive = TRUE, showWarnings = FALSE)
+
+proj <- org::initialize_project(
+  home = home,
+  results = file.path(home, "results"),
+  data_raw = file.path(home, "data_raw")
+)
+
+# Every folder is now available from anywhere in the analysis
+org::project$home
+org::project$results
+org::project$results_today
+org::project$data_raw
+
+unlink(home, recursive = TRUE)
+}
+\seealso{
+\code{vignette("org")}, whose "Project structure" section describes the
+standard folders and the additional-folder convention. Folders passed
+through \code{...} are stored here under their own names and are not described
+individually.
+
+Other project setup: 
+\code{\link{initialize_project}()},
+\code{\link{set_results}()}
+}
+\concept{project setup}
 \keyword{datasets}

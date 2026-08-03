@@ -1,11 +1,17 @@
-strip_trailing_forwardslash <- function(x, encode_from = "UTF-8", encode_to = "latin1") {
+strip_trailing_forwardslash <- function(
+  x,
+  encode_from = "UTF-8",
+  encode_to = "latin1"
+) {
   if (is.null(x)) {
     return(NULL)
   }
   retval <- sub("/$", "", x)
 
   if (requireNamespace("glue", quietly = TRUE)) {
-    for (i in seq_along(retval)) retval[i] <- glue::glue(retval[i], .envir = parent.frame(n = 1))
+    for (i in seq_along(retval)) {
+      retval[i] <- glue::glue(retval[i], .envir = parent.frame(n = 1))
+    }
   }
   if (.Platform$OS.type == "windows") {
     retval <- iconv(retval, from = encode_from, to = encode_to)
@@ -13,13 +19,17 @@ strip_trailing_forwardslash <- function(x, encode_from = "UTF-8", encode_to = "l
   return(retval)
 }
 
-strip_and_then_add_trailing_forwardslash <- function(x, encode_from = "UTF-8", encode_to = "latin1") {
+strip_and_then_add_trailing_forwardslash <- function(
+  x,
+  encode_from = "UTF-8",
+  encode_to = "latin1"
+) {
   retval <- strip_trailing_forwardslash(x, encode_from, encode_to)
   retval <- paste0(retval, "/")
   return(retval)
 }
 
-create_dir <- function(folder){
+create_dir <- function(folder) {
   dir.create(folder, showWarnings = FALSE, recursive = TRUE)
 }
 
@@ -34,11 +44,14 @@ create_dir <- function(folder){
 #' @examples
 #' org::path("home", "user", "data.csv")  # Returns "home/user/data.csv"
 #' org::path("home//user", "data.csv")    # Returns "home/user/data.csv"
+#' @family file utilities
+#' @seealso `vignette("org")`, whose "Path construction and cross-platform
+#'   compatibility" section shows how this function is used in an analysis.
 #' @export
-path <- function(...){
+path <- function(...) {
   dots <- list(...)
-  if(length(dots) > 1){
-    retval <- do.call("paste0", list(dots, collapse="/"))
+  if (length(dots) > 1) {
+    retval <- do.call("paste0", list(dots, collapse = "/"))
   } else {
     retval <- dots[[1]]
   }
@@ -47,24 +60,33 @@ path <- function(...){
 }
 
 ls_files_int <- function(
-    path = ".",
-    regexp = NULL
-){
-  if(path == "."){
+  path = ".",
+  regexp = NULL
+) {
+  if (path == ".") {
     path <- getwd()
-  } else if(length(grep("^\\./", path))){
-    path <- gsub("^./",getwd(), path)
+  } else if (length(grep("^\\./", path))) {
+    path <- gsub("^./", getwd(), path)
   }
   path <- normalizePath(path, mustWork = FALSE)
-  retval <- list.files(path = path, pattern = regexp, full.names = T, include.dirs = T)
+  retval <- list.files(
+    path = path,
+    pattern = regexp,
+    full.names = T,
+    include.dirs = T
+  )
   # remove @eaDir
   eaDir_grep <- grep("@eaDir", retval)
-  if(length(eaDir_grep) > 0){
+  if (length(eaDir_grep) > 0) {
     retval <- retval[-eaDir_grep]
   }
   return(retval)
 }
-ls_files_int_vectorized <- Vectorize(ls_files_int, vectorize.args = "path", USE.NAMES = FALSE)
+ls_files_int_vectorized <- Vectorize(
+  ls_files_int,
+  vectorize.args = "path",
+  USE.NAMES = FALSE
+)
 
 #' List files and directories recursively
 #'
@@ -91,18 +113,21 @@ ls_files_int_vectorized <- Vectorize(ls_files_int, vectorize.args = "path", USE.
 #' # List files in multiple directories
 #' org::ls_files(c("dir1", "dir2"))
 #' }
+#' @family file utilities
+#' @seealso `vignette("org")`, whose "Troubleshooting" section uses this
+#'   function to check which files a project will source.
 #' @export
 ls_files <- function(
-    path = ".",
-    regexp = NULL
-    ){
+  path = ".",
+  regexp = NULL
+) {
   retval <- ls_files_int_vectorized(
     path = path,
     regexp = regexp
   )
-  if(length(path) == 1 & !is.null(ncol(retval))){
-    retval <- retval[,1]
-  } else if(length(path) == 1 & is.list(retval)){
+  if (length(path) == 1 & !is.null(ncol(retval))) {
+    retval <- retval[, 1]
+  } else if (length(path) == 1 & is.list(retval)) {
     retval <- retval[[1]]
   }
   return(retval)
@@ -120,9 +145,9 @@ ls_files <- function(
 #'   - `sep`: Separator between elements (default: "")
 #'   - `append`: Whether to append to existing content (default: TRUE)
 #' @keywords internal
-cat_to_filepath_function_factory <- function(filepath){
+cat_to_filepath_function_factory <- function(filepath) {
   force(filepath)
-  function(..., sep = "", append = TRUE){
+  function(..., sep = "", append = TRUE) {
     cat(..., file = filepath, sep = sep, append = append)
   }
 }
@@ -143,19 +168,37 @@ cat_to_filepath_function_factory <- function(filepath){
 #' - Removes the source directory after successful copy
 #' - Fails if source doesn't exist or destination exists (unless overwrite_to=TRUE)
 #' @examples
-#' \dontrun{
-#' # Move a directory
-#' org::move_directory("old_dir", "new_dir")
+#' from <- file.path(tempdir(), "org_move_from")
+#' to <- file.path(tempdir(), "org_move_to")
+#' dir.create(from, showWarnings = FALSE)
+#' writeLines("first", file.path(from, "a.txt"))
 #'
-#' # Move and overwrite existing directory
-#' org::move_directory("old_dir", "new_dir", overwrite_to = TRUE)
-#' }
+#' # Move a directory
+#' org::move_directory(from, to)
+#' dir.exists(from) # FALSE, the source is gone
+#' list.files(to) # "a.txt"
+#'
+#' # Move and overwrite existing directory. The destination is replaced,
+#' # not merged, so "a.txt" does not survive.
+#' dir.create(from, showWarnings = FALSE)
+#' writeLines("second", file.path(from, "b.txt"))
+#' org::move_directory(from, to, overwrite_to = TRUE)
+#' list.files(to) # "b.txt"
+#'
+#' unlink(to, recursive = TRUE)
+#' @family file utilities
+#' @seealso `vignette("org")`, whose "Function reference" section lists this
+#'   alongside the other file operations.
 #' @export
-move_directory <- function(from, to, overwrite_to = FALSE){
+move_directory <- function(from, to, overwrite_to = FALSE) {
   stopifnot(length(from) == 1)
   stopifnot(length(to) == 1)
-  if(file.exists(to) & !overwrite_to) stop(to, " already exists.")
-  if(!dir.exists(from)) stop(from, " doesn't exist/isn't a directory")
+  if (file.exists(to) & !overwrite_to) {
+    stop(to, " already exists.")
+  }
+  if (!dir.exists(from)) {
+    stop(from, " doesn't exist/isn't a directory")
+  }
 
   unlink(to, recursive = TRUE, force = TRUE)
   create_dir(to)
