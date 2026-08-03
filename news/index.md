@@ -1,5 +1,36 @@
 # Changelog
 
+## Version 2026.8.3
+
+- Fixed
+  [`set_results()`](https://www.rwhite.no/org/reference/set_results.md),
+  which failed with “invalid filename argument” whenever it was called
+  after
+  [`initialize_project()`](https://www.rwhite.no/org/reference/initialize_project.md).
+  [`initialize_project()`](https://www.rwhite.no/org/reference/initialize_project.md)
+  stores the sourcing environment in `org::project$env`; the
+  folder-creation loop applied
+  [`is.na()`](https://rdrr.io/r/base/NA.html) to it, which returns
+  `FALSE` with a warning rather than skipping, so the environment
+  reached [`dir.exists()`](https://rdrr.io/r/base/files2.html) and that
+  is what threw. Non-character entries are now skipped. Multi-element
+  character paths remain unsupported, as before.
+- Added runnable examples to `project` and
+  [`set_results()`](https://www.rwhite.no/org/reference/set_results.md),
+  which previously had none.
+- Replaced the `\dontrun{}` examples on
+  [`initialize_project()`](https://www.rwhite.no/org/reference/initialize_project.md),
+  [`move_directory()`](https://www.rwhite.no/org/reference/move_directory.md),
+  and
+  [`write_text()`](https://www.rwhite.no/org/reference/write_text.md)
+  with examples that run against
+  [`tempdir()`](https://rdrr.io/r/base/tempfile.html).
+- Added `@family` cross-links (project setup; file utilities) and a
+  `@seealso` pointing at
+  [`vignette("org")`](https://www.rwhite.no/org/articles/org.md) to all
+  seven exported objects.
+- Added `index.md`, `pkgdown/`, and `Rplots.pdf` to `.Rbuildignore`.
+
 ## Version 2026.4.9
 
 CRAN release: 2026-04-09

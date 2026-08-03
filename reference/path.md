@@ -20,6 +20,17 @@ path(...)
 
 A character vector containing the constructed path.
 
+## See also
+
+[`vignette("org")`](https://www.rwhite.no/org/articles/org.md), whose
+"Path construction and cross-platform compatibility" section shows how
+this function is used in an analysis.
+
+Other file utilities:
+[`ls_files()`](https://www.rwhite.no/org/reference/ls_files.md),
+[`move_directory()`](https://www.rwhite.no/org/reference/move_directory.md),
+[`write_text()`](https://www.rwhite.no/org/reference/write_text.md)
+
 ## Examples
 
 ``` r

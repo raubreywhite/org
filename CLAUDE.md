@@ -62,11 +62,13 @@ pkgdown::build_site()
 
 ### Version and Release
 
-The package uses date-based versioning format `YY.M.D` (e.g., `25.11.22`
-for November 22, 2025). When making changes:
+The package uses date-based versioning format `YYYY.M.D` (e.g.,
+`2025.11.22` for November 22, 2025). When making changes:
 
-1.  Update `Version:` in DESCRIPTION to YY.M.D format (remove leading
-    zeroes)
+1.  Update `Version:` in DESCRIPTION to YYYY.M.D format (remove leading
+    zeroes). Do NOT write `YY.M.D` —
+    `package_version("26.8.3") > package_version("2026.4.9")` is FALSE,
+    so a two-digit year is a version DECREASE and R refuses the upgrade.
 2.  Update NEWS.md with changes under the new version heading
 
 ## Code Organization

@@ -36,6 +36,17 @@ The function:
 
 - Returns full paths
 
+## See also
+
+[`vignette("org")`](https://www.rwhite.no/org/articles/org.md), whose
+"Troubleshooting" section uses this function to check which files a
+project will source.
+
+Other file utilities:
+[`move_directory()`](https://www.rwhite.no/org/reference/move_directory.md),
+[`path()`](https://www.rwhite.no/org/reference/path.md),
+[`write_text()`](https://www.rwhite.no/org/reference/write_text.md)
+
 ## Examples
 
 ``` r

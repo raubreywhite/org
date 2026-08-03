@@ -36,11 +36,32 @@ write_text(
 
 No return value. Called for its side effect of writing to a file.
 
+## See also
+
+[`vignette("org")`](https://www.rwhite.no/org/articles/org.md), whose
+"Example project structure" section uses this function to keep a change
+log beside the results.
+
+Other file utilities:
+[`ls_files()`](https://www.rwhite.no/org/reference/ls_files.md),
+[`move_directory()`](https://www.rwhite.no/org/reference/move_directory.md),
+[`path()`](https://www.rwhite.no/org/reference/path.md)
+
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-org::write_text("Sample text", "output.txt")
-org::write_text("Another piece of text", "output.txt", "Custom Header\r\n\r\n")
-} # }
+f <- file.path(tempdir(), "output.txt")
+
+org::write_text("Sample text", f)
+readLines(f, warn = FALSE)
+#> [1] "**THIS FILE IS CONSTANTLY OVERWRITTEN -- DO NOT MANUALLY EDIT**"
+#> [2] ""                                                               
+#> [3] "Sample text"                                                    
+
+# A custom header replaces the default one. The file is overwritten.
+org::write_text("Another piece of text", f, "Custom Header\r\n\r\n")
+readLines(f, warn = FALSE)
+#> [1] "Custom Header"         ""                      "Another piece of text"
+
+unlink(f)
 ```

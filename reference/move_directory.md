@@ -40,14 +40,39 @@ The function:
 - Fails if source doesn't exist or destination exists (unless
   overwrite_to=TRUE)
 
+## See also
+
+[`vignette("org")`](https://www.rwhite.no/org/articles/org.md), whose
+"Function reference" section lists this alongside the other file
+operations.
+
+Other file utilities:
+[`ls_files()`](https://www.rwhite.no/org/reference/ls_files.md),
+[`path()`](https://www.rwhite.no/org/reference/path.md),
+[`write_text()`](https://www.rwhite.no/org/reference/write_text.md)
+
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-# Move a directory
-org::move_directory("old_dir", "new_dir")
+from <- file.path(tempdir(), "org_move_from")
+to <- file.path(tempdir(), "org_move_to")
+dir.create(from, showWarnings = FALSE)
+writeLines("first", file.path(from, "a.txt"))
 
-# Move and overwrite existing directory
-org::move_directory("old_dir", "new_dir", overwrite_to = TRUE)
-} # }
+# Move a directory
+org::move_directory(from, to)
+dir.exists(from) # FALSE, the source is gone
+#> [1] FALSE
+list.files(to) # "a.txt"
+#> [1] "a.txt"
+
+# Move and overwrite existing directory. The destination is replaced,
+# not merged, so "a.txt" does not survive.
+dir.create(from, showWarnings = FALSE)
+writeLines("second", file.path(from, "b.txt"))
+org::move_directory(from, to, overwrite_to = TRUE)
+list.files(to) # "b.txt"
+#> [1] "b.txt"
+
+unlink(to, recursive = TRUE)
 ```
