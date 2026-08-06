@@ -7,12 +7,12 @@
 select_folder_that_exists(folders, name)
 }
 \arguments{
-\item{folders}{Character vector of folder paths to check}
+\item{folders}{Character vector of folder paths to check.}
 
-\item{name}{Name of the folder type for error messages}
+\item{name}{Name of the folder type for error messages.}
 }
 \value{
-List with folder path and id
+List with folder path and id.
 }
 \description{
 Select first existing folder from a list

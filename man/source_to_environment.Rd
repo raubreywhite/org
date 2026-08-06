@@ -12,13 +12,13 @@ source_to_environment(
 )
 }
 \arguments{
-\item{proj}{Project environment}
+\item{proj}{Project environment.}
 
-\item{env}{Target environment for sourcing}
+\item{env}{Target environment for the sourced code.}
 
-\item{folders_to_be_sourced}{Folders containing R files}
+\item{folders_to_be_sourced}{Folders containing R files.}
 
-\item{source_folders_absolute}{Whether folder paths are absolute}
+\item{source_folders_absolute}{Whether folder paths are absolute.}
 }
 \description{
 Source R files into environment

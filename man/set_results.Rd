@@ -7,22 +7,23 @@
 set_results(results, proj = org::project)
 }
 \arguments{
-\item{results}{A character vector specifying one or more possible results folder paths.
-The first existing path will be used.}
+\item{results}{A character vector specifying one or more possible results
+folder paths. \code{set_results()} uses the first existing path.}
 
 \item{proj}{The project environment. Default is \code{org::project}.}
 }
 \value{
 Nothing. Modifies the \code{proj} environment to include:
 \describe{
-\item{$results}{The base results folder path}
-\item{$results_today}{Path to today's results folder (format: YYYY-MM-DD)}
+\item{$results}{The base results folder path.}
+\item{$results_today}{Path to today's results folder. The format is YYYY-MM-DD.}
 }
 }
 \description{
-Sets the results folder in the project environment and creates a date-based subfolder.
-The date-based folder is accessible via \code{proj$results_today} and empty date folders
-are automatically cleaned up when new results are added.
+Sets the results folder in the project environment. Creates a date-based
+subfolder. You reach the date-based folder at \code{proj$results_today}.
+\code{set_results()} automatically cleans up empty date folders when new results
+are added.
 }
 \examples{
 home <- file.path(tempdir(), "org_set_results_example")

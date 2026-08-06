@@ -23,8 +23,9 @@ Default is \verb{**THIS FILE IS CONSTANTLY OVERWRITTEN -- DO NOT MANUALLY EDIT**
 No return value. Called for its side effect of writing to a file.
 }
 \description{
-Writes text to a file, optionally including a header at the top of the file.
-Text and header are converted from Linux newline format to Windows newline format before writing.
+Writes text to a file. It can also insert a header at the top of the file.
+\code{write_text()} converts the text and the header from Linux newline format to
+Windows newline format before it writes.
 }
 \examples{
 f <- file.path(tempdir(), "output.txt")

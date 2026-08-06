@@ -17,53 +17,61 @@ initialize_project(
 )
 }
 \arguments{
-\item{env}{The environment that the code will be sourced into. Use \code{.GlobalEnv} to source code
-into the global environment. If a different environment is provided, all functions will
-be sourced into that environment.}
+\item{env}{The environment that \code{initialize_project()} sources the code
+into. Use \code{.GlobalEnv} to source code into the global environment. If you
+provide a different environment, all functions are sourced into that
+environment.}
 
-\item{home}{The folder containing 'Run.R' and 'R/'. This is the main project directory.}
+\item{home}{The folder containing 'Run.R' and 'R/'. This is the main project
+directory.}
 
-\item{results}{The base folder for storing results. A subfolder with today's date will be created
-and accessible via \code{org::project$results_today}.}
+\item{results}{The base folder for storing results. \code{initialize_project()}
+creates a subfolder with today's date. You reach it at
+\code{org::project$results_today}.}
 
-\item{folders_to_be_sourced}{Character vector of folder names inside \code{home} containing .R files
-to be sourced into the environment.}
+\item{folders_to_be_sourced}{Character vector of folder names inside \code{home}.
+These folders hold the .R files to source into the environment.}
 
-\item{install_missing_packages}{If \code{TRUE}, scans \code{folders_to_be_sourced} for package
-dependencies (via \code{library()}, \code{require()}, and \verb{pkg::} usage) and installs any
-missing packages using \code{pak} before sourcing. Falls back to \code{install.packages()}
-if \code{pak} is not available. Default is \code{FALSE}.}
+\item{install_missing_packages}{If \code{TRUE}, \code{initialize_project()} scans
+\code{folders_to_be_sourced} for package dependencies. It looks for
+\code{library()}, \code{require()}, and \verb{pkg::} usage. It then installs any missing
+package with \code{pak} before it sources the code. If \code{pak} is not available,
+it falls back to \code{install.packages()}. Default is \code{FALSE}.}
 
-\item{source_folders_absolute}{If \code{TRUE}, \code{folders_to_be_sourced} is treated as absolute paths.
-If \code{FALSE}, paths are relative to \code{home}.}
+\item{source_folders_absolute}{If \code{TRUE}, \code{initialize_project()} treats
+\code{folders_to_be_sourced} as absolute paths. If \code{FALSE}, the paths are
+relative to \code{home}.}
 
-\item{encode_from}{Source encoding for file paths (only used on Windows)}
+\item{encode_from}{Source encoding for file paths (only used on Windows).}
 
-\item{encode_to}{Target encoding for file paths (only used on Windows)}
+\item{encode_to}{Target encoding for file paths (only used on Windows).}
 
-\item{...}{Additional named arguments for other project folders (e.g., data, raw, etc.)}
+\item{...}{Additional named arguments for other project folders (e.g., data,
+raw, etc.).}
 }
 \value{
 An environment containing:
 \itemize{
-\item All folder locations as named elements
-\item \verb{$env}: The environment where code was sourced
-\item \verb{$results_today}: Path to today's results folder
+\item All folder locations as named elements.
+\item \verb{$env}: The environment that the code was sourced into.
+\item \verb{$results_today}: Path to today's results folder.
 }
 }
 \description{
-This function initializes a new R project by setting up folder locations and sourcing code files.
-It creates a standardized project structure with separate locations for code, results, and data.
-Results are automatically organized by date, and code can be sourced from specified directories.
+\code{initialize_project()} initializes a new R project. It sets up folder
+locations and sources code files. It creates a standardized project
+structure with separate locations for code, results, and data. It organizes
+results by date automatically, and it can source code from the directories
+you specify.
 }
 \details{
-The function performs several key operations:
+\code{initialize_project()} performs the five operations below.
 \enumerate{
-\item Creates necessary directories if they don't exist
-\item Sets up date-based results organization
-\item Sources all .R files from specified directories
-\item Handles path encoding for cross-platform compatibility
-\item Maintains a mirror of settings in \code{org::project}
+\item Creates necessary directories if they do not exist.
+\item Sets up date-based results organization.
+\item Sources all .R files from the specified directories.
+\item Handles path encoding for cross-platform compatibility.
+\item Maintains a mirror of settings in \code{org::project}.
 }
 }
 \examples{
@@ -89,8 +97,9 @@ proj$env$greet()
 unlink(file.path(tempdir(), "org_init_example"), recursive = TRUE)
 }
 \seealso{
-\code{vignette("org")} for the recommended project layout, and its
-"Team collaboration" section for giving one folder several possible paths.
+\code{vignette("org")} for the recommended project layout. Its "Team
+collaboration" section shows how to give one folder several possible
+paths.
 
 Other project setup: 
 \code{\link{project}},

@@ -7,9 +7,9 @@
 set_results_internal(results, proj)
 }
 \arguments{
-\item{results}{Results folder path}
+\item{results}{Results folder path.}
 
-\item{proj}{Project environment}
+\item{proj}{Project environment.}
 }
 \description{
 Internal function to set results folder

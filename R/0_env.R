@@ -3,8 +3,8 @@
 #' An environment that stores the locations of folders used in the project.
 #' @format An environment containing the following elements:
 #' \describe{
-#'   \item{home}{The folder containing 'Run.R' and 'R/'}
-#'   \item{results_today}{The folder inside `results` with today's date, created by `initialize_project`}
+#'   \item{home}{The folder containing 'Run.R' and 'R/'.}
+#'   \item{results_today}{The folder inside `results` with today's date. `initialize_project()` creates it.}
 #' }
 #' @examples
 #' home <- file.path(tempdir(), "org_project_example")
@@ -25,8 +25,8 @@
 #' unlink(home, recursive = TRUE)
 #' @family project setup
 #' @seealso `vignette("org")`, whose "Project structure" section describes the
-#'   standard folders and the additional-folder convention. Folders passed
-#'   through `...` are stored here under their own names and are not described
-#'   individually.
+#'   standard folders and the additional-folder convention. `org` stores
+#'   folders passed through `...` here under their own names. This help page
+#'   does not describe them individually.
 #' @export project
 project <- new.env()

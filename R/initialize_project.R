@@ -1,8 +1,8 @@
 #' Select first existing folder from a list
 #'
-#' @param folders Character vector of folder paths to check
-#' @param name Name of the folder type for error messages
-#' @return List with folder path and id
+#' @param folders Character vector of folder paths to check.
+#' @param name Name of the folder type for error messages.
+#' @return List with folder path and id.
 #' @keywords internal
 select_folder_that_exists <- function(folders, name) {
   retval <- NA
@@ -31,8 +31,8 @@ select_folder_that_exists <- function(folders, name) {
 
 #' Internal function to set results folder
 #'
-#' @param results Results folder path
-#' @param proj Project environment
+#' @param results Results folder path.
+#' @param proj Project environment.
 #' @keywords internal
 set_results_internal <- function(results, proj) {
   if (is.null(results)) {
@@ -87,17 +87,18 @@ set_results_internal <- function(results, proj) {
 
 #' Set results folder after project initialization
 #'
-#' Sets the results folder in the project environment and creates a date-based subfolder.
-#' The date-based folder is accessible via `proj$results_today` and empty date folders
-#' are automatically cleaned up when new results are added.
+#' Sets the results folder in the project environment. Creates a date-based
+#' subfolder. You reach the date-based folder at `proj$results_today`.
+#' `set_results()` automatically cleans up empty date folders when new results
+#' are added.
 #'
-#' @param results A character vector specifying one or more possible results folder paths.
-#'   The first existing path will be used.
+#' @param results A character vector specifying one or more possible results
+#'   folder paths. `set_results()` uses the first existing path.
 #' @param proj The project environment. Default is `org::project`.
 #' @return Nothing. Modifies the `proj` environment to include:
 #'   \describe{
-#'     \item{$results}{The base results folder path}
-#'     \item{$results_today}{Path to today's results folder (format: YYYY-MM-DD)}
+#'     \item{$results}{The base results folder path.}
+#'     \item{$results_today}{Path to today's results folder. The format is YYYY-MM-DD.}
 #'   }
 #' @examples
 #' home <- file.path(tempdir(), "org_set_results_example")
@@ -132,13 +133,13 @@ set_results <- function(results, proj = org::project) {
 
 #' Initialize project folder structure
 #'
-#' @param env Environment to source code into
-#' @param home Home directory path
-#' @param results Results directory path
-#' @param encode_from Source encoding
-#' @param encode_to Target encoding
-#' @param proj Project environment
-#' @param ... Additional folder arguments
+#' @param env Environment to source code into.
+#' @param home Home directory path.
+#' @param results Results directory path.
+#' @param encode_from Source encoding.
+#' @param encode_to Target encoding.
+#' @param proj Project environment.
+#' @param ... Additional folder arguments.
 #' @keywords internal
 initialize_project_folders <- function(
   env,
@@ -202,10 +203,10 @@ initialize_project_folders <- function(
 
 #' Source R files into environment
 #'
-#' @param proj Project environment
-#' @param env Target environment for sourcing
-#' @param folders_to_be_sourced Folders containing R files
-#' @param source_folders_absolute Whether folder paths are absolute
+#' @param proj Project environment.
+#' @param env Target environment for the sourced code.
+#' @param folders_to_be_sourced Folders containing R files.
+#' @param source_folders_absolute Whether folder paths are absolute.
 #' @keywords internal
 source_to_environment <- function(
   proj,
@@ -240,38 +241,46 @@ source_to_environment <- function(
 
 #' Initialize project environment and structure
 #'
-#' This function initializes a new R project by setting up folder locations and sourcing code files.
-#' It creates a standardized project structure with separate locations for code, results, and data.
-#' Results are automatically organized by date, and code can be sourced from specified directories.
+#' `initialize_project()` initializes a new R project. It sets up folder
+#' locations and sources code files. It creates a standardized project
+#' structure with separate locations for code, results, and data. It organizes
+#' results by date automatically, and it can source code from the directories
+#' you specify.
 #'
-#' @param env The environment that the code will be sourced into. Use `.GlobalEnv` to source code
-#'           into the global environment. If a different environment is provided, all functions will
-#'           be sourced into that environment.
-#' @param home The folder containing 'Run.R' and 'R/'. This is the main project directory.
-#' @param results The base folder for storing results. A subfolder with today's date will be created
-#'                and accessible via `org::project$results_today`.
-#' @param folders_to_be_sourced Character vector of folder names inside `home` containing .R files
-#'                             to be sourced into the environment.
-#' @param install_missing_packages If `TRUE`, scans `folders_to_be_sourced` for package
-#'   dependencies (via `library()`, `require()`, and `pkg::` usage) and installs any
-#'   missing packages using `pak` before sourcing. Falls back to `install.packages()`
-#'   if `pak` is not available. Default is `FALSE`.
-#' @param source_folders_absolute If `TRUE`, `folders_to_be_sourced` is treated as absolute paths.
-#'                               If `FALSE`, paths are relative to `home`.
-#' @param encode_from Source encoding for file paths (only used on Windows)
-#' @param encode_to Target encoding for file paths (only used on Windows)
-#' @param ... Additional named arguments for other project folders (e.g., data, raw, etc.)
+#' @param env The environment that `initialize_project()` sources the code
+#'   into. Use `.GlobalEnv` to source code into the global environment. If you
+#'   provide a different environment, all functions are sourced into that
+#'   environment.
+#' @param home The folder containing 'Run.R' and 'R/'. This is the main project
+#'   directory.
+#' @param results The base folder for storing results. `initialize_project()`
+#'   creates a subfolder with today's date. You reach it at
+#'   `org::project$results_today`.
+#' @param folders_to_be_sourced Character vector of folder names inside `home`.
+#'   These folders hold the .R files to source into the environment.
+#' @param install_missing_packages If `TRUE`, `initialize_project()` scans
+#'   `folders_to_be_sourced` for package dependencies. It looks for
+#'   `library()`, `require()`, and `pkg::` usage. It then installs any missing
+#'   package with `pak` before it sources the code. If `pak` is not available,
+#'   it falls back to `install.packages()`. Default is `FALSE`.
+#' @param source_folders_absolute If `TRUE`, `initialize_project()` treats
+#'   `folders_to_be_sourced` as absolute paths. If `FALSE`, the paths are
+#'   relative to `home`.
+#' @param encode_from Source encoding for file paths (only used on Windows).
+#' @param encode_to Target encoding for file paths (only used on Windows).
+#' @param ... Additional named arguments for other project folders (e.g., data,
+#'   raw, etc.).
 #' @return An environment containing:
-#'   - All folder locations as named elements
-#'   - `$env`: The environment where code was sourced
-#'   - `$results_today`: Path to today's results folder
+#'   - All folder locations as named elements.
+#'   - `$env`: The environment that the code was sourced into.
+#'   - `$results_today`: Path to today's results folder.
 #' @details
-#' The function performs several key operations:
-#' 1. Creates necessary directories if they don't exist
-#' 2. Sets up date-based results organization
-#' 3. Sources all .R files from specified directories
-#' 4. Handles path encoding for cross-platform compatibility
-#' 5. Maintains a mirror of settings in `org::project`
+#' `initialize_project()` performs the five operations below.
+#' 1. Creates necessary directories if they do not exist.
+#' 2. Sets up date-based results organization.
+#' 3. Sources all .R files from the specified directories.
+#' 4. Handles path encoding for cross-platform compatibility.
+#' 5. Maintains a mirror of settings in `org::project`.
 #' @examples
 #' # A minimal project: a home folder holding an R/ folder of functions
 #' home <- file.path(tempdir(), "org_init_example", "analysis3")
@@ -294,8 +303,9 @@ source_to_environment <- function(
 #'
 #' unlink(file.path(tempdir(), "org_init_example"), recursive = TRUE)
 #' @family project setup
-#' @seealso `vignette("org")` for the recommended project layout, and its
-#'   "Team collaboration" section for giving one folder several possible paths.
+#' @seealso `vignette("org")` for the recommended project layout. Its "Team
+#'   collaboration" section shows how to give one folder several possible
+#'   paths.
 #' @export
 initialize_project <- function(
   env = new.env(),

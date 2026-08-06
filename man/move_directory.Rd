@@ -17,16 +17,17 @@ move_directory(from, to, overwrite_to = FALSE)
 Nothing. Creates the destination directory and moves all contents.
 }
 \description{
-Moves a directory and all its contents to a new location.
-Can optionally overwrite the destination if it already exists.
+Moves a directory and all its contents to a new location. Can optionally
+overwrite the destination if it already exists.
 }
 \details{
-The function:
+\code{move_directory()}:
 \itemize{
-\item Creates the destination directory if it doesn't exist
-\item Copies all files and subdirectories recursively
-\item Removes the source directory after successful copy
-\item Fails if source doesn't exist or destination exists (unless overwrite_to=TRUE)
+\item Creates the destination directory if it does not exist.
+\item Copies all files and subdirectories recursively.
+\item Removes the source directory after a successful copy.
+\item Fails if the source does not exist, or if the destination exists and
+\code{overwrite_to} is \code{FALSE}.
 }
 }
 \examples{

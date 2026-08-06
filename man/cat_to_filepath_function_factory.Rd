@@ -7,19 +7,19 @@
 cat_to_filepath_function_factory(filepath)
 }
 \arguments{
-\item{filepath}{The path to the file to write to}
+\item{filepath}{The path to the file to write to.}
 }
 \value{
-A function that writes to the specified file with parameters:
+A function that writes to the specified file. It takes these
+parameters:
 \itemize{
-\item \code{...}: Content to write
-\item \code{sep}: Separator between elements (default: "")
-\item \code{append}: Whether to append to existing content (default: TRUE)
+\item \code{...}: Content to write.
+\item \code{sep}: Separator between elements (default: "").
+\item \code{append}: Whether to append to existing content (default: TRUE).
 }
 }
 \description{
-This function creates a closure that writes to a specified file path.
-It's useful for creating multiple functions that write to different files
-while maintaining consistent behavior.
+Creates a closure that writes to a specified file path. Use it to create
+several functions that write to different files with the same behavior.
 }
 \keyword{internal}

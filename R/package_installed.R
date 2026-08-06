@@ -1,10 +1,10 @@
 #' Extract package names referenced in R files
 #'
-#' Scans R files for `library()`, `require()`, and `pkg::` usage and returns
-#' a character vector of unique package names.
+#' Scans R files for `library()`, `require()`, and `pkg::` usage. Returns a
+#' character vector of unique package names.
 #'
-#' @param paths Character vector of file or directory paths. Directories are
-#'   scanned for `.R` files.
+#' @param paths Character vector of file or directory paths.
+#'   `extract_packages()` scans each directory for `.R` files.
 #' @return A sorted character vector of unique package names.
 #' @keywords internal
 extract_packages <- function(paths) {
@@ -16,14 +16,20 @@ extract_packages <- function(paths) {
       files <- c(files, p)
     }
   }
-  if (length(files) == 0) return(character(0))
+  if (length(files) == 0) {
+    return(character(0))
+  }
 
   lines <- unlist(lapply(files, readLines, warn = FALSE))
 
   # library(pkg) and require(pkg) — with or without quotes
   lib_matches <- regmatches(
     lines,
-    gregexpr("(?<=\\b(library|require)\\()[\"']?[a-zA-Z][a-zA-Z0-9.]*[\"']?", lines, perl = TRUE)
+    gregexpr(
+      "(?<=\\b(library|require)\\()[\"']?[a-zA-Z][a-zA-Z0-9.]*[\"']?",
+      lines,
+      perl = TRUE
+    )
   )
   lib_pkgs <- gsub("[\"']", "", unlist(lib_matches))
 
@@ -57,7 +63,8 @@ check_missing_packages <- function(paths) {
   missing <- find_missing_packages(paths)
   if (length(missing) > 0) {
     stop(
-      "Missing packages: ", paste(missing, collapse = ", "),
+      "Missing packages: ",
+      paste(missing, collapse = ", "),
       "\nRun with install_missing_packages = TRUE to install them.",
       call. = FALSE
     )

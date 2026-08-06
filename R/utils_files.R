@@ -35,11 +35,11 @@ create_dir <- function(folder) {
 
 #' Construct file path from components
 #'
-#' Joins path components using forward slashes, ensuring proper path
-#' formatting across operating systems. Handles multiple components and removes
-#' any double slashes that might occur.
+#' Joins path components with forward slashes, so the path format is the same
+#' across operating systems. Handles multiple components and removes any double
+#' slashes that might occur.
 #'
-#' @param ... Character vectors that will be concatenated with "/" as separator.
+#' @param ... Character vectors to join with "/" as the separator.
 #' @return A character vector containing the constructed path.
 #' @examples
 #' org::path("home", "user", "data.csv")  # Returns "home/user/data.csv"
@@ -88,20 +88,21 @@ ls_files_int_vectorized <- Vectorize(
   USE.NAMES = FALSE
 )
 
-#' List files and directories recursively
+#' List the files and directories directly inside a folder
 #'
-#' This function is equivalent to the Unix `ls` command but works across platforms.
-#' It can list files and directories matching a regular expression pattern.
+#' `ls_files()` is equivalent to the Unix `ls` command, and it works across
+#' platforms. It can list files and directories that match a regular expression
+#' pattern.
 #'
-#' @param path A character vector of one or more paths to search
-#' @param regexp A regular expression pattern to filter files/directories
-#' @return A character vector of file and directory paths
+#' @param path A character vector of one or more paths to search.
+#' @param regexp A regular expression pattern to filter files and directories.
+#' @return A character vector of file and directory paths.
 #' @details
-#' The function:
-#' - Handles both single and multiple paths
-#' - Supports regular expression filtering
-#' - Removes system-specific directories (e.g., @eaDir)
-#' - Returns full paths
+#' `ls_files()`:
+#' - Handles both single and multiple paths.
+#' - Supports regular expression filtering.
+#' - Removes system-specific directories (e.g., @eaDir).
+#' - Returns full paths.
 #' @examples
 #' \donttest{
 #' # List all files in current directory
@@ -135,15 +136,15 @@ ls_files <- function(
 
 #' Create a function to write to a specific file
 #'
-#' This function creates a closure that writes to a specified file path.
-#' It's useful for creating multiple functions that write to different files
-#' while maintaining consistent behavior.
+#' Creates a closure that writes to a specified file path. Use it to create
+#' several functions that write to different files with the same behavior.
 #'
-#' @param filepath The path to the file to write to
-#' @return A function that writes to the specified file with parameters:
-#'   - `...`: Content to write
-#'   - `sep`: Separator between elements (default: "")
-#'   - `append`: Whether to append to existing content (default: TRUE)
+#' @param filepath The path to the file to write to.
+#' @return A function that writes to the specified file. It takes these
+#'   parameters:
+#'   - `...`: Content to write.
+#'   - `sep`: Separator between elements (default: "").
+#'   - `append`: Whether to append to existing content (default: TRUE).
 #' @keywords internal
 cat_to_filepath_function_factory <- function(filepath) {
   force(filepath)
@@ -154,19 +155,20 @@ cat_to_filepath_function_factory <- function(filepath) {
 
 #' Move a directory and its contents
 #'
-#' Moves a directory and all its contents to a new location.
-#' Can optionally overwrite the destination if it already exists.
+#' Moves a directory and all its contents to a new location. Can optionally
+#' overwrite the destination if it already exists.
 #'
 #' @param from Source directory path.
 #' @param to Destination directory path.
 #' @param overwrite_to Whether to overwrite existing destination (default: FALSE).
 #' @return Nothing. Creates the destination directory and moves all contents.
 #' @details
-#' The function:
-#' - Creates the destination directory if it doesn't exist
-#' - Copies all files and subdirectories recursively
-#' - Removes the source directory after successful copy
-#' - Fails if source doesn't exist or destination exists (unless overwrite_to=TRUE)
+#' `move_directory()`:
+#' - Creates the destination directory if it does not exist.
+#' - Copies all files and subdirectories recursively.
+#' - Removes the source directory after a successful copy.
+#' - Fails if the source does not exist, or if the destination exists and
+#'   `overwrite_to` is `FALSE`.
 #' @examples
 #' from <- file.path(tempdir(), "org_move_from")
 #' to <- file.path(tempdir(), "org_move_to")

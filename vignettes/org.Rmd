@@ -16,15 +16,15 @@ knitr::opts_chunk$set(
 
 ## Why org?
 
-Managing research projects and data analyses can be challenging when dealing with:
+Research projects and data analyses can be hard to manage. These problems are common:
 
-- **Inconsistent project structures** across different analyses
-- **Mixed requirements** for code (version control), results (sharing), and data (security)
-- **Collaboration difficulties** when team members use different folder structures
-- **Version tracking** for research submissions and revisions
-- **Cross-platform compatibility** issues with file paths
+- **Inconsistent project structures** across different analyses.
+- **Mixed requirements** for code (version control), results (sharing), and data (security).
+- **Collaboration difficulties** when team members use different folder structures.
+- **Version tracking** for research submissions and revisions.
+- **Cross-platform compatibility** issues with file paths.
 
-The `org` package solves these problems by providing a standardized framework for organizing R projects with clear separation of concerns and consistent structure across all your analyses.
+The `org` package solves these problems. It provides a standardized framework that organizes R projects. The framework gives you a clear separation of concerns, and a consistent structure across all your analyses.
 
 ## Installation
 
@@ -38,7 +38,7 @@ install.packages("org")
 
 ## Quick start
 
-Here's how to get started with your first `org` project:
+The code below starts your first `org` project.
 
 ```{r eval=FALSE}
 library(org)
@@ -61,31 +61,31 @@ org::ls_files("R")             # List R files
 
 ## Concept
 
-The concept behind `org` is straightforward - most analyses have three main sections:
+The concept behind `org` is straightforward. Most analyses have three main sections:
 
-- **Code**: Analysis scripts and functions
-- **Results**: Output files and figures
-- **Data**: Input data files
+- **Code**: Analysis scripts and functions.
+- **Results**: Output files and figures.
+- **Data**: Input data files.
 
 Each section has unique requirements:
 
 ### Code requirements
-- Must be version controlled
-- Should be publicly accessible
-- Needs a single analysis pipeline documenting all steps
-- Should be organized into modular functions
+- Code MUST be version controlled.
+- Code SHOULD be publicly accessible.
+- Code needs a single analysis pipeline that documents all steps.
+- Code SHOULD be organized into modular functions.
 
 ### Results requirements
-- Must be immediately shareable with collaborators
-- Should maintain a history of changes over time
-- Should be organized by date for tracking
-- Should be stored in a shared location (e.g., Dropbox)
+- Results MUST be immediately shareable with collaborators.
+- Results SHOULD maintain a history of changes over time.
+- Results SHOULD be organized by date for tracking.
+- Results SHOULD be stored in a shared location (e.g., Dropbox).
 
 ### Data requirements
-- Should be encrypted if sensitive
-- Should not be stored on cloud if sensitive
-- Should be organized by project/analysis
-- Should maintain clear separation from code and results
+- Data SHOULD be encrypted if sensitive.
+- Data SHOULD NOT be stored in the cloud if sensitive.
+- Data SHOULD be organized by project or analysis.
+- Data SHOULD maintain clear separation from code and results.
 
 ## Project structure
 
@@ -93,29 +93,29 @@ Each section has unique requirements:
 
 #### 1. `org::initialize_project`
 
-This is the main function that sets up your project structure. It takes 2+ arguments and saves folder locations in `org::project` for use throughout your analysis:
+`initialize_project()` is the main function that sets up your project structure. It takes two or more arguments. It saves folder locations in `org::project` for use throughout your analysis:
 
-- `home`: Location of `Run.R` and the `R/` folder (accessible via `org::project$home`)
-- `results`: Results folder that creates date-based subfolders (accessible via `org::project$results_today`)
-- `...`: Additional folders as needed (e.g., `data_raw`, `data_clean`)
+- `home`: Location of `Run.R` and the `R/` folder (accessible via `org::project$home`).
+- `results`: Results folder that creates date-based subfolders (accessible via `org::project$results_today`).
+- `...`: Additional folders as needed (e.g., `data_raw`, `data_clean`).
 
 #### 2. `Run.R`
 
-This is your main analysis script that orchestrates the entire workflow:
+`Run.R` is your main analysis script. It orchestrates the entire workflow:
 
-- Data cleaning
-- Analysis
-- Result generation
+- Data cleaning.
+- Analysis.
+- Result generation.
 
-All code sections should be encapsulated in functions in the `R/` folder. You should not have multiple main files, as this creates confusion when returning to your code later. However, you can have versioned files (e.g., `Run_v01.R`, `Run_v02.R`) where later versions supersede earlier ones.
+All code sections SHOULD be in functions in the `R/` folder. You SHOULD NOT have multiple main files. Multiple main files create confusion when you return to your code later. You MAY have versioned files (e.g., `Run_v01.R`, `Run_v02.R`). A later version supersedes an earlier one.
 
 #### 3. `R/` directory
 
-All analysis functions should be defined in `org::project$home/R`. The `initialize_project` function automatically sources all R scripts in this directory.
+All analysis functions SHOULD be defined in `org::project$home/R`. `initialize_project()` automatically sources every R script in `org::project$home/R`.
 
 ### Example project structure
 
-Here's a complete example of how to structure your project:
+The code below is a complete example of a project structure.
 
 ```r
 # Initialize the project
@@ -155,21 +155,21 @@ figure_2(d)        # Saves to org::project$results_today
 
 ## Research article versioning
 
-When writing research articles, you often need multiple versions (initial submission, resubmissions). `org` helps manage this by using date-based versioning:
+A research article often needs multiple versions, such as the initial submission and the resubmissions. `org` manages this with date-based versioning.
 
-1. Initial submission:
-   - Rename `Run.R` to `Run_YYYY_MM_DD_submission_1.R`
-   - Rename `R/` to `R_YYYY_MM_DD_submission_1/`
+1. Initial submission.
+   - Rename `Run.R` to `Run_YYYY_MM_DD_submission_1.R`.
+   - Rename `R/` to `R_YYYY_MM_DD_submission_1/`.
 
-2. Resubmission:
-   - Create new files with updated dates
-   - Keep old versions for reference
+2. Resubmission.
+   - Create new files with updated dates.
+   - Keep old versions for reference.
 
-This preserves the code that produced results for each submission, ensuring all changes are deliberate and intentional.
+This preserves the code that produced the results for each submission. Every change is then deliberate and intentional.
 
 ## Team collaboration
 
-When working with team members who have different folder structures, you can specify multiple possible paths. The `org` package will automatically select the first path that exists:
+Team members often have different folder structures. You can specify several possible paths for one folder. `org` automatically selects the first path that exists:
 
 ```r
 # Team member setup - org will use the first existing path
@@ -193,13 +193,13 @@ org::initialize_project(
 )
 ```
 
-This approach allows the same initialization code to work across different team members' machines without modification.
+The same initialization code then works across different team members' machines, with no changes.
 
 ## Best practices
 
 ### Recommended structure
 
-Store your project components in appropriate locations:
+Store your project components in appropriate locations.
 
 ```
 # Code (GitHub)
@@ -246,7 +246,7 @@ data/
 
 #### RMarkdown project
 
-For projects on a shared network drive without GitHub/Dropbox:
+Use this structure for a project on a shared network drive, without GitHub or Dropbox.
 
 ```
 project_name/              # org::project$home
@@ -268,7 +268,7 @@ project_name/              # org::project$home
 
 #### Single folder project
 
-For projects with limited access:
+Use this structure for a project with limited access.
 
 ```
 project_name/              # org::project$home
@@ -288,7 +288,7 @@ project_name/              # org::project$home
 
 ## Path naming conventions
 
-Understanding path components is important:
+Path components have standard names.
 
 | Component              | Name                      |
 |------------------------|---------------------------|
@@ -303,20 +303,20 @@ A path specifies a location in a directory structure, while a filename only incl
 
 ## Function reference
 
-The `org` package provides several key functions for project management:
+The `org` package provides several key functions for project management.
 
 ### Core functions
 
-- **`org::initialize_project()`**: Set up project structure and source R files
-- **`org::set_results()`**: Modify results folder after project initialization  
-- **`org::project`**: Environment containing all project folder locations
+- **`org::initialize_project()`**: Set up project structure and source R files.
+- **`org::set_results()`**: Change the results folder after project initialization.
+- **`org::project`**: Environment containing all project folder locations.
 
 ### File operations
 
-- **`org::path()`**: Construct cross-platform file paths
-- **`org::ls_files()`**: List files with optional pattern matching
-- **`org::move_directory()`**: Move directories safely
-- **`org::write_text()`**: Write text files with consistent formatting
+- **`org::path()`**: Construct cross-platform file paths.
+- **`org::ls_files()`**: List files with optional pattern matching.
+- **`org::move_directory()`**: Move directories safely.
+- **`org::write_text()`**: Write text files with consistent formatting.
 
 ## Common workflows
 
@@ -352,7 +352,7 @@ org::set_results("/new/results/path/")
 
 ### Environment management
 
-**Recommendation: Always use `.GlobalEnv`** - it makes life so much easier! All your functions will be directly accessible without having to worry about environment scoping issues.
+**Recommendation: you SHOULD always use `.GlobalEnv`.** It is much easier. All your functions are then directly accessible, and you do not need to think about environment scoping.
 
 ```r
 # Recommended approach - use .GlobalEnv
@@ -365,7 +365,7 @@ org::initialize_project(env = my_env, ...)
 
 ## Path construction and cross-platform compatibility
 
-The `org::path()` function ensures your code works across different operating systems:
+The `org::path()` function ensures your code works across different operating systems.
 
 ```r
 # Cross-platform path construction
@@ -384,10 +384,10 @@ clean_path <- org::path("folder//", "//file.txt")  # Returns "folder/file.txt"
 ### Common issues
 
 #### Path issues
-- Always use `org::path()` for cross-platform compatibility
-- Avoid hardcoded absolute paths in shared code
-- Check that all specified directories exist and are accessible
-- Ensure you have write permissions to results directories
+- Always use `org::path()` for cross-platform compatibility.
+- Avoid hardcoded absolute paths in shared code.
+- Check that all specified directories exist and are accessible.
+- Make sure you have write permissions to results directories.
 
 #### Sourcing problems
 ```r

@@ -7,8 +7,8 @@
 \format{
 An environment containing the following elements:
 \describe{
-\item{home}{The folder containing 'Run.R' and 'R/'}
-\item{results_today}{The folder inside \code{results} with today's date, created by \code{initialize_project}}
+\item{home}{The folder containing 'Run.R' and 'R/'.}
+\item{results_today}{The folder inside \code{results} with today's date. \code{initialize_project()} creates it.}
 }
 }
 \usage{
@@ -37,9 +37,9 @@ unlink(home, recursive = TRUE)
 }
 \seealso{
 \code{vignette("org")}, whose "Project structure" section describes the
-standard folders and the additional-folder convention. Folders passed
-through \code{...} are stored here under their own names and are not described
-individually.
+standard folders and the additional-folder convention. \code{org} stores
+folders passed through \code{...} here under their own names. This help page
+does not describe them individually.
 
 Other project setup: 
 \code{\link{initialize_project}()},

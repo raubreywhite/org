@@ -15,19 +15,19 @@ initialize_project_folders(
 )
 }
 \arguments{
-\item{env}{Environment to source code into}
+\item{env}{Environment to source code into.}
 
-\item{home}{Home directory path}
+\item{home}{Home directory path.}
 
-\item{results}{Results directory path}
+\item{results}{Results directory path.}
 
-\item{encode_from}{Source encoding}
+\item{encode_from}{Source encoding.}
 
-\item{encode_to}{Target encoding}
+\item{encode_to}{Target encoding.}
 
-\item{proj}{Project environment}
+\item{proj}{Project environment.}
 
-\item{...}{Additional folder arguments}
+\item{...}{Additional folder arguments.}
 }
 \description{
 Initialize project folder structure

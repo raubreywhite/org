@@ -7,14 +7,14 @@
 extract_packages(paths)
 }
 \arguments{
-\item{paths}{Character vector of file or directory paths. Directories are
-scanned for \code{.R} files.}
+\item{paths}{Character vector of file or directory paths.
+\code{extract_packages()} scans each directory for \code{.R} files.}
 }
 \value{
 A sorted character vector of unique package names.
 }
 \description{
-Scans R files for \code{library()}, \code{require()}, and \verb{pkg::} usage and returns
-a character vector of unique package names.
+Scans R files for \code{library()}, \code{require()}, and \verb{pkg::} usage. Returns a
+character vector of unique package names.
 }
 \keyword{internal}

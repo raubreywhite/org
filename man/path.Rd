@@ -7,15 +7,15 @@
 path(...)
 }
 \arguments{
-\item{...}{Character vectors that will be concatenated with "/" as separator.}
+\item{...}{Character vectors to join with "/" as the separator.}
 }
 \value{
 A character vector containing the constructed path.
 }
 \description{
-Joins path components using forward slashes, ensuring proper path
-formatting across operating systems. Handles multiple components and removes
-any double slashes that might occur.
+Joins path components with forward slashes, so the path format is the same
+across operating systems. Handles multiple components and removes any double
+slashes that might occur.
 }
 \examples{
 org::path("home", "user", "data.csv")  # Returns "home/user/data.csv"

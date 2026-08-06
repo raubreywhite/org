@@ -1,12 +1,12 @@
 # Version 2026.8.3
 
-- Fixed `set_results()`, which failed with "invalid filename argument" whenever
+- Fixed `set_results()`, which failed with "argument is of length zero" whenever
   it was called after `initialize_project()`. `initialize_project()` stores the
-  sourcing environment in `org::project$env`; the folder-creation loop applied
-  `is.na()` to it, which returns `FALSE` with a warning rather than skipping,
-  so the environment reached `dir.exists()` and that is what threw. Non-character
-  entries are now skipped. Multi-element character paths remain unsupported, as
-  before.
+  sourcing environment in `org::project$env`. The folder-creation loop applied
+  `is.na()` to that environment. On an environment `is.na()` returns
+  `logical(0)`, with a warning, rather than `FALSE`. The surrounding `if` then
+  received a zero-length condition and stopped. Non-character entries are now
+  skipped.
 - Added runnable examples to `project` and `set_results()`, which previously had
   none.
 - Replaced the `\dontrun{}` examples on `initialize_project()`,
@@ -15,6 +15,11 @@
 - Added `@family` cross-links (project setup; file utilities) and a `@seealso`
   pointing at `vignette("org")` to all seven exported objects.
 - Added `index.md`, `pkgdown/`, and `Rplots.pdf` to `.Rbuildignore`.
+- All roxygen prose in `R/`, plus `vignettes/org.Rmd`, `README.md` and
+  `index.md`, now follows ASD-STE100 (Simplified Technical English). Every
+  sentence in those files runs to 25 words or fewer. The change splits long
+  sentences, prefers the active voice, and marks requirement levels with
+  RFC-2119 keywords. No behaviour changed.
 
 # Version 2026.4.9
 
