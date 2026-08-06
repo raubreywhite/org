@@ -1,8 +1,8 @@
 # Construct file path from components
 
-Joins path components using forward slashes, ensuring proper path
-formatting across operating systems. Handles multiple components and
-removes any double slashes that might occur.
+Joins path components with forward slashes, so the path format is the
+same across operating systems. Handles multiple components and removes
+any double slashes that might occur.
 
 ## Usage
 
@@ -14,7 +14,7 @@ path(...)
 
 - ...:
 
-  Character vectors that will be concatenated with "/" as separator.
+  Character vectors to join with "/" as the separator.
 
 ## Value
 

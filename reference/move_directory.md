@@ -29,16 +29,16 @@ Nothing. Creates the destination directory and moves all contents.
 
 ## Details
 
-The function:
+`move_directory()`:
 
-- Creates the destination directory if it doesn't exist
+- Creates the destination directory if it does not exist.
 
-- Copies all files and subdirectories recursively
+- Copies all files and subdirectories recursively.
 
-- Removes the source directory after successful copy
+- Removes the source directory after a successful copy.
 
-- Fails if source doesn't exist or destination exists (unless
-  overwrite_to=TRUE)
+- Fails if the source does not exist, or if the destination exists and
+  `overwrite_to` is `FALSE`.
 
 ## See also
 

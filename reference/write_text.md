@@ -1,8 +1,8 @@
 # Write text to file
 
-Writes text to a file, optionally including a header at the top of the
-file. Text and header are converted from Linux newline format to Windows
-newline format before writing.
+Writes text to a file. It can also insert a header at the top of the
+file. `write_text()` converts the text and the header from Linux newline
+format to Windows newline format before it writes.
 
 ## Usage
 

@@ -12,7 +12,7 @@
 ## File and Directory Utilities
 
 - [`ls_files()`](https://www.rwhite.no/org/reference/ls_files.md) : List
-  files and directories recursively
+  the files and directories directly inside a folder
 - [`move_directory()`](https://www.rwhite.no/org/reference/move_directory.md)
   : Move a directory and its contents
 - [`path()`](https://www.rwhite.no/org/reference/path.md) : Construct

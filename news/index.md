@@ -4,17 +4,17 @@
 
 - Fixed
   [`set_results()`](https://www.rwhite.no/org/reference/set_results.md),
-  which failed with “invalid filename argument” whenever it was called
+  which failed with “argument is of length zero” whenever it was called
   after
   [`initialize_project()`](https://www.rwhite.no/org/reference/initialize_project.md).
   [`initialize_project()`](https://www.rwhite.no/org/reference/initialize_project.md)
-  stores the sourcing environment in `org::project$env`; the
+  stores the sourcing environment in `org::project$env`. The
   folder-creation loop applied
-  [`is.na()`](https://rdrr.io/r/base/NA.html) to it, which returns
-  `FALSE` with a warning rather than skipping, so the environment
-  reached [`dir.exists()`](https://rdrr.io/r/base/files2.html) and that
-  is what threw. Non-character entries are now skipped. Multi-element
-  character paths remain unsupported, as before.
+  [`is.na()`](https://rdrr.io/r/base/NA.html) to that environment. On an
+  environment [`is.na()`](https://rdrr.io/r/base/NA.html) returns
+  `logical(0)`, with a warning, rather than `FALSE`. The surrounding
+  `if` then received a zero-length condition and stopped. Non-character
+  entries are now skipped.
 - Added runnable examples to `project` and
   [`set_results()`](https://www.rwhite.no/org/reference/set_results.md),
   which previously had none.
@@ -30,6 +30,11 @@
   [`vignette("org")`](https://www.rwhite.no/org/articles/org.md) to all
   seven exported objects.
 - Added `index.md`, `pkgdown/`, and `Rplots.pdf` to `.Rbuildignore`.
+- All roxygen prose in `R/`, plus `vignettes/org.Rmd`, `README.md` and
+  `index.md`, now follows ASD-STE100 (Simplified Technical English).
+  Every sentence in those files runs to 25 words or fewer. The change
+  splits long sentences, prefers the active voice, and marks requirement
+  levels with RFC-2119 keywords. No behaviour changed.
 
 ## Version 2026.4.9
 

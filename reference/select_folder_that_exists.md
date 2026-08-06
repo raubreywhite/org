@@ -12,12 +12,12 @@ select_folder_that_exists(folders, name)
 
 - folders:
 
-  Character vector of folder paths to check
+  Character vector of folder paths to check.
 
 - name:
 
-  Name of the folder type for error messages
+  Name of the folder type for error messages.
 
 ## Value
 
-List with folder path and id
+List with folder path and id.

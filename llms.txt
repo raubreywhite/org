@@ -18,8 +18,8 @@ with no hard-coded absolutes in your scripts.
 
 ### Date-organised results
 
-Write today’s output to a dated folder automatically, keeping every
-run’s results neatly side by side.
+Write today’s output to a dated folder automatically, so every run’s
+results sit side by side.
 
 # Package index
 
@@ -35,7 +35,7 @@ run’s results neatly side by side.
 ## File and Directory Utilities
 
 - [`ls_files()`](https://www.rwhite.no/org/reference/ls_files.md) : List
-  files and directories recursively
+  the files and directories directly inside a folder
 - [`move_directory()`](https://www.rwhite.no/org/reference/move_directory.md)
   : Move a directory and its contents
 - [`path()`](https://www.rwhite.no/org/reference/path.md) : Construct

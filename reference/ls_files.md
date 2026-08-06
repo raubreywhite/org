@@ -1,7 +1,7 @@
-# List files and directories recursively
+# List the files and directories directly inside a folder
 
-This function is equivalent to the Unix `ls` command but works across
-platforms. It can list files and directories matching a regular
+`ls_files()` is equivalent to the Unix `ls` command, and it works across
+platforms. It can list files and directories that match a regular
 expression pattern.
 
 ## Usage
@@ -14,27 +14,27 @@ ls_files(path = ".", regexp = NULL)
 
 - path:
 
-  A character vector of one or more paths to search
+  A character vector of one or more paths to search.
 
 - regexp:
 
-  A regular expression pattern to filter files/directories
+  A regular expression pattern to filter files and directories.
 
 ## Value
 
-A character vector of file and directory paths
+A character vector of file and directory paths.
 
 ## Details
 
-The function:
+`ls_files()`:
 
-- Handles both single and multiple paths
+- Handles both single and multiple paths.
 
-- Supports regular expression filtering
+- Supports regular expression filtering.
 
-- Removes system-specific directories (e.g., @eaDir)
+- Removes system-specific directories (e.g., @eaDir).
 
-- Returns full paths
+- Returns full paths.
 
 ## See also
 

@@ -18,5 +18,5 @@ with no hard-coded absolutes in your scripts.
 
 ### Date-organised results
 
-Write today’s output to a dated folder automatically, keeping every
-run’s results neatly side by side.
+Write today’s output to a dated folder automatically, so every run’s
+results sit side by side.

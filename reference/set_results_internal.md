@@ -12,8 +12,8 @@ set_results_internal(results, proj)
 
 - results:
 
-  Results folder path
+  Results folder path.
 
 - proj:
 
-  Project environment
+  Project environment.

@@ -80,28 +80,29 @@
 <div class="section level2">
 <h2 id="why-org">Why org?<a class="anchor" aria-label="anchor" href="#why-org"></a>
 </h2>
-<p>Managing research projects and data analyses can be challenging when
-dealing with:</p>
+<p>Research projects and data analyses can be hard to manage. These
+problems are common:</p>
 <ul>
 <li>
 <strong>Inconsistent project structures</strong> across different
-analyses</li>
+analyses.</li>
 <li>
 <strong>Mixed requirements</strong> for code (version control),
-results (sharing), and data (security)</li>
+results (sharing), and data (security).</li>
 <li>
 <strong>Collaboration difficulties</strong> when team members use
-different folder structures</li>
+different folder structures.</li>
 <li>
 <strong>Version tracking</strong> for research submissions and
-revisions</li>
+revisions.</li>
 <li>
 <strong>Cross-platform compatibility</strong> issues with file
-paths</li>
+paths.</li>
 </ul>
-<p>The <code>org</code> package solves these problems by providing a
-standardized framework for organizing R projects with clear separation
-of concerns and consistent structure across all your analyses.</p>
+<p>The <code>org</code> package solves these problems. It provides a
+standardized framework that organizes R projects. The framework gives
+you a clear separation of concerns, and a consistent structure across
+all your analyses.</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -116,8 +117,7 @@ of concerns and consistent structure across all your analyses.</p>
 <div class="section level2">
 <h2 id="quick-start">Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h2>
-<p>Here’s how to get started with your first <code>org</code>
-project:</p>
+<p>The code below starts your first <code>org</code> project.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.rwhite.no/org/">org</a></span><span class="op">)</span></span>
 <span></span>
@@ -139,45 +139,45 @@ project:</p>
 <div class="section level2">
 <h2 id="concept">Concept<a class="anchor" aria-label="anchor" href="#concept"></a>
 </h2>
-<p>The concept behind <code>org</code> is straightforward - most
-analyses have three main sections:</p>
+<p>The concept behind <code>org</code> is straightforward. Most analyses
+have three main sections:</p>
 <ul>
 <li>
-<strong>Code</strong>: Analysis scripts and functions</li>
+<strong>Code</strong>: Analysis scripts and functions.</li>
 <li>
-<strong>Results</strong>: Output files and figures</li>
+<strong>Results</strong>: Output files and figures.</li>
 <li>
-<strong>Data</strong>: Input data files</li>
+<strong>Data</strong>: Input data files.</li>
 </ul>
 <p>Each section has unique requirements:</p>
 <div class="section level3">
 <h3 id="code-requirements">Code requirements<a class="anchor" aria-label="anchor" href="#code-requirements"></a>
 </h3>
 <ul>
-<li>Must be version controlled</li>
-<li>Should be publicly accessible</li>
-<li>Needs a single analysis pipeline documenting all steps</li>
-<li>Should be organized into modular functions</li>
+<li>Code MUST be version controlled.</li>
+<li>Code SHOULD be publicly accessible.</li>
+<li>Code needs a single analysis pipeline that documents all steps.</li>
+<li>Code SHOULD be organized into modular functions.</li>
 </ul>
 </div>
 <div class="section level3">
 <h3 id="results-requirements">Results requirements<a class="anchor" aria-label="anchor" href="#results-requirements"></a>
 </h3>
 <ul>
-<li>Must be immediately shareable with collaborators</li>
-<li>Should maintain a history of changes over time</li>
-<li>Should be organized by date for tracking</li>
-<li>Should be stored in a shared location (e.g., Dropbox)</li>
+<li>Results MUST be immediately shareable with collaborators.</li>
+<li>Results SHOULD maintain a history of changes over time.</li>
+<li>Results SHOULD be organized by date for tracking.</li>
+<li>Results SHOULD be stored in a shared location (e.g., Dropbox).</li>
 </ul>
 </div>
 <div class="section level3">
 <h3 id="data-requirements">Data requirements<a class="anchor" aria-label="anchor" href="#data-requirements"></a>
 </h3>
 <ul>
-<li>Should be encrypted if sensitive</li>
-<li>Should not be stored on cloud if sensitive</li>
-<li>Should be organized by project/analysis</li>
-<li>Should maintain clear separation from code and results</li>
+<li>Data SHOULD be encrypted if sensitive.</li>
+<li>Data SHOULD NOT be stored in the cloud if sensitive.</li>
+<li>Data SHOULD be organized by project or analysis.</li>
+<li>Data SHOULD maintain clear separation from code and results.</li>
 </ul>
 </div>
 </div>
@@ -190,50 +190,53 @@ analyses have three main sections:</p>
 <div class="section level4">
 <h4 id="orginitialize_project">1. <code>org::initialize_project</code><a class="anchor" aria-label="anchor" href="#orginitialize_project"></a>
 </h4>
-<p>This is the main function that sets up your project structure. It
-takes 2+ arguments and saves folder locations in
-<code><a href="../reference/project.html">org::project</a></code> for use throughout your analysis:</p>
+<p><code><a href="../reference/initialize_project.html">initialize_project()</a></code> is the main function that sets up
+your project structure. It takes two or more arguments. It saves folder
+locations in <code><a href="../reference/project.html">org::project</a></code> for use throughout your
+analysis:</p>
 <ul>
 <li>
 <code>home</code>: Location of <code>Run.R</code> and the
 <code>R/</code> folder (accessible via
-<code>org::project$home</code>)</li>
+<code>org::project$home</code>).</li>
 <li>
 <code>results</code>: Results folder that creates date-based
-subfolders (accessible via <code>org::project$results_today</code>)</li>
+subfolders (accessible via
+<code>org::project$results_today</code>).</li>
 <li>
 <code>...</code>: Additional folders as needed (e.g.,
-<code>data_raw</code>, <code>data_clean</code>)</li>
+<code>data_raw</code>, <code>data_clean</code>).</li>
 </ul>
 </div>
 <div class="section level4">
 <h4 id="run-r">2. <code>Run.R</code><a class="anchor" aria-label="anchor" href="#run-r"></a>
 </h4>
-<p>This is your main analysis script that orchestrates the entire
-workflow:</p>
+<p><code>Run.R</code> is your main analysis script. It orchestrates the
+entire workflow:</p>
 <ul>
-<li>Data cleaning</li>
-<li>Analysis</li>
-<li>Result generation</li>
+<li>Data cleaning.</li>
+<li>Analysis.</li>
+<li>Result generation.</li>
 </ul>
-<p>All code sections should be encapsulated in functions in the
-<code>R/</code> folder. You should not have multiple main files, as this
-creates confusion when returning to your code later. However, you can
-have versioned files (e.g., <code>Run_v01.R</code>,
-<code>Run_v02.R</code>) where later versions supersede earlier ones.</p>
+<p>All code sections SHOULD be in functions in the <code>R/</code>
+folder. You SHOULD NOT have multiple main files. Multiple main files
+create confusion when you return to your code later. You MAY have
+versioned files (e.g., <code>Run_v01.R</code>, <code>Run_v02.R</code>).
+A later version supersedes an earlier one.</p>
 </div>
 <div class="section level4">
 <h4 id="r-directory">3. <code>R/</code> directory<a class="anchor" aria-label="anchor" href="#r-directory"></a>
 </h4>
-<p>All analysis functions should be defined in
-<code>org::project$home/R</code>. The <code>initialize_project</code>
-function automatically sources all R scripts in this directory.</p>
+<p>All analysis functions SHOULD be defined in
+<code>org::project$home/R</code>. <code><a href="../reference/initialize_project.html">initialize_project()</a></code>
+automatically sources every R script in
+<code>org::project$home/R</code>.</p>
 </div>
 </div>
 <div class="section level3">
 <h3 id="example-project-structure">Example project structure<a class="anchor" aria-label="anchor" href="#example-project-structure"></a>
 </h3>
-<p>Here’s a complete example of how to structure your project:</p>
+<p>The code below is a complete example of a project structure.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Initialize the project</span></span>
 <span><span class="fu">org</span><span class="fu">::</span><span class="fu"><a href="../reference/initialize_project.html">initialize_project</a></span><span class="op">(</span></span>
@@ -273,36 +276,34 @@ function automatically sources all R scripts in this directory.</p>
 <div class="section level2">
 <h2 id="research-article-versioning">Research article versioning<a class="anchor" aria-label="anchor" href="#research-article-versioning"></a>
 </h2>
-<p>When writing research articles, you often need multiple versions
-(initial submission, resubmissions). <code>org</code> helps manage this
-by using date-based versioning:</p>
+<p>A research article often needs multiple versions, such as the initial
+submission and the resubmissions. <code>org</code> manages this with
+date-based versioning.</p>
 <ol style="list-style-type: decimal">
-<li>Initial submission:
+<li>Initial submission.
 <ul>
 <li>Rename <code>Run.R</code> to
-<code>Run_YYYY_MM_DD_submission_1.R</code>
-</li>
+<code>Run_YYYY_MM_DD_submission_1.R</code>.</li>
 <li>Rename <code>R/</code> to
-<code>R_YYYY_MM_DD_submission_1/</code>
-</li>
+<code>R_YYYY_MM_DD_submission_1/</code>.</li>
 </ul>
 </li>
-<li>Resubmission:
+<li>Resubmission.
 <ul>
-<li>Create new files with updated dates</li>
-<li>Keep old versions for reference</li>
+<li>Create new files with updated dates.</li>
+<li>Keep old versions for reference.</li>
 </ul>
 </li>
 </ol>
-<p>This preserves the code that produced results for each submission,
-ensuring all changes are deliberate and intentional.</p>
+<p>This preserves the code that produced the results for each
+submission. Every change is then deliberate and intentional.</p>
 </div>
 <div class="section level2">
 <h2 id="team-collaboration">Team collaboration<a class="anchor" aria-label="anchor" href="#team-collaboration"></a>
 </h2>
-<p>When working with team members who have different folder structures,
-you can specify multiple possible paths. The <code>org</code> package
-will automatically select the first path that exists:</p>
+<p>Team members often have different folder structures. You can specify
+several possible paths for one folder. <code>org</code> automatically
+selects the first path that exists:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Team member setup - org will use the first existing path</span></span>
 <span><span class="fu">org</span><span class="fu">::</span><span class="fu"><a href="../reference/initialize_project.html">initialize_project</a></span><span class="op">(</span></span>
@@ -323,8 +324,8 @@ will automatically select the first path that exists:</p>
 <span>    <span class="st">"C:/shared_drive/data/analysis3/"</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>This approach allows the same initialization code to work across
-different team members’ machines without modification.</p>
+<p>The same initialization code then works across different team
+members’ machines, with no changes.</p>
 </div>
 <div class="section level2">
 <h2 id="best-practices">Best practices<a class="anchor" aria-label="anchor" href="#best-practices"></a>
@@ -332,7 +333,7 @@ different team members’ machines without modification.</p>
 <div class="section level3">
 <h3 id="recommended-structure">Recommended structure<a class="anchor" aria-label="anchor" href="#recommended-structure"></a>
 </h3>
-<p>Store your project components in appropriate locations:</p>
+<p>Store your project components in appropriate locations.</p>
 <pre><code># Code (GitHub)
 git/
 └── analyses/
@@ -378,7 +379,8 @@ data/
 <div class="section level4">
 <h4 id="rmarkdown-project">RMarkdown project<a class="anchor" aria-label="anchor" href="#rmarkdown-project"></a>
 </h4>
-<p>For projects on a shared network drive without GitHub/Dropbox:</p>
+<p>Use this structure for a project on a shared network drive, without
+GitHub or Dropbox.</p>
 <pre><code>project_name/              # org::project$home
 ├── Run.R
 ├── R/
@@ -398,7 +400,7 @@ data/
 <div class="section level4">
 <h4 id="single-folder-project">Single folder project<a class="anchor" aria-label="anchor" href="#single-folder-project"></a>
 </h4>
-<p>For projects with limited access:</p>
+<p>Use this structure for a project with limited access.</p>
 <pre><code>project_name/              # org::project$home
 ├── Run.R
 ├── R/
@@ -418,7 +420,7 @@ data/
 <div class="section level2">
 <h2 id="path-naming-conventions">Path naming conventions<a class="anchor" aria-label="anchor" href="#path-naming-conventions"></a>
 </h2>
-<p>Understanding path components is important:</p>
+<p>Path components have standard names.</p>
 <table class="table">
 <thead><tr class="header">
 <th>Component</th>
@@ -459,21 +461,20 @@ directory name information.</p>
 <h2 id="function-reference">Function reference<a class="anchor" aria-label="anchor" href="#function-reference"></a>
 </h2>
 <p>The <code>org</code> package provides several key functions for
-project management:</p>
+project management.</p>
 <div class="section level3">
 <h3 id="core-functions">Core functions<a class="anchor" aria-label="anchor" href="#core-functions"></a>
 </h3>
 <ul>
 <li>
 <strong><code><a href="../reference/initialize_project.html">org::initialize_project()</a></code></strong>: Set up
-project structure and source R files</li>
+project structure and source R files.</li>
 <li>
-<strong><code><a href="../reference/set_results.html">org::set_results()</a></code></strong>: Modify results
-folder after project initialization<br>
-</li>
+<strong><code><a href="../reference/set_results.html">org::set_results()</a></code></strong>: Change the results
+folder after project initialization.</li>
 <li>
 <strong><code><a href="../reference/project.html">org::project</a></code></strong>: Environment containing
-all project folder locations</li>
+all project folder locations.</li>
 </ul>
 </div>
 <div class="section level3">
@@ -482,16 +483,16 @@ all project folder locations</li>
 <ul>
 <li>
 <strong><code><a href="../reference/path.html">org::path()</a></code></strong>: Construct cross-platform
-file paths</li>
+file paths.</li>
 <li>
 <strong><code><a href="../reference/ls_files.html">org::ls_files()</a></code></strong>: List files with
-optional pattern matching</li>
+optional pattern matching.</li>
 <li>
 <strong><code><a href="../reference/move_directory.html">org::move_directory()</a></code></strong>: Move
-directories safely</li>
+directories safely.</li>
 <li>
 <strong><code><a href="../reference/write_text.html">org::write_text()</a></code></strong>: Write text files
-with consistent formatting</li>
+with consistent formatting.</li>
 </ul>
 </div>
 </div>
@@ -531,9 +532,10 @@ with consistent formatting</li>
 <div class="section level3">
 <h3 id="environment-management">Environment management<a class="anchor" aria-label="anchor" href="#environment-management"></a>
 </h3>
-<p><strong>Recommendation: Always use <code>.GlobalEnv</code></strong> -
-it makes life so much easier! All your functions will be directly
-accessible without having to worry about environment scoping issues.</p>
+<p><strong>Recommendation: you SHOULD always use
+<code>.GlobalEnv</code>.</strong> It is much easier. All your functions
+are then directly accessible, and you do not need to think about
+environment scoping.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Recommended approach - use .GlobalEnv</span></span>
 <span><span class="fu">org</span><span class="fu">::</span><span class="fu"><a href="../reference/initialize_project.html">initialize_project</a></span><span class="op">(</span>env <span class="op">=</span> <span class="va">.GlobalEnv</span>, <span class="va">...</span><span class="op">)</span></span>
@@ -547,7 +549,7 @@ accessible without having to worry about environment scoping issues.</p>
 <h2 id="path-construction-and-cross-platform-compatibility">Path construction and cross-platform compatibility<a class="anchor" aria-label="anchor" href="#path-construction-and-cross-platform-compatibility"></a>
 </h2>
 <p>The <code><a href="../reference/path.html">org::path()</a></code> function ensures your code works across
-different operating systems:</p>
+different operating systems.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Cross-platform path construction</span></span>
 <span><span class="va">data_file</span> <span class="op">&lt;-</span> <span class="fu">org</span><span class="fu">::</span><span class="fu"><a href="../reference/path.html">path</a></span><span class="op">(</span><span class="fu">org</span><span class="fu">::</span><span class="va"><a href="../reference/project.html">project</a></span><span class="op">$</span><span class="va">data_raw</span>, <span class="st">"survey_data.csv"</span><span class="op">)</span></span>
@@ -570,10 +572,10 @@ different operating systems:</p>
 </h4>
 <ul>
 <li>Always use <code><a href="../reference/path.html">org::path()</a></code> for cross-platform
-compatibility</li>
-<li>Avoid hardcoded absolute paths in shared code</li>
-<li>Check that all specified directories exist and are accessible</li>
-<li>Ensure you have write permissions to results directories</li>
+compatibility.</li>
+<li>Avoid hardcoded absolute paths in shared code.</li>
+<li>Check that all specified directories exist and are accessible.</li>
+<li>Make sure you have write permissions to results directories.</li>
 </ul>
 </div>
 <div class="section level4">

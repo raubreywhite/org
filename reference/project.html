@@ -53,19 +53,19 @@
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
     <p>An environment containing the following elements:</p><dl><dt>home</dt>
-<dd><p>The folder containing 'Run.R' and 'R/'</p></dd>
+<dd><p>The folder containing 'Run.R' and 'R/'.</p></dd>
 
 <dt>results_today</dt>
-<dd><p>The folder inside <code>results</code> with today's date, created by <code>initialize_project</code></p></dd>
+<dd><p>The folder inside <code>results</code> with today's date. <code><a href="initialize_project.html">initialize_project()</a></code> creates it.</p></dd>
 
 
 </dl></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="../articles/org.html">vignette("org")</a></code>, whose "Project structure" section describes the
-standard folders and the additional-folder convention. Folders passed
-through <code>...</code> are stored here under their own names and are not described
-individually.</p>
+standard folders and the additional-folder convention. <code>org</code> stores
+folders passed through <code>...</code> here under their own names. This help page
+does not describe them individually.</p>
 <p>Other project setup:
 <code><a href="initialize_project.html">initialize_project()</a></code>,
 <code><a href="set_results.html">set_results()</a></code></p></div>
@@ -82,17 +82,17 @@ individually.</p>
 <span class="r-in"><span>  data_raw <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">home</span>, <span class="st">"data_raw"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> You are NOT sourcing into .GlobalEnv. All functions will be sourced into an environment that is returned from this function.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Sourcing all code inside /tmp/RtmpnMfP1f/org_project_example/R into </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Sourcing all code inside /tmp/RtmpqxXtq0/org_project_example/R into </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Every folder is now available from anywhere in the analysis</span></span></span>
 <span class="r-in"><span><span class="fu">org</span><span class="fu">::</span><span class="va">project</span><span class="op">$</span><span class="va">home</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpnMfP1f/org_project_example/"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpqxXtq0/org_project_example/"</span>
 <span class="r-in"><span><span class="fu">org</span><span class="fu">::</span><span class="va">project</span><span class="op">$</span><span class="va">results</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpnMfP1f/org_project_example/results/"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpqxXtq0/org_project_example/results/"</span>
 <span class="r-in"><span><span class="fu">org</span><span class="fu">::</span><span class="va">project</span><span class="op">$</span><span class="va">results_today</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpnMfP1f/org_project_example/results/2026-08-03/"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpqxXtq0/org_project_example/results/2026-08-06/"</span>
 <span class="r-in"><span><span class="fu">org</span><span class="fu">::</span><span class="va">project</span><span class="op">$</span><span class="va">data_raw</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpnMfP1f/org_project_example/data_raw/"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpqxXtq0/org_project_example/data_raw/"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">home</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 </code></pre></div>

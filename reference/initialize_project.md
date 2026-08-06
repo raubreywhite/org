@@ -1,10 +1,10 @@
 # Initialize project environment and structure
 
-This function initializes a new R project by setting up folder locations
-and sourcing code files. It creates a standardized project structure
-with separate locations for code, results, and data. Results are
-automatically organized by date, and code can be sourced from specified
-directories.
+`initialize_project()` initializes a new R project. It sets up folder
+locations and sources code files. It creates a standardized project
+structure with separate locations for code, results, and data. It
+organizes results by date automatically, and it can source code from the
+directories you specify.
 
 ## Usage
 
@@ -26,9 +26,10 @@ initialize_project(
 
 - env:
 
-  The environment that the code will be sourced into. Use `.GlobalEnv`
-  to source code into the global environment. If a different environment
-  is provided, all functions will be sourced into that environment.
+  The environment that `initialize_project()` sources the code into. Use
+  `.GlobalEnv` to source code into the global environment. If you
+  provide a different environment, all functions are sourced into that
+  environment.
 
 - home:
 
@@ -37,72 +38,74 @@ initialize_project(
 
 - results:
 
-  The base folder for storing results. A subfolder with today's date
-  will be created and accessible via `org::project$results_today`.
+  The base folder for storing results. `initialize_project()` creates a
+  subfolder with today's date. You reach it at
+  `org::project$results_today`.
 
 - folders_to_be_sourced:
 
-  Character vector of folder names inside `home` containing .R files to
-  be sourced into the environment.
+  Character vector of folder names inside `home`. These folders hold the
+  .R files to source into the environment.
 
 - install_missing_packages:
 
-  If `TRUE`, scans `folders_to_be_sourced` for package dependencies (via
+  If `TRUE`, `initialize_project()` scans `folders_to_be_sourced` for
+  package dependencies. It looks for
   [`library()`](https://rdrr.io/r/base/library.html),
-  [`require()`](https://rdrr.io/r/base/library.html), and `pkg::` usage)
-  and installs any missing packages using `pak` before sourcing. Falls
-  back to
-  [`install.packages()`](https://rdrr.io/r/utils/install.packages.html)
-  if `pak` is not available. Default is `FALSE`.
+  [`require()`](https://rdrr.io/r/base/library.html), and `pkg::` usage.
+  It then installs any missing package with `pak` before it sources the
+  code. If `pak` is not available, it falls back to
+  [`install.packages()`](https://rdrr.io/r/utils/install.packages.html).
+  Default is `FALSE`.
 
 - source_folders_absolute:
 
-  If `TRUE`, `folders_to_be_sourced` is treated as absolute paths. If
-  `FALSE`, paths are relative to `home`.
+  If `TRUE`, `initialize_project()` treats `folders_to_be_sourced` as
+  absolute paths. If `FALSE`, the paths are relative to `home`.
 
 - encode_from:
 
-  Source encoding for file paths (only used on Windows)
+  Source encoding for file paths (only used on Windows).
 
 - encode_to:
 
-  Target encoding for file paths (only used on Windows)
+  Target encoding for file paths (only used on Windows).
 
 - ...:
 
   Additional named arguments for other project folders (e.g., data, raw,
-  etc.)
+  etc.).
 
 ## Value
 
 An environment containing:
 
-- All folder locations as named elements
+- All folder locations as named elements.
 
-- `$env`: The environment where code was sourced
+- `$env`: The environment that the code was sourced into.
 
-- `$results_today`: Path to today's results folder
+- `$results_today`: Path to today's results folder.
 
 ## Details
 
-The function performs several key operations:
+`initialize_project()` performs the five operations below.
 
-1.  Creates necessary directories if they don't exist
+1.  Creates necessary directories if they do not exist.
 
-2.  Sets up date-based results organization
+2.  Sets up date-based results organization.
 
-3.  Sources all .R files from specified directories
+3.  Sources all .R files from the specified directories.
 
-4.  Handles path encoding for cross-platform compatibility
+4.  Handles path encoding for cross-platform compatibility.
 
 5.  Maintains a mirror of settings in
-    [`org::project`](https://www.rwhite.no/org/reference/project.md)
+    [`org::project`](https://www.rwhite.no/org/reference/project.md).
 
 ## See also
 
 [`vignette("org")`](https://www.rwhite.no/org/articles/org.md) for the
-recommended project layout, and its "Team collaboration" section for
-giving one folder several possible paths.
+recommended project layout. Its "Team collaboration" section shows how
+to give one folder several possible paths.
 
 Other project setup:
 [`project`](https://www.rwhite.no/org/reference/project.md),
@@ -122,15 +125,15 @@ proj <- org::initialize_project(
   raw = file.path(tempdir(), "org_init_example", "raw")
 )
 #> You are NOT sourcing into .GlobalEnv. All functions will be sourced into an environment that is returned from this function.
-#> Sourcing all code inside /tmp/RtmpnMfP1f/org_init_example/analysis3/R into 
+#> Sourcing all code inside /tmp/RtmpqxXtq0/org_init_example/analysis3/R into 
 
 # Folder locations, both on the returned environment and on org::project
 proj$results_today # Today's results folder
-#> [1] "/tmp/RtmpnMfP1f/org_init_example/results/2026-08-03/"
+#> [1] "/tmp/RtmpqxXtq0/org_init_example/results/2026-08-06/"
 proj$raw # Raw data folder
-#> [1] "/tmp/RtmpnMfP1f/org_init_example/raw/"
+#> [1] "/tmp/RtmpqxXtq0/org_init_example/raw/"
 org::project$results_today
-#> [1] "/tmp/RtmpnMfP1f/org_init_example/results/2026-08-03/"
+#> [1] "/tmp/RtmpqxXtq0/org_init_example/results/2026-08-06/"
 
 # Everything in home/R/ has been sourced into `env`
 proj$env$greet()

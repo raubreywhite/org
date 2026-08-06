@@ -14,19 +14,21 @@ An environment containing the following elements:
 
 - home:
 
-  The folder containing 'Run.R' and 'R/'
+  The folder containing 'Run.R' and 'R/'.
 
 - results_today:
 
-  The folder inside `results` with today's date, created by
-  `initialize_project`
+  The folder inside `results` with today's date.
+  [`initialize_project()`](https://www.rwhite.no/org/reference/initialize_project.md)
+  creates it.
 
 ## See also
 
 [`vignette("org")`](https://www.rwhite.no/org/articles/org.md), whose
 "Project structure" section describes the standard folders and the
-additional-folder convention. Folders passed through `...` are stored
-here under their own names and are not described individually.
+additional-folder convention. `org` stores folders passed through `...`
+here under their own names. This help page does not describe them
+individually.
 
 Other project setup:
 [`initialize_project()`](https://www.rwhite.no/org/reference/initialize_project.md),
@@ -44,17 +46,17 @@ proj <- org::initialize_project(
   data_raw = file.path(home, "data_raw")
 )
 #> You are NOT sourcing into .GlobalEnv. All functions will be sourced into an environment that is returned from this function.
-#> Sourcing all code inside /tmp/RtmpnMfP1f/org_project_example/R into 
+#> Sourcing all code inside /tmp/RtmpqxXtq0/org_project_example/R into 
 
 # Every folder is now available from anywhere in the analysis
 org::project$home
-#> [1] "/tmp/RtmpnMfP1f/org_project_example/"
+#> [1] "/tmp/RtmpqxXtq0/org_project_example/"
 org::project$results
-#> [1] "/tmp/RtmpnMfP1f/org_project_example/results/"
+#> [1] "/tmp/RtmpqxXtq0/org_project_example/results/"
 org::project$results_today
-#> [1] "/tmp/RtmpnMfP1f/org_project_example/results/2026-08-03/"
+#> [1] "/tmp/RtmpqxXtq0/org_project_example/results/2026-08-06/"
 org::project$data_raw
-#> [1] "/tmp/RtmpnMfP1f/org_project_example/data_raw/"
+#> [1] "/tmp/RtmpqxXtq0/org_project_example/data_raw/"
 
 unlink(home, recursive = TRUE)
 ```

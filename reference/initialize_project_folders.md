@@ -20,28 +20,28 @@ initialize_project_folders(
 
 - env:
 
-  Environment to source code into
+  Environment to source code into.
 
 - home:
 
-  Home directory path
+  Home directory path.
 
 - results:
 
-  Results directory path
+  Results directory path.
 
 - encode_from:
 
-  Source encoding
+  Source encoding.
 
 - encode_to:
 
-  Target encoding
+  Target encoding.
 
 - proj:
 
-  Project environment
+  Project environment.
 
 - ...:
 
-  Additional folder arguments
+  Additional folder arguments.

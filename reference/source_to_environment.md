@@ -17,16 +17,16 @@ source_to_environment(
 
 - proj:
 
-  Project environment
+  Project environment.
 
 - env:
 
-  Target environment for sourcing
+  Target environment for the sourced code.
 
 - folders_to_be_sourced:
 
-  Folders containing R files
+  Folders containing R files.
 
 - source_folders_absolute:
 
-  Whether folder paths are absolute
+  Whether folder paths are absolute.

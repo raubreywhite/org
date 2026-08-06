@@ -1,9 +1,9 @@
 # Set results folder after project initialization
 
-Sets the results folder in the project environment and creates a
-date-based subfolder. The date-based folder is accessible via
-`proj$results_today` and empty date folders are automatically cleaned up
-when new results are added.
+Sets the results folder in the project environment. Creates a date-based
+subfolder. You reach the date-based folder at `proj$results_today`.
+`set_results()` automatically cleans up empty date folders when new
+results are added.
 
 ## Usage
 
@@ -16,7 +16,7 @@ set_results(results, proj = org::project)
 - results:
 
   A character vector specifying one or more possible results folder
-  paths. The first existing path will be used.
+  paths. `set_results()` uses the first existing path.
 
 - proj:
 
@@ -29,11 +29,11 @@ Nothing. Modifies the `proj` environment to include:
 
 - \$results:
 
-  The base results folder path
+  The base results folder path.
 
 - \$results_today:
 
-  Path to today's results folder (format: YYYY-MM-DD)
+  Path to today's results folder. The format is YYYY-MM-DD.
 
 ## See also
 
@@ -56,14 +56,14 @@ proj <- org::initialize_project(
   results = file.path(home, "results_a")
 )
 #> You are NOT sourcing into .GlobalEnv. All functions will be sourced into an environment that is returned from this function.
-#> Sourcing all code inside /tmp/RtmpnMfP1f/org_set_results_example/R into 
+#> Sourcing all code inside /tmp/RtmpqxXtq0/org_set_results_example/R into 
 org::project$results_today
-#> [1] "/tmp/RtmpnMfP1f/org_set_results_example/results_a/2026-08-03/"
+#> [1] "/tmp/RtmpqxXtq0/org_set_results_example/results_a/2026-08-06/"
 
 # Point the project at a different results folder
 org::set_results(file.path(home, "results_b"))
 org::project$results_today
-#> [1] "/tmp/RtmpnMfP1f/org_set_results_example/results_b/2026-08-03/"
+#> [1] "/tmp/RtmpqxXtq0/org_set_results_example/results_b/2026-08-06/"
 dir.exists(org::project$results_today)
 #> [1] TRUE
 

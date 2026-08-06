@@ -1,8 +1,8 @@
 # Extract package names referenced in R files
 
 Scans R files for [`library()`](https://rdrr.io/r/base/library.html),
-[`require()`](https://rdrr.io/r/base/library.html), and `pkg::` usage
-and returns a character vector of unique package names.
+[`require()`](https://rdrr.io/r/base/library.html), and `pkg::` usage.
+Returns a character vector of unique package names.
 
 ## Usage
 
@@ -14,8 +14,8 @@ extract_packages(paths)
 
 - paths:
 
-  Character vector of file or directory paths. Directories are scanned
-  for `.R` files.
+  Character vector of file or directory paths. `extract_packages()`
+  scans each directory for `.R` files.
 
 ## Value
 
