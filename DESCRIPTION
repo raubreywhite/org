@@ -1,9 +1,16 @@
 Package: org
 Title: Organising Projects
 Version: 2026.8.6
-Authors@R: c(
-  person(c("Richard","Aubrey"), "White", email = "hello@rwhite.no", role = c("aut", "cre"),comment = c(ORCID = "0000-0002-6747-1726"))
-  )
+Authors@R:
+    c(
+      person(
+        given = c("Richard", "Aubrey"),
+        family = "White",
+        email = "hello@rwhite.no",
+        role = c("aut", "cre", "cph"),
+        comment = c(ORCID = "0000-0002-6747-1726")
+      )
+    )
 Description: A framework for organizing R projects with a standardized structure. 
     Most analyses consist of three main components: code, results, and data, 
     each with different requirements such as version control, sharing, and encryption. 
