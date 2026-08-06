@@ -1,5 +1,47 @@
 # Changelog
 
+## Version 2026.8.6
+
+### Corrections
+
+- The 2026.8.3 entry described the
+  [`set_results()`](https://www.rwhite.no/org/reference/set_results.md)
+  bug wrongly, on three counts.
+  [`is.na()`](https://rdrr.io/r/base/NA.html) on an environment returns
+  `logical(0)`, not `FALSE`. The surrounding `if` then stopped on a
+  zero-length condition, so the environment never reached
+  [`dir.exists()`](https://rdrr.io/r/base/files2.html). The message was
+  “argument is of length zero”, not “invalid filename argument”.
+  [`dir.exists()`](https://rdrr.io/r/base/files2.html) does give the
+  latter when it is called directly, which is where the string came
+  from, but that path never ran. The entry is corrected.
+- The same entry said multi-element character paths remain unsupported.
+  They work.
+  [`set_results()`](https://www.rwhite.no/org/reference/set_results.md)
+  given two paths where only the second exists returns `NULL` and
+  selects that one. It errors only when none of them exists. The
+  sentence is removed.
+- [`ls_files()`](https://www.rwhite.no/org/reference/ls_files.md) was
+  titled “List files and directories recursively”. It does not recurse:
+  it calls [`list.files()`](https://rdrr.io/r/base/list.files.html)
+  without `recursive = TRUE`. Given `top.R` and `sub/deep.R` it returns
+  `sub` and `top.R`, and never finds `deep.R`.
+
+### Documentation
+
+- All roxygen prose in `R/`, plus `vignettes/org.Rmd`, `README.md` and
+  `index.md`, now follows ASD-STE100 (Simplified Technical English).
+  Every sentence in those files runs to 25 words or fewer. The change
+  splits long sentences, prefers the active voice, and marks requirement
+  levels with RFC-2119 keywords. No behaviour changed.
+- Seven roxygen readings ran over 25 words and every one was a splitter
+  merge, not a long sentence. The fields carried no terminal
+  punctuation, so a sentence splitter ran through `@param` into
+  `@return` and on into the next block’s title. The longest such reading
+  was 65 words; its longest real component was
+  22. Adding the missing full stops fixed the grammar and the
+      measurement.
+
 ## Version 2026.8.3
 
 - Fixed
@@ -15,9 +57,11 @@
   `logical(0)`, with a warning, rather than `FALSE`. The surrounding
   `if` then received a zero-length condition and stopped. Non-character
   entries are now skipped.
+
 - Added runnable examples to `project` and
   [`set_results()`](https://www.rwhite.no/org/reference/set_results.md),
   which previously had none.
+
 - Replaced the `\dontrun{}` examples on
   [`initialize_project()`](https://www.rwhite.no/org/reference/initialize_project.md),
   [`move_directory()`](https://www.rwhite.no/org/reference/move_directory.md),
@@ -25,20 +69,14 @@
   [`write_text()`](https://www.rwhite.no/org/reference/write_text.md)
   with examples that run against
   [`tempdir()`](https://rdrr.io/r/base/tempfile.html).
+
 - Added `@family` cross-links (project setup; file utilities) and a
   `@seealso` pointing at
   [`vignette("org")`](https://www.rwhite.no/org/articles/org.md) to all
   seven exported objects.
-- Added `index.md`, `pkgdown/`, and `Rplots.pdf` to `.Rbuildignore`.
-- All roxygen prose in `R/`, plus `vignettes/org.Rmd`, `README.md` and
-  `index.md`, now follows ASD-STE100 (Simplified Technical English).
-  Every sentence in those files runs to 25 words or fewer. The change
-  splits long sentences, prefers the active voice, and marks requirement
-  levels with RFC-2119 keywords. No behaviour changed.
 
-## Version 2026.4.9
-
-CRAN release: 2026-04-09
+- Added `index.md`, `pkgdown/`, and `Rplots.pdf` to `.Rbuildignore`. \#
+  Version 2026.4.9
 
 - Added `install_missing_packages` argument to
   [`initialize_project()`](https://www.rwhite.no/org/reference/initialize_project.md).
@@ -49,7 +87,9 @@ CRAN release: 2026-04-09
   `install_missing_packages = TRUE` to auto-install via `pak` (falls
   back to
   [`install.packages()`](https://rdrr.io/r/utils/install.packages.html)).
+
 - Removed `package_installed()`.
+
 - Removed `create_project_quarto_internal_results()` and
   `create_project_quarto_external_results()`.
 
