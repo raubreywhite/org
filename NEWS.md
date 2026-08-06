@@ -1,3 +1,35 @@
+# Version 2026.8.6
+
+## Corrections
+
+- The 2026.8.3 entry described the `set_results()` bug wrongly, on three
+  counts. `is.na()` on an environment returns `logical(0)`, not `FALSE`. The
+  surrounding `if` then stopped on a zero-length condition, so the environment
+  never reached `dir.exists()`. The message was "argument is of length zero",
+  not "invalid filename argument". `dir.exists()` does give the latter when it
+  is called directly, which is where the string came from, but that path never
+  ran. The entry is corrected.
+- The same entry said multi-element character paths remain unsupported. They
+  work. `set_results()` given two paths where only the second exists returns
+  `NULL` and selects that one. It errors only when none of them exists. The
+  sentence is removed.
+- `ls_files()` was titled "List files and directories recursively". It does not
+  recurse: it calls `list.files()` without `recursive = TRUE`. Given `top.R` and
+  `sub/deep.R` it returns `sub` and `top.R`, and never finds `deep.R`.
+
+## Documentation
+
+- All roxygen prose in `R/`, plus `vignettes/org.Rmd`, `README.md` and
+  `index.md`, now follows ASD-STE100 (Simplified Technical English). Every
+  sentence in those files runs to 25 words or fewer. The change splits long
+  sentences, prefers the active voice, and marks requirement levels with
+  RFC-2119 keywords. No behaviour changed.
+- Seven roxygen readings ran over 25 words and every one was a splitter merge,
+  not a long sentence. The fields carried no terminal punctuation, so a sentence
+  splitter ran through `@param` into `@return` and on into the next block's
+  title. The longest such reading was 65 words; its longest real component was
+  22. Adding the missing full stops fixed the grammar and the measurement.
+
 # Version 2026.8.3
 
 - Fixed `set_results()`, which failed with "argument is of length zero" whenever
@@ -15,12 +47,6 @@
 - Added `@family` cross-links (project setup; file utilities) and a `@seealso`
   pointing at `vignette("org")` to all seven exported objects.
 - Added `index.md`, `pkgdown/`, and `Rplots.pdf` to `.Rbuildignore`.
-- All roxygen prose in `R/`, plus `vignettes/org.Rmd`, `README.md` and
-  `index.md`, now follows ASD-STE100 (Simplified Technical English). Every
-  sentence in those files runs to 25 words or fewer. The change splits long
-  sentences, prefers the active voice, and marks requirement levels with
-  RFC-2119 keywords. No behaviour changed.
-
 # Version 2026.4.9
 
 - Added `install_missing_packages` argument to `initialize_project()`. Scans
