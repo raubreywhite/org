@@ -56,14 +56,14 @@ proj <- org::initialize_project(
   results = file.path(home, "results_a")
 )
 #> You are NOT sourcing into .GlobalEnv. All functions will be sourced into an environment that is returned from this function.
-#> Sourcing all code inside /tmp/RtmpM1uJZL/org_set_results_example/R into 
+#> Sourcing all code inside /tmp/RtmpGypTUT/org_set_results_example/R into 
 org::project$results_today
-#> [1] "/tmp/RtmpM1uJZL/org_set_results_example/results_a/2026-08-20/"
+#> [1] "/tmp/RtmpGypTUT/org_set_results_example/results_a/2026-08-20/"
 
 # Point the project at a different results folder
 org::set_results(file.path(home, "results_b"))
 org::project$results_today
-#> [1] "/tmp/RtmpM1uJZL/org_set_results_example/results_b/2026-08-20/"
+#> [1] "/tmp/RtmpGypTUT/org_set_results_example/results_b/2026-08-20/"
 dir.exists(org::project$results_today)
 #> [1] TRUE
 
