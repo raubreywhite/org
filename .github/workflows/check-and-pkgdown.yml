@@ -60,6 +60,20 @@ jobs:
         run: pkgdown::build_site_github_pages()
         shell: Rscript {0}
 
+      # pkgdown:::package_mds() globs every root *.md and excludes only a fixed
+      # list (README, LICENSE, NEWS, cran-comments, the issue templates). There
+      # is no setting for it, so CLAUDE.md renders and publishes as a page.
+      - name: Keep agent instructions off the published site
+        run: |
+          set -euo pipefail
+          # Fail if pkgdown stopped generating it, so this step cannot pass
+          # silently once it is no longer doing anything.
+          test -f docs/CLAUDE.html
+          rm docs/CLAUDE.html
+          sed -i '\|<url><loc>[^<]*/CLAUDE\.html</loc></url>|d' docs/sitemap.xml
+          test ! -f docs/CLAUDE.html
+          ! grep -q 'CLAUDE\.html' docs/sitemap.xml
+
       - name: Deploy to GitHub Pages
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v3
