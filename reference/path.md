@@ -27,6 +27,7 @@ A character vector containing the constructed path.
 this function is used in an analysis.
 
 Other file utilities:
+[`loc_per_file()`](https://www.rwhite.no/org/reference/loc_per_file.md),
 [`ls_files()`](https://www.rwhite.no/org/reference/ls_files.md),
 [`move_directory()`](https://www.rwhite.no/org/reference/move_directory.md),
 [`write_text()`](https://www.rwhite.no/org/reference/write_text.md)

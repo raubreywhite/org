@@ -15,7 +15,7 @@ you specify."><meta property="og:image" content="https://www.rwhite.no/org/logo.
 
     <a class="navbar-brand me-2" href="../index.html">org</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2026.8.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2026.8.20</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,6 +64,7 @@ you specify.</p>
 <span>  home <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  results <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  folders_to_be_sourced <span class="op">=</span> <span class="st">"R"</span>,</span>
+<span>  max_loc_per_file <span class="op">=</span> <span class="cn">Inf</span>,</span>
 <span>  install_missing_packages <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  source_folders_absolute <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  encode_from <span class="op">=</span> <span class="st">"UTF-8"</span>,</span>
@@ -97,6 +98,15 @@ creates a subfolder with today's date. You reach it at
 <dt id="arg-folders-to-be-sourced">folders_to_be_sourced<a class="anchor" aria-label="anchor" href="#arg-folders-to-be-sourced"></a></dt>
 <dd><p>Character vector of folder names inside <code>home</code>.
 These folders hold the .R files to source into the environment.</p></dd>
+
+
+<dt id="arg-max-loc-per-file">max_loc_per_file<a class="anchor" aria-label="anchor" href="#arg-max-loc-per-file"></a></dt>
+<dd><p>The maximum number of code lines a single .R file in
+<code>folders_to_be_sourced</code> may hold. <code>initialize_project()</code> stops with an
+error naming every file above the limit, before it sources any of them.
+A code line is a physical line that is neither blank nor entirely a
+comment, as counted by <code><a href="loc_per_file.html">loc_per_file()</a></code>. Default is <code>Inf</code>, which checks
+nothing.</p></dd>
 
 
 <dt id="arg-install-missing-packages">install_missing_packages<a class="anchor" aria-label="anchor" href="#arg-install-missing-packages"></a></dt>
@@ -134,10 +144,13 @@ raw, etc.).</p></dd>
 </ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p><code>initialize_project()</code> performs the five operations below.</p><ol><li><p>Creates necessary directories if they do not exist.</p></li>
+    <p><code>initialize_project()</code> performs the seven operations below, in this order.</p><ol><li><p>Creates necessary directories if they do not exist.</p></li>
 <li><p>Sets up date-based results organization.</p></li>
-<li><p>Sources all .R files from the specified directories.</p></li>
 <li><p>Handles path encoding for cross-platform compatibility.</p></li>
+<li><p>Stops if any file holds more code lines than <code>max_loc_per_file</code>.</p></li>
+<li><p>Stops if a package the code needs is missing, or installs it when
+<code>install_missing_packages</code> is <code>TRUE</code>.</p></li>
+<li><p>Sources all .R files from the specified directories.</p></li>
 <li><p>Maintains a mirror of settings in <code><a href="project.html">org::project</a></code>.</p></li>
 </ol></div>
     <div class="section level2">
@@ -163,15 +176,15 @@ paths.</p>
 <span class="r-in"><span>  raw <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"org_init_example"</span>, <span class="st">"raw"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> You are NOT sourcing into .GlobalEnv. All functions will be sourced into an environment that is returned from this function.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Sourcing all code inside /tmp/RtmpAtqGV8/org_init_example/analysis3/R into </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Sourcing all code inside /tmp/Rtmp03RXI1/org_init_example/analysis3/R into </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Folder locations, both on the returned environment and on org::project</span></span></span>
 <span class="r-in"><span><span class="va">proj</span><span class="op">$</span><span class="va">results_today</span> <span class="co"># Today's results folder</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpAtqGV8/org_init_example/results/2026-08-06/"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/Rtmp03RXI1/org_init_example/results/2026-08-20/"</span>
 <span class="r-in"><span><span class="va">proj</span><span class="op">$</span><span class="va">raw</span> <span class="co"># Raw data folder</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpAtqGV8/org_init_example/raw/"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/Rtmp03RXI1/org_init_example/raw/"</span>
 <span class="r-in"><span><span class="fu">org</span><span class="fu">::</span><span class="va"><a href="project.html">project</a></span><span class="op">$</span><span class="va">results_today</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpAtqGV8/org_init_example/results/2026-08-06/"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/Rtmp03RXI1/org_init_example/results/2026-08-20/"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Everything in home/R/ has been sourced into `env`</span></span></span>
 <span class="r-in"><span><span class="va">proj</span><span class="op">$</span><span class="va">env</span><span class="op">$</span><span class="fu">greet</span><span class="op">(</span><span class="op">)</span></span></span>

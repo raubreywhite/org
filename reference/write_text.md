@@ -43,6 +43,7 @@ No return value. Called for its side effect of writing to a file.
 log beside the results.
 
 Other file utilities:
+[`loc_per_file()`](https://www.rwhite.no/org/reference/loc_per_file.md),
 [`ls_files()`](https://www.rwhite.no/org/reference/ls_files.md),
 [`move_directory()`](https://www.rwhite.no/org/reference/move_directory.md),
 [`path()`](https://www.rwhite.no/org/reference/path.md)

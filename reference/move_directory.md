@@ -47,6 +47,7 @@ Nothing. Creates the destination directory and moves all contents.
 operations.
 
 Other file utilities:
+[`loc_per_file()`](https://www.rwhite.no/org/reference/loc_per_file.md),
 [`ls_files()`](https://www.rwhite.no/org/reference/ls_files.md),
 [`path()`](https://www.rwhite.no/org/reference/path.md),
 [`write_text()`](https://www.rwhite.no/org/reference/write_text.md)

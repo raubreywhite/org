@@ -100,6 +100,18 @@ throughout your analysis:
 - `results`: Results folder that creates date-based subfolders
   (accessible via `org::project$results_today`).
 - `...`: Additional folders as needed (e.g., `data_raw`, `data_clean`).
+- `max_loc_per_file`: The largest number of code lines one .R file may
+  hold.
+  [`initialize_project()`](https://www.rwhite.no/org/reference/initialize_project.md)
+  stops with an error naming every file above the limit, before it
+  sources any of them. The default is `Inf`, which checks nothing.
+
+A code line is a physical line that is neither blank nor entirely a
+comment. The R parser identifies the comments, so a `#` inside a string
+does not hide a line.
+[`org::loc_per_file()`](https://www.rwhite.no/org/reference/loc_per_file.md)
+applies the same count on its own, if you want to see the numbers
+without setting a limit.
 
 #### 2. `Run.R`
 
@@ -330,6 +342,8 @@ The `org` package provides several key functions for project management.
   Construct cross-platform file paths.
 - **[`org::ls_files()`](https://www.rwhite.no/org/reference/ls_files.md)**:
   List files with optional pattern matching.
+- **[`org::loc_per_file()`](https://www.rwhite.no/org/reference/loc_per_file.md)**:
+  Count the code lines in each of several R files.
 - **[`org::move_directory()`](https://www.rwhite.no/org/reference/move_directory.md)**:
   Move directories safely.
 - **[`org::write_text()`](https://www.rwhite.no/org/reference/write_text.md)**:

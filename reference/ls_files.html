@@ -11,7 +11,7 @@ pattern."><meta property="og:image" content="https://www.rwhite.no/org/logo.png"
 
     <a class="navbar-brand me-2" href="../index.html">org</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2026.8.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2026.8.20</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,6 +84,7 @@ pattern.</p>
     <div class="dont-index"><p><code><a href="../articles/org.html">vignette("org")</a></code>, whose "Troubleshooting" section uses this
 function to check which files a project will source.</p>
 <p>Other file utilities:
+<code><a href="loc_per_file.html">loc_per_file()</a></code>,
 <code><a href="move_directory.html">move_directory()</a></code>,
 <code><a href="path.html">path()</a></code>,
 <code><a href="write_text.html">write_text()</a></code></p></div>
@@ -94,15 +95,18 @@ function to check which files a project will source.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># List all files in current directory</span></span></span>
 <span class="r-in"><span><span class="fu">org</span><span class="fu">::</span><span class="fu">ls_files</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/org/org/docs/reference/cat_to_filepath_function_factory.html"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/home/runner/work/org/org/docs/reference/check_missing_packages.html"          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "/home/runner/work/org/org/docs/reference/do_install_missing_packages.html"     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "/home/runner/work/org/org/docs/reference/extract_packages.html"                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5] "/home/runner/work/org/org/docs/reference/figures"                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [6] "/home/runner/work/org/org/docs/reference/find_missing_packages.html"           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [7] "/home/runner/work/org/org/docs/reference/index.html"                           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [8] "/home/runner/work/org/org/docs/reference/initialize_project.html"              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [9] "/home/runner/work/org/org/docs/reference/initialize_project_folders.html"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "/home/runner/work/org/org/docs/reference/cat_to_filepath_function_factory.html"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [2] "/home/runner/work/org/org/docs/reference/check_max_loc_per_file.html"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "/home/runner/work/org/org/docs/reference/check_missing_packages.html"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "/home/runner/work/org/org/docs/reference/do_install_missing_packages.html"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "/home/runner/work/org/org/docs/reference/extract_packages.html"                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] "/home/runner/work/org/org/docs/reference/figures"                              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "/home/runner/work/org/org/docs/reference/find_missing_packages.html"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] "/home/runner/work/org/org/docs/reference/index.html"                           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "/home/runner/work/org/org/docs/reference/initialize_project.html"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10] "/home/runner/work/org/org/docs/reference/initialize_project_folders.html"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11] "/home/runner/work/org/org/docs/reference/loc_one_file.html"                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [12] "/home/runner/work/org/org/docs/reference/loc_per_file.html"                    </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># List only R files</span></span></span>
 <span class="r-in"><span><span class="fu">org</span><span class="fu">::</span><span class="fu">ls_files</span><span class="op">(</span>regexp <span class="op">=</span> <span class="st">"\\.R$"</span><span class="op">)</span></span></span>

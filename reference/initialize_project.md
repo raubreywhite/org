@@ -14,6 +14,7 @@ initialize_project(
   home = NULL,
   results = NULL,
   folders_to_be_sourced = "R",
+  max_loc_per_file = Inf,
   install_missing_packages = FALSE,
   source_folders_absolute = FALSE,
   encode_from = "UTF-8",
@@ -46,6 +47,16 @@ initialize_project(
 
   Character vector of folder names inside `home`. These folders hold the
   .R files to source into the environment.
+
+- max_loc_per_file:
+
+  The maximum number of code lines a single .R file in
+  `folders_to_be_sourced` may hold. `initialize_project()` stops with an
+  error naming every file above the limit, before it sources any of
+  them. A code line is a physical line that is neither blank nor
+  entirely a comment, as counted by
+  [`loc_per_file()`](https://www.rwhite.no/org/reference/loc_per_file.md).
+  Default is `Inf`, which checks nothing.
 
 - install_missing_packages:
 
@@ -88,17 +99,23 @@ An environment containing:
 
 ## Details
 
-`initialize_project()` performs the five operations below.
+`initialize_project()` performs the seven operations below, in this
+order.
 
 1.  Creates necessary directories if they do not exist.
 
 2.  Sets up date-based results organization.
 
-3.  Sources all .R files from the specified directories.
+3.  Handles path encoding for cross-platform compatibility.
 
-4.  Handles path encoding for cross-platform compatibility.
+4.  Stops if any file holds more code lines than `max_loc_per_file`.
 
-5.  Maintains a mirror of settings in
+5.  Stops if a package the code needs is missing, or installs it when
+    `install_missing_packages` is `TRUE`.
+
+6.  Sources all .R files from the specified directories.
+
+7.  Maintains a mirror of settings in
     [`org::project`](https://www.rwhite.no/org/reference/project.md).
 
 ## See also
@@ -125,15 +142,15 @@ proj <- org::initialize_project(
   raw = file.path(tempdir(), "org_init_example", "raw")
 )
 #> You are NOT sourcing into .GlobalEnv. All functions will be sourced into an environment that is returned from this function.
-#> Sourcing all code inside /tmp/RtmpAtqGV8/org_init_example/analysis3/R into 
+#> Sourcing all code inside /tmp/Rtmp03RXI1/org_init_example/analysis3/R into 
 
 # Folder locations, both on the returned environment and on org::project
 proj$results_today # Today's results folder
-#> [1] "/tmp/RtmpAtqGV8/org_init_example/results/2026-08-06/"
+#> [1] "/tmp/Rtmp03RXI1/org_init_example/results/2026-08-20/"
 proj$raw # Raw data folder
-#> [1] "/tmp/RtmpAtqGV8/org_init_example/raw/"
+#> [1] "/tmp/Rtmp03RXI1/org_init_example/raw/"
 org::project$results_today
-#> [1] "/tmp/RtmpAtqGV8/org_init_example/results/2026-08-06/"
+#> [1] "/tmp/Rtmp03RXI1/org_init_example/results/2026-08-20/"
 
 # Everything in home/R/ has been sourced into `env`
 proj$env$greet()

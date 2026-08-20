@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">org</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2026.8.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2026.8.20</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,6 +40,34 @@
       <small>Source: <a href="https://github.com/raubreywhite/org/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="2026.8.20" id="version-2026820">Version 2026.8.20<a class="anchor" aria-label="anchor" href="#version-2026820"></a></h2>
+<div class="section level3">
+<h3 id="a-file-length-limit-for-analysis-projects-2026-8-20">A file-length limit for analysis projects<a class="anchor" aria-label="anchor" href="#a-file-length-limit-for-analysis-projects-2026-8-20"></a></h3>
+<ul><li>
+<code><a href="../reference/initialize_project.html">initialize_project()</a></code> takes <code>max_loc_per_file</code>. It stops with an error naming every .R file that holds more code lines than the limit. The check runs before the package check and before sourcing, so an oversized file stops the project without installing or running anything first. The default is <code>Inf</code>, which checks nothing. The argument otherwise takes one whole number of zero or more, and rejects anything else.</li>
+<li>
+<code><a href="../reference/loc_per_file.html">loc_per_file()</a></code> is new and exported. It counts the code lines in each file you give it. A code line is a physical line that is neither blank nor entirely a comment.</li>
+<li>The R parser identifies the comments, not a regular expression. A regular expression skips a line inside a string that starts with <code>#</code>, and it cannot separate a comment that follows code from a comment that fills the line. Measured across the 237 R files of the package fleet, the two approaches disagree on 11 of them. The largest gap is 203 lines, in a file that embeds an R template as a single string.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fix-a-project-with-several-source-folders-was-never-checked-2026-8-20">Bug fix: a project with several source folders was never checked<a class="anchor" aria-label="anchor" href="#bug-fix-a-project-with-several-source-folders-was-never-checked-2026-8-20"></a></h3>
+<ul><li>
+<code><a href="../reference/initialize_project.html">initialize_project()</a></code> built its list of source folders with one <code>path(home, folders_to_be_sourced)</code> call. <code><a href="../reference/path.html">path()</a></code> deparses a multi-element argument into the path, so two folders produced a single string ending in <code>c("x", "y")</code>, which matches no folder.</li>
+<li>Every check reading that list therefore saw nothing whenever <code>folders_to_be_sourced</code> held more than one folder. That silently disabled <code><a href="../reference/check_missing_packages.html">check_missing_packages()</a></code>, and it would have disabled the new <code>max_loc_per_file</code> check in the same way.</li>
+<li>Sourcing was never affected. <code><a href="../reference/source_to_environment.html">source_to_environment()</a></code> loops over the folders and calls <code><a href="../reference/path.html">path()</a></code> once per folder, which is the correct usage.</li>
+<li>
+<code><a href="../reference/initialize_project.html">initialize_project()</a></code> now calls <code><a href="../reference/path.html">path()</a></code> once per folder as well.</li>
+<li>
+<code><a href="../reference/path.html">path()</a></code> itself is unchanged. It deparses a multi-element argument for every caller, not only this one.</li>
+<li>
+<strong>This changes behaviour for a project with several source folders</strong>, even at the default <code>max_loc_per_file = Inf</code>. Such a project was never checked for missing packages, and now it is. It can therefore stop, or install a package, where earlier versions did neither.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="documentation-2026-8-20">Documentation<a class="anchor" aria-label="anchor" href="#documentation-2026-8-20"></a></h3>
+<ul><li>The package now generates its documentation with roxygen2 8.0.0. <code>DESCRIPTION</code> carries <code>Config/roxygen2/version</code> in place of <code>RoxygenNote</code>.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2026.8.6" id="version-202686">Version 2026.8.6<a class="anchor" aria-label="anchor" href="#version-202686"></a></h2>
 <div class="section level3">

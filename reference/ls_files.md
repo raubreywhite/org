@@ -43,6 +43,7 @@ A character vector of file and directory paths.
 project will source.
 
 Other file utilities:
+[`loc_per_file()`](https://www.rwhite.no/org/reference/loc_per_file.md),
 [`move_directory()`](https://www.rwhite.no/org/reference/move_directory.md),
 [`path()`](https://www.rwhite.no/org/reference/path.md),
 [`write_text()`](https://www.rwhite.no/org/reference/write_text.md)
@@ -53,15 +54,18 @@ Other file utilities:
 # \donttest{
 # List all files in current directory
 org::ls_files()
-#> [1] "/home/runner/work/org/org/docs/reference/cat_to_filepath_function_factory.html"
-#> [2] "/home/runner/work/org/org/docs/reference/check_missing_packages.html"          
-#> [3] "/home/runner/work/org/org/docs/reference/do_install_missing_packages.html"     
-#> [4] "/home/runner/work/org/org/docs/reference/extract_packages.html"                
-#> [5] "/home/runner/work/org/org/docs/reference/figures"                              
-#> [6] "/home/runner/work/org/org/docs/reference/find_missing_packages.html"           
-#> [7] "/home/runner/work/org/org/docs/reference/index.html"                           
-#> [8] "/home/runner/work/org/org/docs/reference/initialize_project.html"              
-#> [9] "/home/runner/work/org/org/docs/reference/initialize_project_folders.html"      
+#>  [1] "/home/runner/work/org/org/docs/reference/cat_to_filepath_function_factory.html"
+#>  [2] "/home/runner/work/org/org/docs/reference/check_max_loc_per_file.html"          
+#>  [3] "/home/runner/work/org/org/docs/reference/check_missing_packages.html"          
+#>  [4] "/home/runner/work/org/org/docs/reference/do_install_missing_packages.html"     
+#>  [5] "/home/runner/work/org/org/docs/reference/extract_packages.html"                
+#>  [6] "/home/runner/work/org/org/docs/reference/figures"                              
+#>  [7] "/home/runner/work/org/org/docs/reference/find_missing_packages.html"           
+#>  [8] "/home/runner/work/org/org/docs/reference/index.html"                           
+#>  [9] "/home/runner/work/org/org/docs/reference/initialize_project.html"              
+#> [10] "/home/runner/work/org/org/docs/reference/initialize_project_folders.html"      
+#> [11] "/home/runner/work/org/org/docs/reference/loc_one_file.html"                    
+#> [12] "/home/runner/work/org/org/docs/reference/loc_per_file.html"                    
 
 # List only R files
 org::ls_files(regexp = "\\.R$")

@@ -11,6 +11,8 @@
 
 ## File and Directory Utilities
 
+- [`loc_per_file()`](https://www.rwhite.no/org/reference/loc_per_file.md)
+  : Count the code lines in R files
 - [`ls_files()`](https://www.rwhite.no/org/reference/ls_files.md) : List
   the files and directories directly inside a folder
 - [`move_directory()`](https://www.rwhite.no/org/reference/move_directory.md)
