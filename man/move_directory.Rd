@@ -54,9 +54,10 @@ unlink(to, recursive = TRUE)
 \code{vignette("org")}, whose "Function reference" section lists this
 alongside the other file operations.
 
-Other file utilities: 
-\code{\link{ls_files}()},
-\code{\link{path}()},
-\code{\link{write_text}()}
+Other file utilities:
+\code{\link[=loc_per_file]{loc_per_file()}},
+\code{\link[=ls_files]{ls_files()}},
+\code{\link[=path]{path()}},
+\code{\link[=write_text]{write_text()}}
 }
 \concept{file utilities}

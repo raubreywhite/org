@@ -25,9 +25,10 @@ org::path("home//user", "data.csv")    # Returns "home/user/data.csv"
 \code{vignette("org")}, whose "Path construction and cross-platform
 compatibility" section shows how this function is used in an analysis.
 
-Other file utilities: 
-\code{\link{ls_files}()},
-\code{\link{move_directory}()},
-\code{\link{write_text}()}
+Other file utilities:
+\code{\link[=loc_per_file]{loc_per_file()}},
+\code{\link[=ls_files]{ls_files()}},
+\code{\link[=move_directory]{move_directory()}},
+\code{\link[=write_text]{write_text()}}
 }
 \concept{file utilities}

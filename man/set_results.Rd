@@ -46,8 +46,8 @@ unlink(home, recursive = TRUE)
 \code{vignette("org")}, whose "Common workflows" section shows when to
 change the results folder after a project is already initialized.
 
-Other project setup: 
-\code{\link{initialize_project}()},
+Other project setup:
+\code{\link[=initialize_project]{initialize_project()}},
 \code{\link{project}}
 }
 \concept{project setup}

@@ -44,9 +44,10 @@ org::ls_files(c("dir1", "dir2"))
 \code{vignette("org")}, whose "Troubleshooting" section uses this
 function to check which files a project will source.
 
-Other file utilities: 
-\code{\link{move_directory}()},
-\code{\link{path}()},
-\code{\link{write_text}()}
+Other file utilities:
+\code{\link[=loc_per_file]{loc_per_file()}},
+\code{\link[=move_directory]{move_directory()}},
+\code{\link[=path]{path()}},
+\code{\link[=write_text]{write_text()}}
 }
 \concept{file utilities}

@@ -258,6 +258,12 @@ source_to_environment <- function(
 #'   `org::project$results_today`.
 #' @param folders_to_be_sourced Character vector of folder names inside `home`.
 #'   These folders hold the .R files to source into the environment.
+#' @param max_loc_per_file The maximum number of code lines a single .R file in
+#'   `folders_to_be_sourced` may hold. `initialize_project()` stops with an
+#'   error naming every file above the limit, before it sources any of them.
+#'   A code line is a physical line that is neither blank nor entirely a
+#'   comment, as counted by [loc_per_file()]. Default is `Inf`, which checks
+#'   nothing.
 #' @param install_missing_packages If `TRUE`, `initialize_project()` scans
 #'   `folders_to_be_sourced` for package dependencies. It looks for
 #'   `library()`, `require()`, and `pkg::` usage. It then installs any missing
@@ -275,12 +281,15 @@ source_to_environment <- function(
 #'   - `$env`: The environment that the code was sourced into.
 #'   - `$results_today`: Path to today's results folder.
 #' @details
-#' `initialize_project()` performs the five operations below.
+#' `initialize_project()` performs the seven operations below, in this order.
 #' 1. Creates necessary directories if they do not exist.
 #' 2. Sets up date-based results organization.
-#' 3. Sources all .R files from the specified directories.
-#' 4. Handles path encoding for cross-platform compatibility.
-#' 5. Maintains a mirror of settings in `org::project`.
+#' 3. Handles path encoding for cross-platform compatibility.
+#' 4. Stops if any file holds more code lines than `max_loc_per_file`.
+#' 5. Stops if a package the code needs is missing, or installs it when
+#'    `install_missing_packages` is `TRUE`.
+#' 6. Sources all .R files from the specified directories.
+#' 7. Maintains a mirror of settings in `org::project`.
 #' @examples
 #' # A minimal project: a home folder holding an R/ folder of functions
 #' home <- file.path(tempdir(), "org_init_example", "analysis3")
@@ -312,6 +321,7 @@ initialize_project <- function(
   home = NULL,
   results = NULL,
   folders_to_be_sourced = "R",
+  max_loc_per_file = Inf,
   install_missing_packages = FALSE,
   source_folders_absolute = FALSE,
   encode_from = "UTF-8",
@@ -339,11 +349,24 @@ initialize_project <- function(
     )
   }
 
+  # One call to path() per folder. path() deparses a multi-element argument into
+  # the path itself, so path(home, c("x", "y")) returns one string ending in
+  # `c("x", "y")`, and every check downstream then looks at a folder that does
+  # not exist.
   source_folders <- if (source_folders_absolute) {
     folders_to_be_sourced
   } else {
-    path(proj$home, folders_to_be_sourced)
+    vapply(
+      folders_to_be_sourced,
+      function(folder) path(proj$home, folder),
+      character(1),
+      USE.NAMES = FALSE
+    )
   }
+  # Before the package check, so an oversized file stops the project without
+  # installing anything first.
+  check_max_loc_per_file(source_folders, max_loc_per_file)
+
   if (install_missing_packages) {
     do_install_missing_packages(source_folders)
   } else {

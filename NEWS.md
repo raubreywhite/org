@@ -1,3 +1,48 @@
+# Version 2026.8.20
+
+## A file-length limit for analysis projects
+
+- `initialize_project()` takes `max_loc_per_file`. It stops with an error naming
+  every .R file that holds more code lines than the limit. The check runs before
+  the package check and before sourcing, so an oversized file stops the project
+  without installing or running anything first. The default is `Inf`, which
+  checks nothing. The argument otherwise takes one whole number of zero or more,
+  and rejects anything else.
+- `loc_per_file()` is new and exported. It counts the code lines in each file you
+  give it. A code line is a physical line that is neither blank nor entirely a
+  comment.
+- The R parser identifies the comments, not a regular expression. A regular
+  expression skips a line inside a string that starts with `#`, and it cannot
+  separate a comment that follows code from a comment that fills the line.
+  Measured across the 237 R files of the package fleet, the two approaches
+  disagree on 11 of them. The largest gap is 203 lines, in a file that embeds an
+  R template as a single string.
+
+## Bug fix: a project with several source folders was never checked
+
+- `initialize_project()` built its list of source folders with one
+  `path(home, folders_to_be_sourced)` call. `path()` deparses a multi-element
+  argument into the path, so two folders produced a single string ending in
+  `c("x", "y")`, which matches no folder.
+- Every check reading that list therefore saw nothing whenever
+  `folders_to_be_sourced` held more than one folder. That silently disabled
+  `check_missing_packages()`, and it would have disabled the new
+  `max_loc_per_file` check in the same way.
+- Sourcing was never affected. `source_to_environment()` loops over the folders
+  and calls `path()` once per folder, which is the correct usage.
+- `initialize_project()` now calls `path()` once per folder as well.
+- `path()` itself is unchanged. It deparses a multi-element argument for every
+  caller, not only this one.
+- **This changes behaviour for a project with several source folders**, even at
+  the default `max_loc_per_file = Inf`. Such a project was never checked for
+  missing packages, and now it is. It can therefore stop, or install a package,
+  where earlier versions did neither.
+
+## Documentation
+
+- The package now generates its documentation with roxygen2 8.0.0. `DESCRIPTION`
+  carries `Config/roxygen2/version` in place of `RoxygenNote`.
+
 # Version 2026.8.6
 
 ## Licensing

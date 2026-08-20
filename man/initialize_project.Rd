@@ -9,6 +9,7 @@ initialize_project(
   home = NULL,
   results = NULL,
   folders_to_be_sourced = "R",
+  max_loc_per_file = Inf,
   install_missing_packages = FALSE,
   source_folders_absolute = FALSE,
   encode_from = "UTF-8",
@@ -31,6 +32,13 @@ creates a subfolder with today's date. You reach it at
 
 \item{folders_to_be_sourced}{Character vector of folder names inside \code{home}.
 These folders hold the .R files to source into the environment.}
+
+\item{max_loc_per_file}{The maximum number of code lines a single .R file in
+\code{folders_to_be_sourced} may hold. \code{initialize_project()} stops with an
+error naming every file above the limit, before it sources any of them.
+A code line is a physical line that is neither blank nor entirely a
+comment, as counted by \code{\link[=loc_per_file]{loc_per_file()}}. Default is \code{Inf}, which checks
+nothing.}
 
 \item{install_missing_packages}{If \code{TRUE}, \code{initialize_project()} scans
 \code{folders_to_be_sourced} for package dependencies. It looks for
@@ -65,12 +73,15 @@ results by date automatically, and it can source code from the directories
 you specify.
 }
 \details{
-\code{initialize_project()} performs the five operations below.
+\code{initialize_project()} performs the seven operations below, in this order.
 \enumerate{
 \item Creates necessary directories if they do not exist.
 \item Sets up date-based results organization.
-\item Sources all .R files from the specified directories.
 \item Handles path encoding for cross-platform compatibility.
+\item Stops if any file holds more code lines than \code{max_loc_per_file}.
+\item Stops if a package the code needs is missing, or installs it when
+\code{install_missing_packages} is \code{TRUE}.
+\item Sources all .R files from the specified directories.
 \item Maintains a mirror of settings in \code{org::project}.
 }
 }
@@ -101,8 +112,8 @@ unlink(file.path(tempdir(), "org_init_example"), recursive = TRUE)
 collaboration" section shows how to give one folder several possible
 paths.
 
-Other project setup: 
+Other project setup:
 \code{\link{project}},
-\code{\link{set_results}()}
+\code{\link[=set_results]{set_results()}}
 }
 \concept{project setup}

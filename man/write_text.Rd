@@ -43,9 +43,10 @@ unlink(f)
 \code{vignette("org")}, whose "Example project structure" section uses
 this function to keep a change log beside the results.
 
-Other file utilities: 
-\code{\link{ls_files}()},
-\code{\link{move_directory}()},
-\code{\link{path}()}
+Other file utilities:
+\code{\link[=loc_per_file]{loc_per_file()}},
+\code{\link[=ls_files]{ls_files()}},
+\code{\link[=move_directory]{move_directory()}},
+\code{\link[=path]{path()}}
 }
 \concept{file utilities}
