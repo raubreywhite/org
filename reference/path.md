@@ -14,11 +14,15 @@ path(...)
 
 - ...:
 
-  Character vectors to join with "/" as the separator.
+  Character vectors to join with "/" as the separator. `path()` recycles
+  them against each other, the same way
+  [`base::file.path()`](https://rdrr.io/r/base/file.path.html) does, so
+  one component of length 3 and one of length 1 give three paths.
 
 ## Value
 
-A character vector containing the constructed path.
+A character vector containing the constructed path. It is `character(0)`
+if any component has length zero.
 
 ## See also
 
@@ -39,4 +43,8 @@ org::path("home", "user", "data.csv")  # Returns "home/user/data.csv"
 #> [1] "home/user/data.csv"
 org::path("home//user", "data.csv")    # Returns "home/user/data.csv"
 #> [1] "home/user/data.csv"
+
+# Components are recycled, so one call builds several paths
+org::path("home", c("a.csv", "b.csv"))
+#> [1] "home/a.csv" "home/b.csv"
 ```

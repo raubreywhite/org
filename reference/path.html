@@ -61,12 +61,15 @@ slashes that might occur.</p>
 
 
 <dl><dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Character vectors to join with "/" as the separator.</p></dd>
+<dd><p>Character vectors to join with "/" as the separator. <code>path()</code>
+recycles them against each other, the same way <code><a href="https://rdrr.io/r/base/file.path.html" class="external-link">base::file.path()</a></code> does, so
+one component of length 3 and one of length 1 give three paths.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A character vector containing the constructed path.</p>
+    <p>A character vector containing the constructed path. It is
+<code>character(0)</code> if any component has length zero.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -85,6 +88,10 @@ compatibility" section shows how this function is used in an analysis.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "home/user/data.csv"</span>
 <span class="r-in"><span><span class="fu">org</span><span class="fu">::</span><span class="fu">path</span><span class="op">(</span><span class="st">"home//user"</span>, <span class="st">"data.csv"</span><span class="op">)</span>    <span class="co"># Returns "home/user/data.csv"</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "home/user/data.csv"</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Components are recycled, so one call builds several paths</span></span></span>
+<span class="r-in"><span><span class="fu">org</span><span class="fu">::</span><span class="fu">path</span><span class="op">(</span><span class="st">"home"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a.csv"</span>, <span class="st">"b.csv"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "home/a.csv" "home/b.csv"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

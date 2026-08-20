@@ -101,14 +101,14 @@ change the results folder after a project is already initialized.</p>
 <span class="r-in"><span>  results <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">home</span>, <span class="st">"results_a"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> You are NOT sourcing into .GlobalEnv. All functions will be sourced into an environment that is returned from this function.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Sourcing all code inside /tmp/Rtmp03RXI1/org_set_results_example/R into </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Sourcing all code inside /tmp/Rtmp8bw3CM/org_set_results_example/R into </span>
 <span class="r-in"><span><span class="fu">org</span><span class="fu">::</span><span class="va"><a href="project.html">project</a></span><span class="op">$</span><span class="va">results_today</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/Rtmp03RXI1/org_set_results_example/results_a/2026-08-20/"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/Rtmp8bw3CM/org_set_results_example/results_a/2026-08-20/"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Point the project at a different results folder</span></span></span>
 <span class="r-in"><span><span class="fu">org</span><span class="fu">::</span><span class="fu">set_results</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">home</span>, <span class="st">"results_b"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">org</span><span class="fu">::</span><span class="va"><a href="project.html">project</a></span><span class="op">$</span><span class="va">results_today</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/Rtmp03RXI1/org_set_results_example/results_b/2026-08-20/"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/Rtmp8bw3CM/org_set_results_example/results_b/2026-08-20/"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.exists</a></span><span class="op">(</span><span class="fu">org</span><span class="fu">::</span><span class="va"><a href="project.html">project</a></span><span class="op">$</span><span class="va">results_today</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"><span></span></span>

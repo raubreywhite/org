@@ -51,21 +51,36 @@
 <li>The R parser identifies the comments, not a regular expression. A regular expression skips a line inside a string that starts with <code>#</code>, and it cannot separate a comment that follows code from a comment that fills the line. Measured across the 237 R files of the package fleet, the two approaches disagree on 11 of them. The largest gap is 203 lines, in a file that embeds an R template as a single string.</li>
 </ul></div>
 <div class="section level3">
+<h3 id="bug-fix-path-deparsed-a-multi-element-component-into-the-path-2026-8-20">Bug fix: <code>path()</code> deparsed a multi-element component into the path<a class="anchor" aria-label="anchor" href="#bug-fix-path-deparsed-a-multi-element-component-into-the-path-2026-8-20"></a></h3>
+<ul><li>
+<code><a href="../reference/path.html">path()</a></code> passed its <code>...</code> to <code><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0()</a></code> as a single list. <code><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0()</a></code> coerces a list with <code><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character()</a></code>, which deparses each element, so <code>path("home/", c("x", "y"))</code> returned the one string <code>home/c("x", "y")</code>.</li>
+<li>
+<code><a href="../reference/path.html">path()</a></code> now recycles its components against each other, the way <code><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path()</a></code> does. <code>path("home", c("a.csv", "b.csv"))</code> returns two paths. A component of length zero gives <code>character(0)</code>, rather than a path with an empty segment.</li>
+<li>The documented return value was already “a character vector”, so this makes the function match its own documentation.</li>
+<li>
+<strong>This changes behaviour for any caller that passed a multi-element component</strong> and did not notice. Such a call previously produced a path containing R syntax, which no file or folder matches.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="bug-fix-a-project-with-several-source-folders-was-never-checked-2026-8-20">Bug fix: a project with several source folders was never checked<a class="anchor" aria-label="anchor" href="#bug-fix-a-project-with-several-source-folders-was-never-checked-2026-8-20"></a></h3>
 <ul><li>
-<code><a href="../reference/initialize_project.html">initialize_project()</a></code> built its list of source folders with one <code>path(home, folders_to_be_sourced)</code> call. <code><a href="../reference/path.html">path()</a></code> deparses a multi-element argument into the path, so two folders produced a single string ending in <code>c("x", "y")</code>, which matches no folder.</li>
-<li>Every check reading that list therefore saw nothing whenever <code>folders_to_be_sourced</code> held more than one folder. That silently disabled <code><a href="../reference/check_missing_packages.html">check_missing_packages()</a></code>, and it would have disabled the new <code>max_loc_per_file</code> check in the same way.</li>
-<li>Sourcing was never affected. <code><a href="../reference/source_to_environment.html">source_to_environment()</a></code> loops over the folders and calls <code><a href="../reference/path.html">path()</a></code> once per folder, which is the correct usage.</li>
-<li>
-<code><a href="../reference/initialize_project.html">initialize_project()</a></code> now calls <code><a href="../reference/path.html">path()</a></code> once per folder as well.</li>
-<li>
-<code><a href="../reference/path.html">path()</a></code> itself is unchanged. It deparses a multi-element argument for every caller, not only this one.</li>
+<code><a href="../reference/initialize_project.html">initialize_project()</a></code> built its list of source folders with one <code>path(home, folders_to_be_sourced)</code> call, so it hit the defect above. Every check reading that list saw nothing whenever <code>folders_to_be_sourced</code> held more than one folder. That silently disabled <code><a href="../reference/check_missing_packages.html">check_missing_packages()</a></code>.</li>
+<li>Sourcing was never affected. <code><a href="../reference/source_to_environment.html">source_to_environment()</a></code> loops over the folders and calls <code><a href="../reference/path.html">path()</a></code> once per folder.</li>
 <li>
 <strong>This changes behaviour for a project with several source folders</strong>, even at the default <code>max_loc_per_file = Inf</code>. Such a project was never checked for missing packages, and now it is. It can therefore stop, or install a package, where earlier versions did neither.</li>
 </ul></div>
 <div class="section level3">
+<h3 id="bug-fix-files-without-a-r-extension-were-sourced-2026-8-20">Bug fix: files without a .R extension were sourced<a class="anchor" aria-label="anchor" href="#bug-fix-files-without-a-r-extension-were-sourced-2026-8-20"></a></h3>
+<ul><li>
+<code><a href="../reference/source_to_environment.html">source_to_environment()</a></code> selected files with the pattern <code>"*.[rR]$"</code>. A leading <code>*</code> has nothing to repeat, so the pattern matches any name ending in <code>r</code> or <code>R</code>, not only an extension. <code>helper</code>, <code>fooR</code> and <code>READMER</code> all matched, and <code><a href="../reference/initialize_project.html">initialize_project()</a></code> sourced them.</li>
+<li>The pattern is now <code>"\\.[rR]$"</code> in <code><a href="../reference/source_to_environment.html">source_to_environment()</a></code> and in the new <code>max_loc_per_file</code> check, which have to agree about which files they cover.</li>
+<li>
+<strong>This changes behaviour for a project holding an extensionless file whose name ends in <code>r</code> or <code>R</code></strong> inside a sourced folder. Such a file was sourced before and is not sourced now.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="documentation-2026-8-20">Documentation<a class="anchor" aria-label="anchor" href="#documentation-2026-8-20"></a></h3>
 <ul><li>The package now generates its documentation with roxygen2 8.0.0. <code>DESCRIPTION</code> carries <code>Config/roxygen2/version</code> in place of <code>RoxygenNote</code>.</li>
+<li>
+<code>docs</code> and <code>data-raw</code> are in <code>.Rbuildignore</code>. <code>R CMD check</code> reported both as non-standard top-level files, and reported the generated font filenames under <code>docs/deps</code> as non-portable paths.</li>
 </ul></div>
 </div>
     <div class="section level2">
