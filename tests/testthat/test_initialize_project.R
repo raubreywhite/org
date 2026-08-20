@@ -174,7 +174,11 @@ test_that("only .R and .r files are sourced, and only those are checked", {
 
   testthat::expect_true(exists("from_upper", envir = target, inherits = FALSE))
   testthat::expect_true(exists("from_lower", envir = target, inherits = FALSE))
-  testthat::expect_false(exists("from_helper", envir = target, inherits = FALSE))
+  testthat::expect_false(exists(
+    "from_helper",
+    envir = target,
+    inherits = FALSE
+  ))
   testthat::expect_false(exists("not_r", envir = target, inherits = FALSE))
 
   unlink(home, recursive = TRUE, force = TRUE)

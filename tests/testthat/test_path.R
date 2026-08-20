@@ -1,8 +1,14 @@
 context("path")
 
 test_that("path joins scalar components", {
-  testthat::expect_equal(org::path("home", "user", "data.csv"), "home/user/data.csv")
-  testthat::expect_equal(org::path("home//user", "data.csv"), "home/user/data.csv")
+  testthat::expect_equal(
+    org::path("home", "user", "data.csv"),
+    "home/user/data.csv"
+  )
+  testthat::expect_equal(
+    org::path("home//user", "data.csv"),
+    "home/user/data.csv"
+  )
 })
 
 test_that("path returns a single component unchanged", {
