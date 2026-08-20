@@ -7,10 +7,13 @@
 path(...)
 }
 \arguments{
-\item{...}{Character vectors to join with "/" as the separator.}
+\item{...}{Character vectors to join with "/" as the separator. \code{path()}
+recycles them against each other, the same way \code{\link[base:file.path]{base::file.path()}} does, so
+one component of length 3 and one of length 1 give three paths.}
 }
 \value{
-A character vector containing the constructed path.
+A character vector containing the constructed path. It is
+\code{character(0)} if any component has length zero.
 }
 \description{
 Joins path components with forward slashes, so the path format is the same
@@ -20,6 +23,9 @@ slashes that might occur.
 \examples{
 org::path("home", "user", "data.csv")  # Returns "home/user/data.csv"
 org::path("home//user", "data.csv")    # Returns "home/user/data.csv"
+
+# Components are recycled, so one call builds several paths
+org::path("home", c("a.csv", "b.csv"))
 }
 \seealso{
 \code{vignette("org")}, whose "Path construction and cross-platform

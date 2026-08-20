@@ -39,22 +39,38 @@ create_dir <- function(folder) {
 #' across operating systems. Handles multiple components and removes any double
 #' slashes that might occur.
 #'
-#' @param ... Character vectors to join with "/" as the separator.
-#' @return A character vector containing the constructed path.
+#' @param ... Character vectors to join with "/" as the separator. `path()`
+#'   recycles them against each other, the same way [base::file.path()] does, so
+#'   one component of length 3 and one of length 1 give three paths.
+#' @return A character vector containing the constructed path. It is
+#'   `character(0)` if any component has length zero.
 #' @examples
 #' org::path("home", "user", "data.csv")  # Returns "home/user/data.csv"
 #' org::path("home//user", "data.csv")    # Returns "home/user/data.csv"
+#'
+#' # Components are recycled, so one call builds several paths
+#' org::path("home", c("a.csv", "b.csv"))
 #' @family file utilities
 #' @seealso `vignette("org")`, whose "Path construction and cross-platform
 #'   compatibility" section shows how this function is used in an analysis.
 #' @export
 path <- function(...) {
   dots <- list(...)
-  if (length(dots) > 1) {
-    retval <- do.call("paste0", list(dots, collapse = "/"))
-  } else {
-    retval <- dots[[1]]
+  if (length(dots) == 0) {
+    return(character(0))
   }
+
+  if (length(dots) == 1) {
+    retval <- dots[[1]]
+  } else {
+    # A zero-length component means there is no path to build. paste() would
+    # instead treat it as "" and return a path with an empty segment.
+    if (any(vapply(dots, length, integer(1)) == 0L)) {
+      return(character(0))
+    }
+    retval <- do.call(paste, c(dots, list(sep = "/")))
+  }
+
   retval <- gsub("([^/])//", "\\1/", retval)
   return(retval)
 }

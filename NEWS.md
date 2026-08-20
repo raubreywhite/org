@@ -18,30 +18,53 @@
   disagree on 11 of them. The largest gap is 203 lines, in a file that embeds an
   R template as a single string.
 
+## Bug fix: `path()` deparsed a multi-element component into the path
+
+- `path()` passed its `...` to `paste0()` as a single list. `paste0()` coerces a
+  list with `as.character()`, which deparses each element, so
+  `path("home/", c("x", "y"))` returned the one string `home/c("x", "y")`.
+- `path()` now recycles its components against each other, the way
+  `file.path()` does. `path("home", c("a.csv", "b.csv"))` returns two
+  paths. A component of length zero gives `character(0)`, rather than a path
+  with an empty segment.
+- The documented return value was already "a character vector", so this makes
+  the function match its own documentation.
+- **This changes behaviour for any caller that passed a multi-element
+  component** and did not notice. Such a call previously produced a path
+  containing R syntax, which no file or folder matches.
+
 ## Bug fix: a project with several source folders was never checked
 
 - `initialize_project()` built its list of source folders with one
-  `path(home, folders_to_be_sourced)` call. `path()` deparses a multi-element
-  argument into the path, so two folders produced a single string ending in
-  `c("x", "y")`, which matches no folder.
-- Every check reading that list therefore saw nothing whenever
-  `folders_to_be_sourced` held more than one folder. That silently disabled
-  `check_missing_packages()`, and it would have disabled the new
-  `max_loc_per_file` check in the same way.
+  `path(home, folders_to_be_sourced)` call, so it hit the defect above. Every
+  check reading that list saw nothing whenever `folders_to_be_sourced` held more
+  than one folder. That silently disabled `check_missing_packages()`.
 - Sourcing was never affected. `source_to_environment()` loops over the folders
-  and calls `path()` once per folder, which is the correct usage.
-- `initialize_project()` now calls `path()` once per folder as well.
-- `path()` itself is unchanged. It deparses a multi-element argument for every
-  caller, not only this one.
+  and calls `path()` once per folder.
 - **This changes behaviour for a project with several source folders**, even at
   the default `max_loc_per_file = Inf`. Such a project was never checked for
   missing packages, and now it is. It can therefore stop, or install a package,
   where earlier versions did neither.
 
+## Bug fix: files without a .R extension were sourced
+
+- `source_to_environment()` selected files with the pattern `"*.[rR]$"`. A
+  leading `*` has nothing to repeat, so the pattern matches any name ending in
+  `r` or `R`, not only an extension. `helper`, `fooR` and `READMER` all matched,
+  and `initialize_project()` sourced them.
+- The pattern is now `"\\.[rR]$"` in `source_to_environment()` and in the new
+  `max_loc_per_file` check, which have to agree about which files they cover.
+- **This changes behaviour for a project holding an extensionless file whose
+  name ends in `r` or `R`** inside a sourced folder. Such a file was sourced
+  before and is not sourced now.
+
 ## Documentation
 
 - The package now generates its documentation with roxygen2 8.0.0. `DESCRIPTION`
   carries `Config/roxygen2/version` in place of `RoxygenNote`.
+- `docs` and `data-raw` are in `.Rbuildignore`. `R CMD check` reported both as
+  non-standard top-level files, and reported the generated font filenames under
+  `docs/deps` as non-portable paths.
 
 # Version 2026.8.6
 

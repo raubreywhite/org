@@ -154,6 +154,32 @@ test_that("max_loc_per_file rejects a limit that is not one whole count", {
   unlink(home, recursive = TRUE, force = TRUE)
 })
 
+test_that("only .R and .r files are sourced, and only those are checked", {
+  home <- file.path(tempdir(), "org_loc_ext")
+  unlink(home, recursive = TRUE, force = TRUE)
+  dir.create(file.path(home, "R"), recursive = TRUE, showWarnings = FALSE)
+  writeLines("from_upper <- TRUE", file.path(home, "R", "code.R"))
+  writeLines("from_lower <- TRUE", file.path(home, "R", "code2.r"))
+  # An extensionless name ending in "R" matched the old pattern "*.[rR]$".
+  writeLines(rep("from_helper <- TRUE", 1001), file.path(home, "R", "helpeR"))
+  writeLines("not_r <- TRUE", file.path(home, "R", "notes.txt"))
+
+  target <- new.env()
+  initialize_project(
+    env = target,
+    home = home,
+    folders_to_be_sourced = "R",
+    max_loc_per_file = 1000
+  )
+
+  testthat::expect_true(exists("from_upper", envir = target, inherits = FALSE))
+  testthat::expect_true(exists("from_lower", envir = target, inherits = FALSE))
+  testthat::expect_false(exists("from_helper", envir = target, inherits = FALSE))
+  testthat::expect_false(exists("not_r", envir = target, inherits = FALSE))
+
+  unlink(home, recursive = TRUE, force = TRUE)
+})
+
 test_that("max_loc_per_file checks absolute source folders too", {
   home <- file.path(tempdir(), "org_loc_abs")
   folder <- file.path(tempdir(), "org_loc_abs_code")

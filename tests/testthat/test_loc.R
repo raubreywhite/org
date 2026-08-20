@@ -140,7 +140,10 @@ test_that("loc_per_file handles the awkward shapes of real R source", {
     1L
   )
   # A comment between arguments of a call that spans lines.
-  testthat::expect_equal(count("inner.R", "f(\n  1, # one\n  # two\n  2\n)\n"), 4L)
+  testthat::expect_equal(
+    count("inner.R", "f(\n  1, # one\n  # two\n  2\n)\n"),
+    4L
+  )
 
   unlink(d, recursive = TRUE)
 })

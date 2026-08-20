@@ -233,7 +233,7 @@ source_to_environment <- function(
       environmentName(env)
     ))
     # fileSources <- file.path(folder, list.files(folder, pattern = "*.[rR]$"))
-    file_sources <- ls_files(folder, regexp = "*.[rR]$")
+    file_sources <- ls_files(folder, regexp = "\\.[rR]$")
 
     sapply(file_sources, source, env)
   }
@@ -349,19 +349,10 @@ initialize_project <- function(
     )
   }
 
-  # One call to path() per folder. path() deparses a multi-element argument into
-  # the path itself, so path(home, c("x", "y")) returns one string ending in
-  # `c("x", "y")`, and every check downstream then looks at a folder that does
-  # not exist.
   source_folders <- if (source_folders_absolute) {
     folders_to_be_sourced
   } else {
-    vapply(
-      folders_to_be_sourced,
-      function(folder) path(proj$home, folder),
-      character(1),
-      USE.NAMES = FALSE
-    )
+    path(proj$home, folders_to_be_sourced)
   }
   # Before the package check, so an oversized file stops the project without
   # installing anything first.

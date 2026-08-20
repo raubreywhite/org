@@ -20,3 +20,5 @@ CLAUDE.md
 ^index\.md$
 ^pkgdown$
 ^Rplots\.pdf$
+^docs$
+^data-raw$

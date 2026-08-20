@@ -127,7 +127,7 @@ check_max_loc_per_file <- function(paths, max_loc) {
   # The same pattern that source_to_environment() uses to pick the files it
   # sources. The gate MUST cover exactly the files that get sourced, so the two
   # patterns have to stay identical.
-  files <- unlist(ls_files(paths, regexp = "*.[rR]$"), use.names = FALSE)
+  files <- unlist(ls_files(paths, regexp = "\\.[rR]$"), use.names = FALSE)
   if (length(files) == 0) {
     return(invisible(NULL))
   }
