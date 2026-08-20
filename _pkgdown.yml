@@ -27,6 +27,7 @@ reference:
 
 - title: "File and Directory Utilities"
   contents:
+    - loc_per_file
     - ls_files
     - move_directory
     - path
