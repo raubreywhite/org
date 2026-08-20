@@ -142,15 +142,15 @@ proj <- org::initialize_project(
   raw = file.path(tempdir(), "org_init_example", "raw")
 )
 #> You are NOT sourcing into .GlobalEnv. All functions will be sourced into an environment that is returned from this function.
-#> Sourcing all code inside /tmp/RtmpAnpvuU/org_init_example/analysis3/R into 
+#> Sourcing all code inside /tmp/RtmpJVNOv8/org_init_example/analysis3/R into 
 
 # Folder locations, both on the returned environment and on org::project
 proj$results_today # Today's results folder
-#> [1] "/tmp/RtmpAnpvuU/org_init_example/results/2026-08-20/"
+#> [1] "/tmp/RtmpJVNOv8/org_init_example/results/2026-08-20/"
 proj$raw # Raw data folder
-#> [1] "/tmp/RtmpAnpvuU/org_init_example/raw/"
+#> [1] "/tmp/RtmpJVNOv8/org_init_example/raw/"
 org::project$results_today
-#> [1] "/tmp/RtmpAnpvuU/org_init_example/results/2026-08-20/"
+#> [1] "/tmp/RtmpJVNOv8/org_init_example/results/2026-08-20/"
 
 # Everything in home/R/ has been sourced into `env`
 proj$env$greet()
