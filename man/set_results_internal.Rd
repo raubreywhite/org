@@ -4,12 +4,15 @@
 \alias{set_results_internal}
 \title{Internal function to set results folder}
 \usage{
-set_results_internal(results, proj)
+set_results_internal(results, proj, results_subfolder = NULL)
 }
 \arguments{
 \item{results}{Results folder path.}
 
 \item{proj}{Project environment.}
+
+\item{results_subfolder}{\code{NULL} for a folder named after today's date, or a
+checked relative path for a named folder.}
 }
 \description{
 Internal function to set results folder

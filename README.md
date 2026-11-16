@@ -47,6 +47,8 @@ org::project$results_today  # Today's results folder
 org::project$data_raw      # Raw data folder
 ```
 
+Give `results_subfolder = "v01"` to `initialize_project()` to make `<results>/v01/` the `results_today` folder, instead of a folder with today's date.
+
 ## Contributing
 
 Contributions are welcome. Submit a [Pull Request](https://github.com/raubreywhite/org/pulls).

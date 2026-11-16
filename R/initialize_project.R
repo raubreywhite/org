@@ -29,12 +29,92 @@ select_folder_that_exists <- function(folders, name) {
   ))
 }
 
+#' Test for one non-empty character string
+#'
+#' @param x Any object.
+#' @return `TRUE` if `x` is a character vector of length 1 that is neither `NA`
+#'   nor `""`, otherwise `FALSE`.
+#' @keywords internal
+is_one_nonempty_string <- function(x) {
+  return(is.character(x) && length(x) == 1L && !is.na(x) && nzchar(x))
+}
+
+#' Check the results_subfolder argument
+#'
+#' @param results_subfolder `NULL`, or one relative path inside `results`.
+#' @param results Results folder path.
+#' @return `results_subfolder`, invisibly.
+#' @keywords internal
+check_results_subfolder <- function(results_subfolder, results) {
+  if (is.null(results_subfolder)) {
+    return(invisible(NULL))
+  }
+  if (is.null(results)) {
+    stop(
+      "`results_subfolder` needs `results`. Give `results` too, or remove ",
+      "`results_subfolder`.",
+      call. = FALSE
+    )
+  }
+  if (!is_one_nonempty_string(results_subfolder)) {
+    stop(
+      "`results_subfolder` must be NULL or one non-empty character string.",
+      call. = FALSE
+    )
+  }
+  if (grepl("^([/\\\\]|[A-Za-z]:)", results_subfolder)) {
+    stop(
+      "`results_subfolder` must be a relative path inside `results`. ",
+      "It is an absolute path: ",
+      results_subfolder,
+      call. = FALSE
+    )
+  }
+  if (grepl("..", results_subfolder, fixed = TRUE)) {
+    stop(
+      "`results_subfolder` must not contain `..`. It is: ",
+      results_subfolder,
+      call. = FALSE
+    )
+  }
+  # A trailing "/" gives an empty last part, which strsplit() drops, so it is
+  # tested by itself.
+  parts <- strsplit(results_subfolder, "/", fixed = TRUE)[[1]]
+  if (
+    endsWith(results_subfolder, "/") || !all(grepl("^[A-Za-z0-9._-]+$", parts))
+  ) {
+    stop(
+      "`results_subfolder` must be folder names made of letters, digits, ",
+      "`.`, `_` and `-`, joined by `/`. It is: ",
+      results_subfolder,
+      call. = FALSE
+    )
+  }
+  return(invisible(results_subfolder))
+}
+
+#' Name of the results folder for this run, relative to `results`
+#'
+#' @param today Today's date as `YYYY-MM-DD`.
+#' @param results_subfolder `NULL`, or a checked relative path.
+#' @return `today` when `results_subfolder` is `NULL`, otherwise
+#'   `results_subfolder` without trailing slashes.
+#' @keywords internal
+results_today_name <- function(today, results_subfolder) {
+  if (is.null(results_subfolder)) {
+    return(today)
+  }
+  return(sub("[/\\\\]+$", "", results_subfolder))
+}
+
 #' Internal function to set results folder
 #'
 #' @param results Results folder path.
 #' @param proj Project environment.
+#' @param results_subfolder `NULL` for a folder named after today's date, or a
+#'   checked relative path for a named folder.
 #' @keywords internal
-set_results_internal <- function(results, proj) {
+set_results_internal <- function(results, proj, results_subfolder = NULL) {
   if (is.null(results)) {
     return()
   }
@@ -43,12 +123,16 @@ set_results_internal <- function(results, proj) {
   )
 
   today <- format.Date(Sys.time(), "%Y-%m-%d")
+  today_name <- results_today_name(today, results_subfolder)
+  # The clean-up below MUST NOT delete the folder this run just created. A
+  # named folder can match the date pattern, for example "2026-01-01".
+  keep <- c(today, strsplit(today_name, "[/\\\\]")[[1]][1])
 
   # Add SHARED_TODAY to project
   if (is.null(proj$results)) {
     proj$results_today <- NULL
   } else {
-    proj$results_today <- path(proj$results, today, "/")
+    proj$results_today <- path(proj$results, today_name, "/")
   }
 
   for (i in names(proj)) {
@@ -66,11 +150,19 @@ set_results_internal <- function(results, proj) {
     }
   }
 
+  if (!is.null(results_subfolder) && !dir.exists(proj$results_today)) {
+    stop(
+      "The results folder could not be created: ",
+      proj$results_today,
+      call. = FALSE
+    )
+  }
+
   # Delete empty folders in results folder
   if (!is.null(proj$results)) {
     for (f in list.files(proj$results)) {
       if (grepl("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]", f)) {
-        if (f == today) {
+        if (f %in% keep) {
           next
         } # don't want to delete today's folder
         f2 <- file.path(proj$results, f)
@@ -140,6 +232,8 @@ set_results <- function(results, proj = org::project) {
 #' @param encode_to Target encoding.
 #' @param proj Project environment.
 #' @param ... Additional folder arguments.
+#' @param results_subfolder `NULL`, or a checked relative path inside
+#'   `results`.
 #' @keywords internal
 initialize_project_folders <- function(
   env,
@@ -148,7 +242,8 @@ initialize_project_folders <- function(
   encode_from,
   encode_to,
   proj,
-  ...
+  ...,
+  results_subfolder = NULL
 ) {
   temp_env <- new.env()
 
@@ -193,7 +288,11 @@ initialize_project_folders <- function(
   }
 
   # Add results_today to path
-  set_results_internal(results = results, proj = temp_env)
+  set_results_internal(
+    results = results,
+    proj = temp_env,
+    results_subfolder = results_subfolder
+  )
 
   # copy temp_env to proj
   for (i in names(temp_env)) {
@@ -254,8 +353,15 @@ source_to_environment <- function(
 #' @param home The folder containing 'Run.R' and 'R/'. This is the main project
 #'   directory.
 #' @param results The base folder for storing results. `initialize_project()`
-#'   creates a subfolder with today's date. You reach it at
-#'   `org::project$results_today`.
+#'   creates a subfolder with today's date, or the subfolder that
+#'   `results_subfolder` names. You reach it at `org::project$results_today`.
+#' @param results_subfolder `NULL`, or one relative path inside `results`, for
+#'   example `"v01"` or `"null/sim_0003"`. If you give it,
+#'   `initialize_project()` creates `<results>/<results_subfolder>/` and sets
+#'   `results_today` to that folder. It then creates no folder with today's
+#'   date. The path MUST NOT be absolute and MUST NOT contain `..`, and
+#'   `results` MUST also be given. The default, `NULL`, gives the folder with
+#'   today's date.
 #' @param folders_to_be_sourced Character vector of folder names inside `home`.
 #'   These folders hold the .R files to source into the environment.
 #' @param max_loc_per_file The maximum number of code lines a single .R file in
@@ -279,11 +385,15 @@ source_to_environment <- function(
 #' @return An environment containing:
 #'   - All folder locations as named elements.
 #'   - `$env`: The environment that the code was sourced into.
-#'   - `$results_today`: Path to today's results folder.
+#'   - `$results_today`: Path to today's results folder, or to the folder
+#'     that `results_subfolder` names.
 #' @details
 #' `initialize_project()` performs the seven operations below, in this order.
 #' 1. Creates necessary directories if they do not exist.
-#' 2. Sets up date-based results organization.
+#' 2. Sets up date-based results organization, or the named folder that
+#'    `results_subfolder` gives. It deletes each empty folder in `results`
+#'    whose name holds a `YYYY-MM-DD` date. It keeps today's folder and the
+#'    folder of the current run.
 #' 3. Handles path encoding for cross-platform compatibility.
 #' 4. Stops if any file holds more code lines than `max_loc_per_file`.
 #' 5. Stops if a package the code needs is missing, or installs it when
@@ -310,6 +420,14 @@ source_to_environment <- function(
 #' # Everything in home/R/ has been sourced into `env`
 #' proj$env$greet()
 #'
+#' # A named results folder instead of a dated one
+#' proj <- org::initialize_project(
+#'   home = home,
+#'   results = file.path(tempdir(), "org_init_example", "results"),
+#'   results_subfolder = "v01"
+#' )
+#' proj$results_today
+#'
 #' unlink(file.path(tempdir(), "org_init_example"), recursive = TRUE)
 #' @family project setup
 #' @seealso `vignette("org")` for the recommended project layout. Its "Team
@@ -326,9 +444,12 @@ initialize_project <- function(
   source_folders_absolute = FALSE,
   encode_from = "UTF-8",
   encode_to = "latin1",
+  results_subfolder = NULL,
   ...
 ) {
   stopifnot(!is.null(home))
+  # Before any folder is created, so an invalid value changes nothing on disk.
+  check_results_subfolder(results_subfolder, results)
 
   if (!identical(env, .GlobalEnv)) {
     message(
@@ -345,7 +466,8 @@ initialize_project <- function(
       encode_from = encode_from,
       encode_to = encode_to,
       proj = p,
-      ...
+      ...,
+      results_subfolder = results_subfolder
     )
   }
 

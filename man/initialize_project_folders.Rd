@@ -11,7 +11,8 @@ initialize_project_folders(
   encode_from,
   encode_to,
   proj,
-  ...
+  ...,
+  results_subfolder = NULL
 )
 }
 \arguments{
@@ -28,6 +29,9 @@ initialize_project_folders(
 \item{proj}{Project environment.}
 
 \item{...}{Additional folder arguments.}
+
+\item{results_subfolder}{\code{NULL}, or a checked relative path inside
+\code{results}.}
 }
 \description{
 Initialize project folder structure

@@ -14,6 +14,7 @@ initialize_project(
   source_folders_absolute = FALSE,
   encode_from = "UTF-8",
   encode_to = "latin1",
+  results_subfolder = NULL,
   ...
 )
 }
@@ -27,8 +28,8 @@ environment.}
 directory.}
 
 \item{results}{The base folder for storing results. \code{initialize_project()}
-creates a subfolder with today's date. You reach it at
-\code{org::project$results_today}.}
+creates a subfolder with today's date, or the subfolder that
+\code{results_subfolder} names. You reach it at \code{org::project$results_today}.}
 
 \item{folders_to_be_sourced}{Character vector of folder names inside \code{home}.
 These folders hold the .R files to source into the environment.}
@@ -54,6 +55,14 @@ relative to \code{home}.}
 
 \item{encode_to}{Target encoding for file paths (only used on Windows).}
 
+\item{results_subfolder}{\code{NULL}, or one relative path inside \code{results}, for
+example \code{"v01"} or \code{"null/sim_0003"}. If you give it,
+\code{initialize_project()} creates \verb{<results>/<results_subfolder>/} and sets
+\code{results_today} to that folder. It then creates no folder with today's
+date. The path MUST NOT be absolute and MUST NOT contain \code{..}, and
+\code{results} MUST also be given. The default, \code{NULL}, gives the folder with
+today's date.}
+
 \item{...}{Additional named arguments for other project folders (e.g., data,
 raw, etc.).}
 }
@@ -62,7 +71,8 @@ An environment containing:
 \itemize{
 \item All folder locations as named elements.
 \item \verb{$env}: The environment that the code was sourced into.
-\item \verb{$results_today}: Path to today's results folder.
+\item \verb{$results_today}: Path to today's results folder, or to the folder
+that \code{results_subfolder} names.
 }
 }
 \description{
@@ -76,7 +86,10 @@ you specify.
 \code{initialize_project()} performs the seven operations below, in this order.
 \enumerate{
 \item Creates necessary directories if they do not exist.
-\item Sets up date-based results organization.
+\item Sets up date-based results organization, or the named folder that
+\code{results_subfolder} gives. It deletes each empty folder in \code{results}
+whose name holds a \code{YYYY-MM-DD} date. It keeps today's folder and the
+folder of the current run.
 \item Handles path encoding for cross-platform compatibility.
 \item Stops if any file holds more code lines than \code{max_loc_per_file}.
 \item Stops if a package the code needs is missing, or installs it when
@@ -104,6 +117,14 @@ org::project$results_today
 
 # Everything in home/R/ has been sourced into `env`
 proj$env$greet()
+
+# A named results folder instead of a dated one
+proj <- org::initialize_project(
+  home = home,
+  results = file.path(tempdir(), "org_init_example", "results"),
+  results_subfolder = "v01"
+)
+proj$results_today
 
 unlink(file.path(tempdir(), "org_init_example"), recursive = TRUE)
 }

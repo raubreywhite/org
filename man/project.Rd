@@ -7,7 +7,7 @@
 An environment containing the following elements:
 \describe{
 \item{home}{The folder containing 'Run.R' and 'R/'.}
-\item{results_today}{The folder inside \code{results} with today's date. \code{initialize_project()} creates it.}
+\item{results_today}{The folder inside \code{results} with today's date. \code{initialize_project()} creates it. If you give \code{results_subfolder} to \code{initialize_project()}, it is the folder that \code{results_subfolder} names.}
 }
 }
 \usage{

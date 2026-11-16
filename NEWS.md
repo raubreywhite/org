@@ -1,3 +1,13 @@
+# Version 2026.11.16
+
+## A named results folder instead of a dated one
+
+- `initialize_project()` takes `results_subfolder`, for example `"v01"` or `"null/sim_0003"`. `results_today` is then `<results>/<results_subfolder>/`, and `initialize_project()` creates no folder with today's date.
+- The default, `NULL`, keeps the folder with today's date.
+- A `results_subfolder` is one or more folder names joined by `/`. A folder name holds letters, digits, `.`, `_` and `-`. `initialize_project()` stops on any other value, on `..`, on a leading or trailing `/`, and when `results` is missing.
+- `initialize_project()` stops if it cannot create the named folder.
+- The clean-up of empty dated folders keeps the named folder, also when its name holds a date.
+
 # Version 2026.8.20
 
 ## A file-length limit for analysis projects

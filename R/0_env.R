@@ -4,7 +4,7 @@
 #' @format An environment containing the following elements:
 #' \describe{
 #'   \item{home}{The folder containing 'Run.R' and 'R/'.}
-#'   \item{results_today}{The folder inside `results` with today's date. `initialize_project()` creates it.}
+#'   \item{results_today}{The folder inside `results` with today's date. `initialize_project()` creates it. If you give `results_subfolder` to `initialize_project()`, it is the folder that `results_subfolder` names.}
 #' }
 #' @examples
 #' home <- file.path(tempdir(), "org_project_example")
