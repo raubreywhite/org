@@ -1,5 +1,44 @@
 # Changelog
 
+## Version 2026.11.17
+
+- The code passes the lint gate of the shared CI workflow, and behaviour
+  does not change. The only change is that these five messages no longer
+  show the call that raised them:
+  - [`initialize_project()`](https://www.rwhite.no/org/reference/initialize_project.md)
+    and
+    [`set_results()`](https://www.rwhite.no/org/reference/set_results.md),
+    the error “Multiple folders provided to results, but none exist”,
+    and the same error for each other folder.
+  - [`initialize_project()`](https://www.rwhite.no/org/reference/initialize_project.md),
+    the warning “Folder … does not exist. Creating it now.”.
+  - [`set_results()`](https://www.rwhite.no/org/reference/set_results.md),
+    the error “not initialized”.
+  - [`move_directory()`](https://www.rwhite.no/org/reference/move_directory.md),
+    the error “… already exists.”.
+  - [`move_directory()`](https://www.rwhite.no/org/reference/move_directory.md),
+    the error “… doesn’t exist/isn’t a directory”.
+
+## Version 2026.11.16
+
+### A named results folder instead of a dated one
+
+- [`initialize_project()`](https://www.rwhite.no/org/reference/initialize_project.md)
+  takes `results_subfolder`, for example `"v01"` or `"null/sim_0003"`.
+  `results_today` is then `<results>/<results_subfolder>/`, and
+  [`initialize_project()`](https://www.rwhite.no/org/reference/initialize_project.md)
+  creates no folder with today’s date.
+- The default, `NULL`, keeps the folder with today’s date.
+- A `results_subfolder` is one or more folder names joined by `/`. A
+  folder name holds letters, digits, `.`, `_` and `-`.
+  [`initialize_project()`](https://www.rwhite.no/org/reference/initialize_project.md)
+  stops on any other value, on `..`, on a leading or trailing `/`, and
+  when `results` is missing.
+- [`initialize_project()`](https://www.rwhite.no/org/reference/initialize_project.md)
+  stops if it cannot create the named folder.
+- The clean-up of empty dated folders keeps the named folder, also when
+  its name holds a date.
+
 ## Version 2026.8.20
 
 ### A file-length limit for analysis projects

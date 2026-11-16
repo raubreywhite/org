@@ -99,6 +99,10 @@ throughout your analysis:
   `org::project$home`).
 - `results`: Results folder that creates date-based subfolders
   (accessible via `org::project$results_today`).
+- `results_subfolder`: A relative path inside `results`, for example
+  `"v01"`, that
+  [`initialize_project()`](https://www.rwhite.no/org/reference/initialize_project.md)
+  uses for `org::project$results_today` instead of a dated folder.
 - `...`: Additional folders as needed (e.g., `data_raw`, `data_clean`).
 - `max_loc_per_file`: The largest number of code lines one .R file may
   hold.

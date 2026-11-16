@@ -19,6 +19,7 @@ initialize_project(
   source_folders_absolute = FALSE,
   encode_from = "UTF-8",
   encode_to = "latin1",
+  results_subfolder = NULL,
   ...
 )
 ```
@@ -40,8 +41,8 @@ initialize_project(
 - results:
 
   The base folder for storing results. `initialize_project()` creates a
-  subfolder with today's date. You reach it at
-  `org::project$results_today`.
+  subfolder with today's date, or the subfolder that `results_subfolder`
+  names. You reach it at `org::project$results_today`.
 
 - folders_to_be_sourced:
 
@@ -82,6 +83,15 @@ initialize_project(
 
   Target encoding for file paths (only used on Windows).
 
+- results_subfolder:
+
+  `NULL`, or one relative path inside `results`, for example `"v01"` or
+  `"null/sim_0003"`. If you give it, `initialize_project()` creates
+  `<results>/<results_subfolder>/` and sets `results_today` to that
+  folder. It then creates no folder with today's date. The path MUST NOT
+  be absolute and MUST NOT contain `..`, and `results` MUST also be
+  given. The default, `NULL`, gives the folder with today's date.
+
 - ...:
 
   Additional named arguments for other project folders (e.g., data, raw,
@@ -95,7 +105,8 @@ An environment containing:
 
 - `$env`: The environment that the code was sourced into.
 
-- `$results_today`: Path to today's results folder.
+- `$results_today`: Path to today's results folder, or to the folder
+  that `results_subfolder` names.
 
 ## Details
 
@@ -104,7 +115,10 @@ order.
 
 1.  Creates necessary directories if they do not exist.
 
-2.  Sets up date-based results organization.
+2.  Sets up date-based results organization, or the named folder that
+    `results_subfolder` gives. It deletes each empty folder in `results`
+    whose name holds a `YYYY-MM-DD` date. It keeps today's folder and
+    the folder of the current run.
 
 3.  Handles path encoding for cross-platform compatibility.
 
@@ -142,19 +156,30 @@ proj <- org::initialize_project(
   raw = file.path(tempdir(), "org_init_example", "raw")
 )
 #> You are NOT sourcing into .GlobalEnv. All functions will be sourced into an environment that is returned from this function.
-#> Sourcing all code inside /tmp/RtmppZAjz6/org_init_example/analysis3/R into 
+#> Sourcing all code inside /tmp/RtmpzI8H7e/org_init_example/analysis3/R into 
 
 # Folder locations, both on the returned environment and on org::project
 proj$results_today # Today's results folder
-#> [1] "/tmp/RtmppZAjz6/org_init_example/results/2026-08-21/"
+#> [1] "/tmp/RtmpzI8H7e/org_init_example/results/2026-11-16/"
 proj$raw # Raw data folder
-#> [1] "/tmp/RtmppZAjz6/org_init_example/raw/"
+#> [1] "/tmp/RtmpzI8H7e/org_init_example/raw/"
 org::project$results_today
-#> [1] "/tmp/RtmppZAjz6/org_init_example/results/2026-08-21/"
+#> [1] "/tmp/RtmpzI8H7e/org_init_example/results/2026-11-16/"
 
 # Everything in home/R/ has been sourced into `env`
 proj$env$greet()
 #> [1] "hello"
+
+# A named results folder instead of a dated one
+proj <- org::initialize_project(
+  home = home,
+  results = file.path(tempdir(), "org_init_example", "results"),
+  results_subfolder = "v01"
+)
+#> You are NOT sourcing into .GlobalEnv. All functions will be sourced into an environment that is returned from this function.
+#> Sourcing all code inside /tmp/RtmpzI8H7e/org_init_example/analysis3/R into 
+proj$results_today
+#> [1] "/tmp/RtmpzI8H7e/org_init_example/results/v01/"
 
 unlink(file.path(tempdir(), "org_init_example"), recursive = TRUE)
 ```
