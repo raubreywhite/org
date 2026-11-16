@@ -1,6 +1,6 @@
 Package: org
 Title: Organising Projects
-Version: 2026.11.16
+Version: 2026.11.17
 Authors@R:
     c(
       person(

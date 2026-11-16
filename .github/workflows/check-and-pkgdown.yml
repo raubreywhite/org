@@ -11,4 +11,24 @@ jobs:
   r-package:
     permissions:
       contents: write
-    uses: raubreywhite/rwtemplate/.github/workflows/r-package.yml@3a02a568840bf9d6d41f76e139922eb658da0e13
+    uses: raubreywhite/rwtemplate/.github/workflows/r-package.yml@d8ac8295e20f72700129d27ed38e5f55ae1b6a34
+    with:
+      # R/initialize_project.R:cyclocomp_linter: set_results_internal() has
+      # complexity 30. A split of it changes the code that creates the
+      # results folders and deletes the empty dated folders.
+      # R/initialize_project.R:undesirable_function_linter: sapply() sources
+      # the files. vapply() needs one result shape, and source() returns NULL
+      # for an empty file and a list of two otherwise.
+      # R/loc.R:cyclocomp_linter: check_max_loc_per_file() has complexity
+      # 27, and 17 of it comes from the check of the max_loc_per_file value.
+      # Every initialize_project() call runs this function.
+      # R/utils_files.R:vector_logic_linter: move_directory() uses `&` on
+      # overwrite_to, which the user sets. `&&` does not evaluate the
+      # right side when `to` does not exist, so a NULL, vector or string
+      # value then gives no error. When `to` exists, a vector gives another
+      # error.
+      lint-allowlist: |
+        R/initialize_project.R:cyclocomp_linter
+        R/initialize_project.R:undesirable_function_linter
+        R/loc.R:cyclocomp_linter
+        R/utils_files.R:vector_logic_linter

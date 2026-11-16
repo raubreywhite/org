@@ -1,3 +1,12 @@
+# Version 2026.11.17
+
+- The code passes the lint gate of the shared CI workflow, and behaviour does not change. The only change is that these five messages no longer show the call that raised them:
+  - `initialize_project()` and `set_results()`, the error "Multiple folders provided to results, but none exist", and the same error for each other folder.
+  - `initialize_project()`, the warning "Folder ... does not exist. Creating it now.".
+  - `set_results()`, the error "not initialized".
+  - `move_directory()`, the error "... already exists.".
+  - `move_directory()`, the error "... doesn't exist/isn't a directory".
+
 # Version 2026.11.16
 
 ## A named results folder instead of a dated one

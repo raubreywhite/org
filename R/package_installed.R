@@ -40,7 +40,7 @@ extract_packages <- function(paths) {
   )
   ns_pkgs <- unlist(ns_matches)
 
-  sort(unique(c(lib_pkgs, ns_pkgs)))
+  return(sort(unique(c(lib_pkgs, ns_pkgs))))
 }
 
 #' Find missing packages referenced in R files
@@ -52,7 +52,7 @@ find_missing_packages <- function(paths) {
   pkgs <- extract_packages(paths)
   installed <- utils::installed.packages()[, "Package"]
   base_pkgs <- rownames(utils::installed.packages(priority = "base"))
-  setdiff(pkgs, c(installed, base_pkgs))
+  return(setdiff(pkgs, c(installed, base_pkgs)))
 }
 
 #' Error if packages are missing
@@ -91,5 +91,5 @@ do_install_missing_packages <- function(paths) {
     utils::install.packages(missing)
   }
 
-  invisible(missing)
+  return(invisible(missing))
 }

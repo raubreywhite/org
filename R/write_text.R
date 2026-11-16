@@ -44,5 +44,5 @@ write_text <- function(
 
   retval <- paste0(header, txt)
 
-  cat(retval, file = file)
+  return(cat(retval, file = file))
 }

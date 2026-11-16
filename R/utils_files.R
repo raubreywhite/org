@@ -30,7 +30,7 @@ strip_and_then_add_trailing_forwardslash <- function(
 }
 
 create_dir <- function(folder) {
-  dir.create(folder, showWarnings = FALSE, recursive = TRUE)
+  return(dir.create(folder, showWarnings = FALSE, recursive = TRUE))
 }
 
 #' Construct file path from components
@@ -88,8 +88,8 @@ ls_files_int <- function(
   retval <- list.files(
     path = path,
     pattern = regexp,
-    full.names = T,
-    include.dirs = T
+    full.names = TRUE,
+    include.dirs = TRUE
   )
   # remove @eaDir
   eaDir_grep <- grep("@eaDir", retval)
@@ -142,9 +142,9 @@ ls_files <- function(
     path = path,
     regexp = regexp
   )
-  if (length(path) == 1 & !is.null(ncol(retval))) {
+  if (length(path) == 1 && !is.null(ncol(retval))) {
     retval <- retval[, 1]
-  } else if (length(path) == 1 & is.list(retval)) {
+  } else if (length(path) == 1 && is.list(retval)) {
     retval <- retval[[1]]
   }
   return(retval)
@@ -164,9 +164,9 @@ ls_files <- function(
 #' @keywords internal
 cat_to_filepath_function_factory <- function(filepath) {
   force(filepath)
-  function(..., sep = "", append = TRUE) {
-    cat(..., file = filepath, sep = sep, append = append)
-  }
+  return(function(..., sep = "", append = TRUE) {
+    return(cat(..., file = filepath, sep = sep, append = append))
+  })
 }
 
 #' Move a directory and its contents
@@ -212,10 +212,10 @@ move_directory <- function(from, to, overwrite_to = FALSE) {
   stopifnot(length(from) == 1)
   stopifnot(length(to) == 1)
   if (file.exists(to) & !overwrite_to) {
-    stop(to, " already exists.")
+    stop(to, " already exists.", call. = FALSE)
   }
   if (!dir.exists(from)) {
-    stop(from, " doesn't exist/isn't a directory")
+    stop(from, " doesn't exist/isn't a directory", call. = FALSE)
   }
 
   unlink(to, recursive = TRUE, force = TRUE)
@@ -224,8 +224,12 @@ move_directory <- function(from, to, overwrite_to = FALSE) {
   file.copy(
     from = ls_files(from),
     to = to,
-    recursive = T
+    recursive = TRUE
   )
 
-  unlink(strip_trailing_forwardslash(from), recursive = TRUE, force = TRUE)
+  return(unlink(
+    strip_trailing_forwardslash(from),
+    recursive = TRUE,
+    force = TRUE
+  ))
 }

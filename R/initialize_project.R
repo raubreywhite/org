@@ -16,9 +16,12 @@ select_folder_that_exists <- function(folders, name) {
   }
 
   # if multiple folders are provided, then they *must* exist
-  if (is.na(retval) & length(folders) > 1) {
-    stop(sprintf("Multiple folders provided to %s, but none exist", name))
-  } else if (is.na(retval) & length(folders) == 1) {
+  if (is.na(retval) && length(folders) > 1) {
+    stop(
+      sprintf("Multiple folders provided to %s, but none exist", name),
+      call. = FALSE
+    )
+  } else if (is.na(retval) && length(folders) == 1) {
     retval <- folders
     id <- 1
   }
@@ -170,11 +173,12 @@ set_results_internal <- function(results, proj, results_subfolder = NULL) {
           next
         } # dont delete files
         if (length(list.files(f2)) == 0) {
-          unlink(f2, recursive = T)
+          unlink(f2, recursive = TRUE)
         }
       }
     }
   }
+  return(invisible(NULL))
 }
 
 #' Set results folder after project initialization
@@ -214,13 +218,13 @@ set_results_internal <- function(results, proj, results_subfolder = NULL) {
 #' @export
 set_results <- function(results, proj = org::project) {
   if (is.null(proj[["computer_id"]])) {
-    stop("not initialized")
+    stop("not initialized", call. = FALSE)
   }
 
   if (!identical(proj, project)) {
     set_results_internal(results, proj)
   }
-  set_results_internal(results, project)
+  return(set_results_internal(results, project))
 }
 
 #' Initialize project folder structure
@@ -298,6 +302,7 @@ initialize_project_folders <- function(
   for (i in names(temp_env)) {
     proj[[i]] <- temp_env[[i]]
   }
+  return(invisible(NULL))
 }
 
 #' Source R files into environment
@@ -321,7 +326,10 @@ source_to_environment <- function(
     }
 
     if (!dir.exists(folder)) {
-      warning(paste0("Folder ", folder, " does not exist. Creating it now."))
+      warning(
+        paste0("Folder ", folder, " does not exist. Creating it now."),
+        call. = FALSE
+      )
       create_dir(folder)
     }
 
@@ -336,6 +344,7 @@ source_to_environment <- function(
 
     sapply(file_sources, source, env)
   }
+  return(invisible(NULL))
 }
 
 #' Initialize project environment and structure
