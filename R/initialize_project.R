@@ -305,6 +305,70 @@ initialize_project_folders <- function(
   return(invisible(NULL))
 }
 
+#' Characters in sourcing order
+#'
+#' The space and the ASCII punctuation, then the digits, then the letters.
+#' This is the order that R 4.6.0 gives with ICU under `en_US.UTF-8`.
+#' @keywords internal
+sourcing_collation <- c(
+  strsplit(" _-,;:!?.'\"()[]{}@*/\\&#%`^+<=>|~$", "")[[1]],
+  as.character(0:9),
+  letters
+)
+
+#' Rank of each ASCII code for the primary sourcing key
+#'
+#' Element `code + 1` holds the rank of the ASCII character `code`. An upper
+#' case letter has the rank of its lower case letter. A control character
+#' keeps its code, which puts it before the space.
+#' @keywords internal
+sourcing_rank <- local({
+  rank <- 0:127
+  codes <- vapply(sourcing_collation, utf8ToInt, integer(1))
+  rank[codes + 1L] <- 32L + seq_along(codes)
+  upper <- utf8ToInt(paste(LETTERS, collapse = ""))
+  rank[upper + 1L] <- rank[upper + 32L + 1L]
+  rank
+})
+
+#' Sort keys for one file name
+#'
+#' @param name One file name.
+#' @return Two strings of hexadecimal digits. The first sorts the names with
+#'   case ignored. The second breaks a tie, lower case first.
+#' @keywords internal
+sourcing_keys <- function(name) {
+  bytes <- as.integer(charToRaw(enc2utf8(name)))
+  ascii <- bytes < 128L
+  primary <- bytes
+  primary[ascii] <- sourcing_rank[bytes[ascii] + 1L]
+  is_lower <- bytes >= 97L & bytes <= 122L
+  is_upper <- bytes >= 65L & bytes <= 90L
+  tie <- bytes - 32L * is_lower + 32L * is_upper
+  return(c(
+    paste(sprintf("%02x", primary), collapse = ""),
+    paste(sprintf("%02x", tie), collapse = "")
+  ))
+}
+
+#' Sort files into the order in which they are sourced
+#'
+#' @param files Paths to the files in one folder.
+#' @return `files`, sorted by file name with the rule that
+#'   [initialize_project()] documents. The locale does not change the result.
+#' @keywords internal
+sort_for_sourcing <- function(files) {
+  keys <- vapply(
+    basename(files),
+    sourcing_keys,
+    character(2),
+    USE.NAMES = FALSE
+  )
+  # The full path is the last key, so two files with one base name always come
+  # in the same order.
+  return(files[order(keys[1, ], keys[2, ], files, method = "radix")])
+}
+
 #' Source R files into environment
 #'
 #' @param proj Project environment.
@@ -340,7 +404,7 @@ source_to_environment <- function(
       environmentName(env)
     ))
     # fileSources <- file.path(folder, list.files(folder, pattern = "*.[rR]$"))
-    file_sources <- ls_files(folder, regexp = "\\.[rR]$")
+    file_sources <- sort_for_sourcing(ls_files(folder, regexp = "\\.[rR]$"))
 
     sapply(file_sources, source, env)
   }
@@ -360,7 +424,8 @@ source_to_environment <- function(
 #'   provide a different environment, all functions are sourced into that
 #'   environment.
 #' @param home The folder containing 'Run.R' and 'R/'. This is the main project
-#'   directory.
+#'   directory. A relative path, for example `"."` or `"./analysis"`, is
+#'   relative to the working directory.
 #' @param results The base folder for storing results. `initialize_project()`
 #'   creates a subfolder with today's date, or the subfolder that
 #'   `results_subfolder` names. You reach it at `org::project$results_today`.
@@ -407,8 +472,29 @@ source_to_environment <- function(
 #' 4. Stops if any file holds more code lines than `max_loc_per_file`.
 #' 5. Stops if a package the code needs is missing, or installs it when
 #'    `install_missing_packages` is `TRUE`.
-#' 6. Sources all .R files from the specified directories.
+#' 6. Sources all .R files from the specified directories, in the order that
+#'    the section "Sourcing order" gives.
 #' 7. Maintains a mirror of settings in `org::project`.
+#' @section Sourcing order:
+#' `initialize_project()` sources the folders in the order of
+#' `folders_to_be_sourced`. In each folder, it sources the .R files in the
+#' order of their file names. The locale does not change this order.
+#'
+#' The rule compares two names character by character, and it ignores case:
+#' 1. The space and the ASCII punctuation come first, in this order:
+#'    the space, then ``_-,;:!?.'"()[]{}@*/\&#%`^+<=>|~$``.
+#' 2. The digits come next, from `0` to `9`.
+#' 3. The letters come next, from `a` to `z`.
+#' 4. A character that is not ASCII comes last, in the order of its UTF-8
+#'    bytes.
+#'
+#' If two names are equal when case is ignored, the name with a lower case
+#' letter at the first difference comes first. A name that is the start of a
+#' longer name comes first. For example, `_cfg.R`, `01_data.R`, `get_data.R`,
+#' `get.R`, `Get.R` and `plot.R` are sourced in that order.
+#'
+#' For names of ASCII characters, the rule gives the order that R 4.6.0 with
+#' ICU gives under the `en_US.UTF-8` locale.
 #' @examples
 #' # A minimal project: a home folder holding an R/ folder of functions
 #' home <- file.path(tempdir(), "org_init_example", "analysis3")

@@ -25,7 +25,8 @@ provide a different environment, all functions are sourced into that
 environment.}
 
 \item{home}{The folder containing 'Run.R' and 'R/'. This is the main project
-directory.}
+directory. A relative path, for example \code{"."} or \code{"./analysis"}, is
+relative to the working directory.}
 
 \item{results}{The base folder for storing results. \code{initialize_project()}
 creates a subfolder with today's date, or the subfolder that
@@ -94,10 +95,36 @@ folder of the current run.
 \item Stops if any file holds more code lines than \code{max_loc_per_file}.
 \item Stops if a package the code needs is missing, or installs it when
 \code{install_missing_packages} is \code{TRUE}.
-\item Sources all .R files from the specified directories.
+\item Sources all .R files from the specified directories, in the order that
+the section "Sourcing order" gives.
 \item Maintains a mirror of settings in \code{org::project}.
 }
 }
+\section{Sourcing order}{
+
+\code{initialize_project()} sources the folders in the order of
+\code{folders_to_be_sourced}. In each folder, it sources the .R files in the
+order of their file names. The locale does not change this order.
+
+The rule compares two names character by character, and it ignores case:
+\enumerate{
+\item The space and the ASCII punctuation come first, in this order:
+the space, then \verb{_-,;:!?.'"()[]\{\}@*/\\&#\%`^+<=>|~$}.
+\item The digits come next, from \code{0} to \code{9}.
+\item The letters come next, from \code{a} to \code{z}.
+\item A character that is not ASCII comes last, in the order of its UTF-8
+bytes.
+}
+
+If two names are equal when case is ignored, the name with a lower case
+letter at the first difference comes first. A name that is the start of a
+longer name comes first. For example, \verb{_cfg.R}, \verb{01_data.R}, \code{get_data.R},
+\code{get.R}, \code{Get.R} and \code{plot.R} are sourced in that order.
+
+For names of ASCII characters, the rule gives the order that R 4.6.0 with
+ICU gives under the \code{en_US.UTF-8} locale.
+}
+
 \examples{
 # A minimal project: a home folder holding an R/ folder of functions
 home <- file.path(tempdir(), "org_init_example", "analysis3")

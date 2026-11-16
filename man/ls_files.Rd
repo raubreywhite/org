@@ -7,7 +7,8 @@
 ls_files(path = ".", regexp = NULL)
 }
 \arguments{
-\item{path}{A character vector of one or more paths to search.}
+\item{path}{A character vector of one or more paths to search. A relative
+path, for example \code{"."} or \code{"./x"}, is relative to the working directory.}
 
 \item{regexp}{A regular expression pattern to filter files and directories.}
 }

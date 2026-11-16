@@ -82,7 +82,8 @@ ls_files_int <- function(
   if (path == ".") {
     path <- getwd()
   } else if (length(grep("^\\./", path))) {
-    path <- gsub("^./", getwd(), path)
+    # Keep the "/" after the ".", or "./x" becomes "<wd>x" and lists nothing.
+    path <- paste0(getwd(), substring(path, 2L))
   }
   path <- normalizePath(path, mustWork = FALSE)
   retval <- list.files(
@@ -110,7 +111,8 @@ ls_files_int_vectorized <- Vectorize(
 #' platforms. It can list files and directories that match a regular expression
 #' pattern.
 #'
-#' @param path A character vector of one or more paths to search.
+#' @param path A character vector of one or more paths to search. A relative
+#'   path, for example `"."` or `"./x"`, is relative to the working directory.
 #' @param regexp A regular expression pattern to filter files and directories.
 #' @return A character vector of file and directory paths.
 #' @details
