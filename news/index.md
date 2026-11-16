@@ -1,5 +1,36 @@
 # Changelog
 
+## Version 2026.11.18
+
+- [`initialize_project()`](https://www.rwhite.no/org/reference/initialize_project.md)
+  sources the .R files in each folder in one fixed order, and the locale
+  no longer changes it. The names compare character by character with
+  case ignored: punctuation first (`_` before `-` before `.`), then
+  digits, then letters. On a tie, lower case comes first.
+  [`?initialize_project`](https://www.rwhite.no/org/reference/initialize_project.md)
+  gives the full rule.
+- **This changes the sourcing order for a project that runs under a
+  locale other than `en_US.UTF-8`**, for example `C`. Under `C`,
+  `get_data.R` came before `get_data_2020.R`, and `SaveA4.r` before
+  `clean_data.r`. Now `get_data_2020.R` and `clean_data.r` come first,
+  as under `en_US.UTF-8`. In the 60 project folders measured on
+  2026-11-16, the new order equals the `en_US.UTF-8` order.
+- A file name with a character outside ASCII, for example `e` with an
+  accent, now comes after every ASCII name, in the order of its UTF-8
+  bytes. Under `en_US.UTF-8` such a name came beside its unaccented
+  letter, so its place changes there too.
+- Bug fix:
+  [`initialize_project()`](https://www.rwhite.no/org/reference/initialize_project.md)
+  sourced nothing when `home` started with `./`, for example `"."` or
+  `"./analysis"`.
+  [`ls_files()`](https://www.rwhite.no/org/reference/ls_files.md) turned
+  `"./x"` into `"<working directory>x"`, without the `/`. The
+  `max_loc_per_file` check saw no files for the same reason. A `home` of
+  `"."`, `"./x"` or `"./x/"` now sources the same files as the absolute
+  path. A `home` that starts with `~` already did, and a test now covers
+  it. [`ls_files()`](https://www.rwhite.no/org/reference/ls_files.md)
+  gives the same result as before for an absolute path.
+
 ## Version 2026.11.17
 
 - The code passes the lint gate of the shared CI workflow, and behaviour

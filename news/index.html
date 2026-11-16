@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">org</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2026.11.17</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2026.11.18</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,6 +41,15 @@
       <small>Source: <a href="https://github.com/raubreywhite/org/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="2026.11.18" id="version-20261118">Version 2026.11.18<a class="anchor" aria-label="anchor" href="#version-20261118"></a></h2>
+<ul><li>
+<code><a href="../reference/initialize_project.html">initialize_project()</a></code> sources the .R files in each folder in one fixed order, and the locale no longer changes it. The names compare character by character with case ignored: punctuation first (<code>_</code> before <code>-</code> before <code>.</code>), then digits, then letters. On a tie, lower case comes first. <code><a href="../reference/initialize_project.html">?initialize_project</a></code> gives the full rule.</li>
+<li>
+<strong>This changes the sourcing order for a project that runs under a locale other than <code>en_US.UTF-8</code></strong>, for example <code>C</code>. Under <code>C</code>, <code>get_data.R</code> came before <code>get_data_2020.R</code>, and <code>SaveA4.r</code> before <code>clean_data.r</code>. Now <code>get_data_2020.R</code> and <code>clean_data.r</code> come first, as under <code>en_US.UTF-8</code>. In the 60 project folders measured on 2026-11-16, the new order equals the <code>en_US.UTF-8</code> order.</li>
+<li>A file name with a character outside ASCII, for example <code>e</code> with an accent, now comes after every ASCII name, in the order of its UTF-8 bytes. Under <code>en_US.UTF-8</code> such a name came beside its unaccented letter, so its place changes there too.</li>
+<li>Bug fix: <code><a href="../reference/initialize_project.html">initialize_project()</a></code> sourced nothing when <code>home</code> started with <code>./</code>, for example <code>"."</code> or <code>"./analysis"</code>. <code><a href="../reference/ls_files.html">ls_files()</a></code> turned <code>"./x"</code> into <code>"&lt;working directory&gt;x"</code>, without the <code>/</code>. The <code>max_loc_per_file</code> check saw no files for the same reason. A <code>home</code> of <code>"."</code>, <code>"./x"</code> or <code>"./x/"</code> now sources the same files as the absolute path. A <code>home</code> that starts with <code>~</code> already did, and a test now covers it. <code><a href="../reference/ls_files.html">ls_files()</a></code> gives the same result as before for an absolute path.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2026.11.17" id="version-20261117">Version 2026.11.17<a class="anchor" aria-label="anchor" href="#version-20261117"></a></h2>
 <ul><li>The code passes the lint gate of the shared CI workflow, and behaviour does not change. The only change is that these five messages no longer show the call that raised them:

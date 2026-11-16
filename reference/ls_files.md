@@ -14,7 +14,8 @@ ls_files(path = ".", regexp = NULL)
 
 - path:
 
-  A character vector of one or more paths to search.
+  A character vector of one or more paths to search. A relative path,
+  for example `"."` or `"./x"`, is relative to the working directory.
 
 - regexp:
 

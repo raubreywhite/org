@@ -36,7 +36,8 @@ initialize_project(
 - home:
 
   The folder containing 'Run.R' and 'R/'. This is the main project
-  directory.
+  directory. A relative path, for example `"."` or `"./analysis"`, is
+  relative to the working directory.
 
 - results:
 
@@ -127,10 +128,37 @@ order.
 5.  Stops if a package the code needs is missing, or installs it when
     `install_missing_packages` is `TRUE`.
 
-6.  Sources all .R files from the specified directories.
+6.  Sources all .R files from the specified directories, in the order
+    that the section "Sourcing order" gives.
 
 7.  Maintains a mirror of settings in
     [`org::project`](https://www.rwhite.no/org/reference/project.md).
+
+## Sourcing order
+
+`initialize_project()` sources the folders in the order of
+`folders_to_be_sourced`. In each folder, it sources the .R files in the
+order of their file names. The locale does not change this order.
+
+The rule compares two names character by character, and it ignores case:
+
+1.  The space and the ASCII punctuation come first, in this order: the
+    space, then `` _-,;:!?.'"()[]{}@*/\&#%`^+<=>|~$ ``.
+
+2.  The digits come next, from `0` to `9`.
+
+3.  The letters come next, from `a` to `z`.
+
+4.  A character that is not ASCII comes last, in the order of its UTF-8
+    bytes.
+
+If two names are equal when case is ignored, the name with a lower case
+letter at the first difference comes first. A name that is the start of
+a longer name comes first. For example, `_cfg.R`, `01_data.R`,
+`get_data.R`, `get.R`, `Get.R` and `plot.R` are sourced in that order.
+
+For names of ASCII characters, the rule gives the order that R 4.6.0
+with ICU gives under the `en_US.UTF-8` locale.
 
 ## See also
 
@@ -156,15 +184,15 @@ proj <- org::initialize_project(
   raw = file.path(tempdir(), "org_init_example", "raw")
 )
 #> You are NOT sourcing into .GlobalEnv. All functions will be sourced into an environment that is returned from this function.
-#> Sourcing all code inside /tmp/RtmpzI8H7e/org_init_example/analysis3/R into 
+#> Sourcing all code inside /tmp/RtmpoZGEqL/org_init_example/analysis3/R into 
 
 # Folder locations, both on the returned environment and on org::project
 proj$results_today # Today's results folder
-#> [1] "/tmp/RtmpzI8H7e/org_init_example/results/2026-11-16/"
+#> [1] "/tmp/RtmpoZGEqL/org_init_example/results/2026-11-16/"
 proj$raw # Raw data folder
-#> [1] "/tmp/RtmpzI8H7e/org_init_example/raw/"
+#> [1] "/tmp/RtmpoZGEqL/org_init_example/raw/"
 org::project$results_today
-#> [1] "/tmp/RtmpzI8H7e/org_init_example/results/2026-11-16/"
+#> [1] "/tmp/RtmpoZGEqL/org_init_example/results/2026-11-16/"
 
 # Everything in home/R/ has been sourced into `env`
 proj$env$greet()
@@ -177,9 +205,9 @@ proj <- org::initialize_project(
   results_subfolder = "v01"
 )
 #> You are NOT sourcing into .GlobalEnv. All functions will be sourced into an environment that is returned from this function.
-#> Sourcing all code inside /tmp/RtmpzI8H7e/org_init_example/analysis3/R into 
+#> Sourcing all code inside /tmp/RtmpoZGEqL/org_init_example/analysis3/R into 
 proj$results_today
-#> [1] "/tmp/RtmpzI8H7e/org_init_example/results/v01/"
+#> [1] "/tmp/RtmpoZGEqL/org_init_example/results/v01/"
 
 unlink(file.path(tempdir(), "org_init_example"), recursive = TRUE)
 ```

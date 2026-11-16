@@ -48,17 +48,17 @@ proj <- org::initialize_project(
   data_raw = file.path(home, "data_raw")
 )
 #> You are NOT sourcing into .GlobalEnv. All functions will be sourced into an environment that is returned from this function.
-#> Sourcing all code inside /tmp/RtmpzI8H7e/org_project_example/R into 
+#> Sourcing all code inside /tmp/RtmpoZGEqL/org_project_example/R into 
 
 # Every folder is now available from anywhere in the analysis
 org::project$home
-#> [1] "/tmp/RtmpzI8H7e/org_project_example/"
+#> [1] "/tmp/RtmpoZGEqL/org_project_example/"
 org::project$results
-#> [1] "/tmp/RtmpzI8H7e/org_project_example/results/"
+#> [1] "/tmp/RtmpoZGEqL/org_project_example/results/"
 org::project$results_today
-#> [1] "/tmp/RtmpzI8H7e/org_project_example/results/2026-11-16/"
+#> [1] "/tmp/RtmpoZGEqL/org_project_example/results/2026-11-16/"
 org::project$data_raw
-#> [1] "/tmp/RtmpzI8H7e/org_project_example/data_raw/"
+#> [1] "/tmp/RtmpoZGEqL/org_project_example/data_raw/"
 
 unlink(home, recursive = TRUE)
 ```
