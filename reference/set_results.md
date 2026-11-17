@@ -43,7 +43,8 @@ a project is already initialized.
 
 Other project setup:
 [`initialize_project()`](https://www.rwhite.no/org/reference/initialize_project.md),
-[`project`](https://www.rwhite.no/org/reference/project.md)
+[`project`](https://www.rwhite.no/org/reference/project.md),
+[`sort_for_sourcing()`](https://www.rwhite.no/org/reference/sort_for_sourcing.md)
 
 ## Examples
 
@@ -56,14 +57,14 @@ proj <- org::initialize_project(
   results = file.path(home, "results_a")
 )
 #> You are NOT sourcing into .GlobalEnv. All functions will be sourced into an environment that is returned from this function.
-#> Sourcing all code inside /tmp/RtmpRkmNTu/org_set_results_example/R into 
+#> Sourcing all code inside /tmp/RtmpGLbeQp/org_set_results_example/R into 
 org::project$results_today
-#> [1] "/tmp/RtmpRkmNTu/org_set_results_example/results_a/2026-11-16/"
+#> [1] "/tmp/RtmpGLbeQp/org_set_results_example/results_a/2026-11-17/"
 
 # Point the project at a different results folder
 org::set_results(file.path(home, "results_b"))
 org::project$results_today
-#> [1] "/tmp/RtmpRkmNTu/org_set_results_example/results_b/2026-11-16/"
+#> [1] "/tmp/RtmpGLbeQp/org_set_results_example/results_b/2026-11-17/"
 dir.exists(org::project$results_today)
 #> [1] TRUE
 

@@ -337,6 +337,10 @@ The `org` package provides several key functions for project management.
   Set up project structure and source R files.
 - **[`org::set_results()`](https://www.rwhite.no/org/reference/set_results.md)**:
   Change the results folder after project initialization.
+- **[`org::sort_for_sourcing()`](https://www.rwhite.no/org/reference/sort_for_sourcing.md)**:
+  Sort files into the order in which
+  [`initialize_project()`](https://www.rwhite.no/org/reference/initialize_project.md)
+  sources them.
 - **[`org::project`](https://www.rwhite.no/org/reference/project.md)**:
   Environment containing all project folder locations.
 

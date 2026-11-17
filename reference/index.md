@@ -8,6 +8,8 @@
   folder locations
 - [`set_results()`](https://www.rwhite.no/org/reference/set_results.md)
   : Set results folder after project initialization
+- [`sort_for_sourcing()`](https://www.rwhite.no/org/reference/sort_for_sourcing.md)
+  : Sort files into the order in which org sources them
 
 ## File and Directory Utilities
 

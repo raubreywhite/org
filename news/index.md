@@ -1,5 +1,14 @@
 # Changelog
 
+## Version 2026.11.19
+
+- [`sort_for_sourcing()`](https://www.rwhite.no/org/reference/sort_for_sourcing.md)
+  is new and exported. It sorts file paths into the order in which
+  [`initialize_project()`](https://www.rwhite.no/org/reference/initialize_project.md)
+  sources them, and
+  [`initialize_project()`](https://www.rwhite.no/org/reference/initialize_project.md)
+  calls it. The sourcing order does not change.
+
 ## Version 2026.11.18
 
 - [`initialize_project()`](https://www.rwhite.no/org/reference/initialize_project.md)

@@ -168,7 +168,8 @@ to give one folder several possible paths.
 
 Other project setup:
 [`project`](https://www.rwhite.no/org/reference/project.md),
-[`set_results()`](https://www.rwhite.no/org/reference/set_results.md)
+[`set_results()`](https://www.rwhite.no/org/reference/set_results.md),
+[`sort_for_sourcing()`](https://www.rwhite.no/org/reference/sort_for_sourcing.md)
 
 ## Examples
 
@@ -184,15 +185,15 @@ proj <- org::initialize_project(
   raw = file.path(tempdir(), "org_init_example", "raw")
 )
 #> You are NOT sourcing into .GlobalEnv. All functions will be sourced into an environment that is returned from this function.
-#> Sourcing all code inside /tmp/RtmpRkmNTu/org_init_example/analysis3/R into 
+#> Sourcing all code inside /tmp/RtmpGLbeQp/org_init_example/analysis3/R into 
 
 # Folder locations, both on the returned environment and on org::project
 proj$results_today # Today's results folder
-#> [1] "/tmp/RtmpRkmNTu/org_init_example/results/2026-11-16/"
+#> [1] "/tmp/RtmpGLbeQp/org_init_example/results/2026-11-17/"
 proj$raw # Raw data folder
-#> [1] "/tmp/RtmpRkmNTu/org_init_example/raw/"
+#> [1] "/tmp/RtmpGLbeQp/org_init_example/raw/"
 org::project$results_today
-#> [1] "/tmp/RtmpRkmNTu/org_init_example/results/2026-11-16/"
+#> [1] "/tmp/RtmpGLbeQp/org_init_example/results/2026-11-17/"
 
 # Everything in home/R/ has been sourced into `env`
 proj$env$greet()
@@ -205,9 +206,9 @@ proj <- org::initialize_project(
   results_subfolder = "v01"
 )
 #> You are NOT sourcing into .GlobalEnv. All functions will be sourced into an environment that is returned from this function.
-#> Sourcing all code inside /tmp/RtmpRkmNTu/org_init_example/analysis3/R into 
+#> Sourcing all code inside /tmp/RtmpGLbeQp/org_init_example/analysis3/R into 
 proj$results_today
-#> [1] "/tmp/RtmpRkmNTu/org_init_example/results/v01/"
+#> [1] "/tmp/RtmpGLbeQp/org_init_example/results/v01/"
 
 unlink(file.path(tempdir(), "org_init_example"), recursive = TRUE)
 ```
