@@ -162,6 +162,7 @@ paths.
 
 Other project setup:
 \code{\link{project}},
-\code{\link[=set_results]{set_results()}}
+\code{\link[=set_results]{set_results()}},
+\code{\link[=sort_for_sourcing]{sort_for_sourcing()}}
 }
 \concept{project setup}

@@ -1,3 +1,7 @@
+# Version 2026.11.19
+
+- `sort_for_sourcing()` is new and exported. It sorts file paths into the order in which `initialize_project()` sources them, and `initialize_project()` calls it. The sourcing order does not change.
+
 # Version 2026.11.18
 
 - `initialize_project()` sources the .R files in each folder in one fixed order, and the locale no longer changes it. The names compare character by character with case ignored: punctuation first (`_` before `-` before `.`), then digits, then letters. On a tie, lower case comes first. `?initialize_project` gives the full rule.

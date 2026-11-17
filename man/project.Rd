@@ -42,6 +42,7 @@ does not describe them individually.
 
 Other project setup:
 \code{\link[=initialize_project]{initialize_project()}},
-\code{\link[=set_results]{set_results()}}
+\code{\link[=set_results]{set_results()}},
+\code{\link[=sort_for_sourcing]{sort_for_sourcing()}}
 }
 \concept{project setup}

@@ -313,6 +313,7 @@ The `org` package provides several key functions for project management.
 
 - **`org::initialize_project()`**: Set up project structure and source R files.
 - **`org::set_results()`**: Change the results folder after project initialization.
+- **`org::sort_for_sourcing()`**: Sort files into the order in which `initialize_project()` sources them.
 - **`org::project`**: Environment containing all project folder locations.
 
 ### File operations

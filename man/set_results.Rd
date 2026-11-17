@@ -48,6 +48,7 @@ change the results folder after a project is already initialized.
 
 Other project setup:
 \code{\link[=initialize_project]{initialize_project()}},
-\code{\link{project}}
+\code{\link{project}},
+\code{\link[=sort_for_sourcing]{sort_for_sourcing()}}
 }
 \concept{project setup}

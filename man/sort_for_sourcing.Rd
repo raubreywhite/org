@@ -2,18 +2,42 @@
 % Please edit documentation in R/initialize_project.R
 \name{sort_for_sourcing}
 \alias{sort_for_sourcing}
-\title{Sort files into the order in which they are sourced}
+\title{Sort files into the order in which org sources them}
 \usage{
 sort_for_sourcing(files)
 }
 \arguments{
-\item{files}{Paths to the files in one folder.}
+\item{files}{A character vector of file paths or file names.}
 }
 \value{
-\code{files}, sorted by file name with the rule that
-\code{\link[=initialize_project]{initialize_project()}} documents. The locale does not change the result.
+\code{files}, in sourcing order. Only the file name, \code{basename(files)},
+sets the order. Two paths with the same file name keep the order of their
+full paths.
 }
 \description{
-Sort files into the order in which they are sourced
+\code{sort_for_sourcing()} sorts file paths into the order in which
+\code{\link[=initialize_project]{initialize_project()}} sources the .R files of one folder. The locale does
+not change the result.
 }
-\keyword{internal}
+\details{
+The rule compares the file names character by character, with case
+ignored. Punctuation comes first (\verb{_} before \code{-} before \code{.}), then digits,
+then letters. A character that is not ASCII comes last, in the order of its
+UTF-8 bytes. If two names are equal with case ignored, the name with a
+lower case letter at the first difference comes first. The section
+"Sourcing order" in \code{\link[=initialize_project]{initialize_project()}} gives the full rule.
+}
+\examples{
+org::sort_for_sourcing(c(
+  "R/plot.R", "R/Get.R", "R/get.R", "R/get_data.R", "R/01_data.R",
+  "R/_cfg.R"
+))
+# "R/_cfg.R" "R/01_data.R" "R/get_data.R" "R/get.R" "R/Get.R" "R/plot.R"
+}
+\seealso{
+Other project setup:
+\code{\link[=initialize_project]{initialize_project()}},
+\code{\link{project}},
+\code{\link[=set_results]{set_results()}}
+}
+\concept{project setup}

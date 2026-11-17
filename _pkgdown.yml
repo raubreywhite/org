@@ -24,6 +24,7 @@ reference:
     - initialize_project
     - project
     - set_results
+    - sort_for_sourcing
 
 - title: "File and Directory Utilities"
   contents:
